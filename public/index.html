@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DMC Inventory</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/32150d741e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>DMC Inventory</h1>
+        </div>
+
+        <!--SEARCH CONTAINER-->
+        <div class="category-container search-container">
+            <div class="wrap-nuancier">
+                <h2><i class="fas fa-palette"></i> Select your colours</h2>
+                <i class="fas fa-chevron-left"></i>
+                <i class="fas fa-chevron-right"></i>
+                <ul class="nuancier">
+                    <li class="color-circle" data-id="red">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/red.jpg" alt="">
+                        </div>
+                        <p>red</p>
+                    </li>
+                    <li class="color-circle" data-id="orange">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/orange.jpg" alt="">
+                        </div>
+                        <p>orange</p>
+                    </li>
+                    <li class="color-circle" data-id="yellow">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/yellow.jpg" alt="">
+                        </div>
+                        <p>yellow</p>
+                    </li>
+                    <li class="color-circle" data-id="muted-green">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/mutedgreen.jpg" alt="">
+                        </div>
+                        <p>muted green</p>
+                    </li>
+                    <li class="color-circle" data-id="green">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/green.jpg" alt="">
+                        </div>
+                        <p>green</p>
+                    </li>
+                    <li class="color-circle" data-id="teal">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/teal.jpg" alt="">
+                        </div>
+                        <p>teal</p>
+                    </li>
+                    <li class="color-circle" data-id="blue">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/blue.jpg" alt="">
+                        </div>
+                        <p>blue</p>
+                    </li>
+                    <li class="color-circle" data-id="purple">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/purple.jpg" alt="">
+                        </div>
+                        <p>purple</p>
+                    </li>
+                    <li class="color-circle" data-id="pink">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/pink.jpg" alt="">
+                        </div>
+                        <p>pink</p>
+                    </li>
+                    <li class="color-circle" data-id="brown">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/brown.jpg" alt="">
+                        </div>
+                        <p>brown</p>
+                    </li>
+                    <li class="color-circle" data-id="light">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/light.jpg" alt="">
+                        </div>
+                        <p>light</p>
+                    </li>
+                    <li class="color-circle" data-id="dark">
+                        <div class="img-wrap">
+                            <img src="https://www.dmc.com/media/colours/dark.jpg" alt="">
+                        </div>
+                        <p>dark</p>
+                    </li>
+                </ul>
+            </div>
+            <!--SEARCH INPUT-->
+            <div class="input-wraper">
+                <input type="text" id="search-term" class="search-term" placeholder="search by code" />
+                <button id="search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <!--SEARCH CONTAINER RESULTS-->
+            <div class="results">
+                <div class="no-found">
+                    <img src="./5.png" alt=""/>
+                    <p>Sorry, no match !</p>
+                </div>
+                <div class="wrapper thread-items-wrapper">  
+                </div>
+            </div>
+        </div>
+
+        <!--SHOPPING CONTAINER-->
+
+        <div class="category-container shopping-container">
+            <h2><i class="fas fa-shopping-basket"></i> My shopping list</h2>
+            <div class="wrapper shopping-items-wrapper">
+            </div>
+        </div>
+
+        <!--TREAD STORAGE CONTAINER-->
+
+        <div class="category-container box-container">
+            <h2><i class="fas fa-archive"></i> My thread box</h2>
+            <div class="wrapper box-items-wrapper">
+            </div>
+        </div>
+    </div>
+    
+    <!-- JS -->
+    <script src="browser.js"></script>
+    <script src="carousel.js"></script>
+     <!-- axios -->
+     <script
+     src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+     integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+     crossorigin="anonymous"
+     referrerpolicy="no-referrer"
+   ></script>
+</body>
+
+</html>

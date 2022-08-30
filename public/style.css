@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&displayfamily=Open+Sans&family=swap');
+
+/*beige #064420 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Open Sans', sans-serif;
+    margin: 20px;
+}
+
+.container {
+    background: white;
+}
+
+h1 {
+    font-family: 'Staatliches', cursive;
+    font-size: 80px;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 100;
+}
+
+h2{
+    font-size: 30px;
+    margin: 20px 0;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+}
+
+.category-container {
+    margin: 60px 0;
+    width: 900px;
+}
+
+@media screen and (max-width: 991px){
+    .category-container {
+        width: 520px;
+    }
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/*SEARCH*/
+
+.wrap-nuancier {
+    position: relative
+}
+
+.fa-chevron-left{
+    position: absolute;
+    top: 88px;
+    left: -15px;
+    font-size: 20px;
+    cursor:pointer;
+}
+
+.fa-chevron-right {
+    position: absolute;
+    right: -15px;
+    top: 88px;
+    font-size: 20px;
+    cursor:pointer;
+}
+
+.nuancier {
+    list-style: none;
+    display: flex;
+    justify-content: left;
+    overflow: hidden;
+    height: 120px;
+    margin-left: 20px;
+    width: 840px;
+}
+
+@media screen and (max-width: 991px){
+    .nuancier  {
+        width: 520px;
+        margin-left: 0px;
+    }
+}
+
+.color-circle {
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+}
+
+.color-circle:hover p{
+    border-bottom: black solid 5px;
+    display: block;
+}
+
+.color-circle p {
+    text-transform: uppercase;
+    padding: 5px 0px;
+    display: none;
+    font-size: 14px;
+}
+
+.img-wrap{
+    width: 65px;
+    height: 65px;
+}
+
+.img-wrap img{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+}
+
+.input-wraper {
+    text-align: center;
+    margin: 20px 0px;
+    left: 300px;
+}
+
+.search-term {
+    height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    padding-left: 5px;
+    border: solid #8d7955  1px;
+    margin-left: -20px;
+}
+
+.search-term:focus {
+    outline: none;
+}
+
+#search {
+    color: white;
+    background-color: #8d7955 ;
+    border:solid #8d7955  1px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    position: absolute;
+}
+
+/*SEARCH RESULTS */
+
+.results {
+    margin: 40px 0px;
+}
+
+.no-found {
+    text-align: center;
+    display: none;
+}
+
+.no-found p {
+    margin-top: 5px;
+}
+
+.no-found img {
+    height: 110px;
+}
+
+.active {
+    display: block;
+}
+
+/*TREAD ITEM */
+
+.thread-item {
+    position: relative;
+    width: 120px;
+    margin: 4px 4px 20px 4px;
+}
+
+.item-background {
+
+    background-color: #8d7955;
+    width: 120px;
+    height: 120px;
+}
+
+.thread-item:hover {
+    opacity: 1;
+}
+
+.img-color-thread {
+    width: 120px;
+    height: 120px;
+    opacity: 1;
+}
+
+.thread-item:hover .img-color-thread {
+    opacity: 0;
+}
+
+.thread-item p {
+    text-align: center;
+}
+
+.thread-item .clear{
+    position: absolute;
+    right: 0px;
+    background-color: black;
+    height: 18px;
+    width: 18px;
+    border: none;
+    border-radius: 2px;
+    opacity: 0;
+}
+
+.thread-item:hover .clear {
+    opacity: 1;
+}
+
+.clear:hover {
+    transform: rotate(90deg);
+    transition: transform 300ms ease-in-out;
+}
+
+.fa-times {
+    font-size: 16px;
+    color: white;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 1px;
+    right: 3px;
+}
+
+.fa-window-close:hover{
+    transform: rotate(90deg);
+    transition: transform 300ms ease-in-out;
+}
+
+.thread-item:hover .fa-times {
+    opacity: 1;
+}
+
+.thread-item .action-box {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 16px;
+    left: 48px;
+}
+
+.action-box .fa-shopping-basket, .action-box .fa-archive {
+    font-size: 25px;
+    opacity: 0;
+    margin: 10px 0px;
+    color: white;
+    cursor: pointer;
+}
+
+.thread-item:hover .action-box .fa-shopping-basket {
+    opacity: 1;
+
+}
+.thread-item:hover .action-box .fa-archive {
+    opacity: 1;
+}
+
+.line{
+    border-bottom: solid white 2px;
+    width: 90px;
+    opacity: 0;
+    position: absolute;
+    top: 43px;
+    left: -34px;
+}
+
+/*.line:hover{
+
+}*/
+
+.thread-item:hover .line {
+    opacity: 1;
+}
+
+
+/*SHOPPING LIST ET THREAD BOX */
+
