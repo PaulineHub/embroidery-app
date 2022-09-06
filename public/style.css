@@ -40,7 +40,7 @@ h2{
     width: 900px;
 }
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 991px) {
     .category-container {
         width: 520px;
     }
@@ -58,7 +58,7 @@ h2{
     position: relative
 }
 
-.fa-chevron-left{
+.fa-chevron-left {
     position: absolute;
     top: 88px;
     left: -15px;
@@ -269,7 +269,7 @@ h2{
     opacity: 1;
 }
 
-.line{
+.line {
     border-bottom: solid white 2px;
     width: 90px;
     opacity: 0;
@@ -278,14 +278,12 @@ h2{
     left: -34px;
 }
 
-/*.line:hover{
 
-}*/
 
 .thread-item:hover .line {
     opacity: 1;
 }
 
 
-/*SHOPPING LIST ET THREAD BOX */
+
 

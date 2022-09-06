@@ -1,3 +1,5 @@
+import Carousel from "./Carousel.js";
+
 //***SELECT ITEMS***//
 
 const colorsBtn = document.querySelectorAll(".color-circle");
@@ -7,10 +9,10 @@ const btnSearch = document.getElementById("search");
 const shoppingContainer = document.querySelector('.shopping-items-wrapper');
 const boxContainer = document.querySelector('.box-items-wrapper');
 const noFound = document.querySelector('.no-found');
-const prevBtn = document.querySelector('.fa-chevron-left');
-const nextBtn = document.querySelector('.fa-chevron-right');
 const searchContainer = document.querySelector('.search-container');
 
+//*** CAROUSEL */
+new Carousel(searchContainer);
 
 //***FONCTIONALITIES ***//
 
