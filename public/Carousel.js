@@ -32,7 +32,7 @@ export default class Carousel {
      */
     moveCarousel() {
         // Display buttons
-        if (this.carouselWidth === 900 && this.counter < 1) {
+        if (this.carouselWidth === 860 && this.counter < 1) {
             this._elNextBtn.style.display = 'block';
         } else if (this.carouselWidth === 520 && this.counter < 2) {
             this._elNextBtn.style.display = 'block';
@@ -45,9 +45,9 @@ export default class Carousel {
             this._elPrevBtn.style.display = 'none';
         }
         // Move colors of the carousel
-        if (this.carouselWidth === 900) {
+        if (this.carouselWidth === 860) {
             this._elcolorBtns.forEach(color =>{
-                color.style.transform = `translateX(-${this.counter * 270}%)`;
+                color.style.transform = `translateX(-${this.counter * 330}%)`;
             })
         } else if (this.carouselWidth === 520) {
             this._elcolorBtns.forEach(color =>{

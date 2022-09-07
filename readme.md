@@ -19,11 +19,3 @@ Browse and store your favorite colors of thread for your embroidery projects !
 - Refactoriser add shop item add box item
 - Generer les couleurs du nuancier automatiquement
 
-### Style
-#### Prioritaire
-- Ajout effet hover icones panier et boite
-- Ajout effet hover icone loupe
-- Modifier with sur .main et non body
-- Ajouter une ombre autour de main ?
-#### Non prioritaire
-- bug affichage muted green sur deux lignes

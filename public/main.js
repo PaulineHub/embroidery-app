@@ -43,16 +43,16 @@ function addItem(arr, container,destination){
         const threadItem = document.createElement("div");
         threadItem.classList.add("thread-item");
         threadItem.dataset.colorOrder = `${arr[i].order}`;
-        threadItem.innerHTML = `
-        <div class="item-background">
-        <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_${arr[i].code}_swatch_150x150.jpg" alt="">
-    <button class="clear"><i class="fas fa-times"></i></button>
-    <p>${arr[i].code}</p>
-    <div class="action-box">
-        <i class="fas fa-shopping-basket"></i>
-        <i class="fas fa-archive"></i>
-        <span class="line"></span>
-    </div></div>`;
+        threadItem.innerHTML = `<div class="item-background">
+                                    <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_${arr[i].code}_swatch_150x150.jpg" alt="">
+                                    <button class="clear"><i class="fas fa-times"></i></button>
+                                    <div class="action-box">
+                                        <i class="fas fa-shopping-basket"></i>
+                                        <i class="fas fa-archive"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                                <span class="item-code">${arr[i].code}</span>`;
         container.appendChild(threadItem);
     } 
     
@@ -91,7 +91,7 @@ function clearItem(e,destination){
     parentItem.removeChild(item);
     //remove from LS
     const itemSelected = e.currentTarget.parentElement.parentElement;
-    const code = itemSelected.querySelector(".item-background p").innerHTML;
+    const code = itemSelected.querySelector(".item-code").innerHTML;
     if(destination === 'cart'){
         removeFromLS(code,'shoppingList');
     }
@@ -115,7 +115,7 @@ function addItemShopOrBox(e, destination = 'cart'){
         boxContainer.appendChild(cloneItem);
     }
     //ajout item au LS
-    const code = cloneItem.querySelector(".item-background p").innerHTML;
+    const code = cloneItem.querySelector(".item-code").innerHTML;
     const order = cloneItem.dataset.colorOrder;
     if (destination === 'cart') {
         addToLS({code, order},'shoppingList');
