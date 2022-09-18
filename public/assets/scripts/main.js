@@ -1,4 +1,4 @@
-import Carousel from "./Carousel.js";
+import ColorBrowser from "./ColorBrowser.js";
 
 //***SELECT ITEMS***//
 
@@ -11,31 +11,13 @@ const boxContainer = document.querySelector('.box-items-wrapper');
 const noFound = document.querySelector('.no-found');
 const searchContainer = document.querySelector('.search-container');
 
-//*** CAROUSEL */
-new Carousel(searchContainer);
+//*** ColorBrowser */
+new ColorBrowser();
 
 //***FONCTIONALITIES ***//
 
 //SEARCH BY COLOUR
-colorsBtn.forEach(colorBtn => {
-    colorBtn.addEventListener('click', async (e)=> {
-        resultsContainer.innerHTML = '';
-        noFound.classList.remove('active');
-        searchInput.value = '';
-        const idColor = e.currentTarget.dataset.id;
-        const categoryArray = await getCategoryArray(idColor);
-        addItem(categoryArray, resultsContainer);
-    })
-})
 
-async function getCategoryArray(id){
-    const { data : dmcArray } = await axios.get(`/dmc-api/items?category=${id}`);
-    //console.log(dmcArray)
-    const categoryArray = dmcArray.filter(element => {
-        return element.category === id;
-    })
-    return categoryArray;
-}
 
 //add item
 function addItem(arr, container,destination){
@@ -136,25 +118,7 @@ function addItemShopOrBox(e, destination = 'cart'){
 
 //SEARCH BY CODE
 
-btnSearch.addEventListener('click', async ()=> {
-    resultsContainer.innerHTML = '';
-    noFound.classList.remove('active');
-    const codeValue = searchInput.value;
-    const itemByCode = await getItemByCode(codeValue);
-    addItem(itemByCode,resultsContainer);
-})
 
-async function getItemByCode(codeSearched){
-    const {data : DMCArray} = await axios.get(`/dmc-api/items?code=${codeSearched}`);
-    const codeItem = DMCArray.filter(item => {
-        return item.code === codeSearched;
-    })
-    if(codeItem.length === 0){
-        noFound.classList.add('active');
-    }else {
-        return codeItem;
-    }
-}
 
 //***LOCAL STORAGE***//
 

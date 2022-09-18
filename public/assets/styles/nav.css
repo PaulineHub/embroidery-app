@@ -1,0 +1,17 @@
+
+nav {
+    text-align: right;
+}
+
+nav a {
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    font-weight: bold;
+}
+
+.nav-selected {
+    font-weight: bold;
+}

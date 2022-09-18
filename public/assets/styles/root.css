@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&displayfamily=Open+Sans&family=swap');
+
+/* ROOT */
+
+:root {
+    --beige: #9b7d45;
+    --light-black: #2c2c2c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif; 
+    background-color: #f5eaf1;
+}
+
+header {
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Staatliches', cursive;
+    font-size: 80px;
+    text-align: center;
+    font-weight: 100;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 100;
+    border-bottom: 5px solid var(--light-black);
+    border-radius: 3px;
+    padding-bottom: 5px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}

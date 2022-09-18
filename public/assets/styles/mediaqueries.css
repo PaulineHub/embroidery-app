@@ -1,0 +1,13 @@
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 991px) {
+    .category-container {
+        width: 520px;
+    }
+
+    .nuancier  {
+        width: 520px;
+        margin-left: 0px;
+    }
+
+}

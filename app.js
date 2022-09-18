@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 const connectDB = require('./db/connect');
-const productsRouter = require('./routes/items')
+const threadsRouter = require('./routes/threads')
 
 //middleware errors
 const notFoundMiddleware = require('./middleware/not-found');
@@ -17,7 +17,7 @@ app.use(express.static('./public'))
 
 //routes
 
-app.use('/dmc-api/items', productsRouter)
+app.use('/api/v1/threads', threadsRouter)
 
 //error routes
 app.use(notFoundMiddleware)

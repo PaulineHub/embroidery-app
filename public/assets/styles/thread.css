@@ -1,0 +1,122 @@
+/*TREAD ITEM */
+
+.thread-item {
+    position: relative;
+    width: 120px;
+    margin: 5px 5px 20px 5px;
+}
+
+.item-background {
+    background-color: var(--beige);
+    width: 120px;
+    height: 120px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.thread-item:hover {
+    opacity: 1;
+}
+
+.img-color-thread {
+    width: 120px;
+    height: 120px;
+    opacity: 1;
+}
+
+.thread-item:hover .img-color-thread {
+    opacity: 0;
+}
+
+.item-code {
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+
+.thread-item .clear{
+    position: absolute;
+    right: 0px;
+    background-color: black;
+    height: 18px;
+    width: 18px;
+    border: none;
+    border-radius: 2px;
+    opacity: 0;
+}
+
+.thread-item:hover .clear {
+    opacity: 1;
+}
+
+.clear:hover {
+    transform: rotate(90deg);
+    transition: transform 300ms ease-in-out;
+}
+
+.fa-times {
+    font-size: 16px;
+    color: white;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 1px;
+    right: 3px;
+}
+
+.action-box .fa-shopping-basket:hover {
+    transform: scale(1.2);
+    transition: transform 200ms ease-in-out;
+}
+
+.action-box .fa-archive:hover {
+    transform: scale(1.2);
+    transition: transform 200ms ease-in-out;
+}
+
+.fa-window-close:hover{
+    transform: rotate(90deg);
+    transition: transform 300ms ease-in-out;
+}
+
+.thread-item:hover .fa-times {
+    opacity: 1;
+}
+
+.thread-item .action-box {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 16px;
+    left: 48px;
+}
+
+.action-box .fa-shopping-basket, .action-box .fa-archive {
+    font-size: 25px;
+    opacity: 0;
+    margin: 10px 0px;
+    color: white;
+    cursor: pointer;
+}
+
+.thread-item:hover .action-box .fa-shopping-basket {
+    opacity: 1;
+
+}
+.thread-item:hover .action-box .fa-archive {
+    opacity: 1;
+}
+
+.line {
+    border-bottom: solid white 2px;
+    width: 90px;
+    opacity: 0;
+    position: absolute;
+    top: 43px;
+    left: -34px;
+}
+
+.thread-item:hover .line {
+    opacity: 1;
+}

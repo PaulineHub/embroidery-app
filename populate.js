@@ -1,15 +1,15 @@
 require('dotenv').config()
 
 const connectDB = require('./db/connect')
-const Item = require('./models/item')
+const Thread = require('./models/thread')
 
-const jsonItems = require('./data.json')
+const jsonThreads = require('./data.json')
 
 const start = async () =>{
     try {
         await connectDB(process.env.MONGO_URI)
-        await Item.deleteMany()
-        await Item.create(jsonItems)
+        await Thread.deleteMany()
+        await Thread.create(jsonThreads)
         console.log('Success !!!')
         process.exit(0)
     }catch(error){

@@ -1,0 +1,20 @@
+/* CONTAINERS */
+
+main {
+    background: white;
+    margin: 60px auto;
+    width: 860px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 20px 40px;
+    border-radius: 5px;
+}
+
+section {
+    margin: 60px 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
