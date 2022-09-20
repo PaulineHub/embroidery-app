@@ -38,6 +38,7 @@ h2 {
     border-bottom: 5px solid var(--light-black);
     border-radius: 3px;
     padding-bottom: 5px;
+    text-transform: capitalize;
 }
 
 a {
@@ -69,6 +70,12 @@ button {
 
 button:hover {
     background-color: black;
+}
+
+.fa-keyboard {
+    float: left;
+    font-size: 30px;
+    margin-right: 5px;
 }
 
 .dynamic-underline::after {

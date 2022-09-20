@@ -14,10 +14,11 @@ const getAllThreads = async(req,res)=>{
     }
     const threads = await Thread.find(queryObject)
     res.status(200).json(threads)
+    
 }
 
 const saveThread = async(req,res)=>{
-
+    res.json(req.user)
 }
 
 const deleteThread = async(req,res)=>{

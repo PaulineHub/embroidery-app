@@ -4,7 +4,11 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 
+// connexion
 const connectDB = require('./db/connect');
+const authenticateUser = require('./middleware/authentication');
+
+//routers
 const authRouter = require('./routes/auth')
 const threadsRouter = require('./routes/threads')
 const projectsRouter = require('./routes/projects')
@@ -19,8 +23,8 @@ app.use(express.static('./public'))
 
 //routes
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/threads', threadsRouter)
-app.use('/api/v1/projects', projectsRouter)
+app.use('/api/v1/threads', authenticateUser, threadsRouter)
+app.use('/api/v1/projects', authenticateUser, projectsRouter)
 
 //error routes
 app.use(notFoundMiddleware)

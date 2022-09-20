@@ -11,37 +11,32 @@
 </head>
 <body>
     <main>
-        <nav>
-            <a href="#">Inventory</a>
-            <a href="#">Projects</a>
-            <a href="#" class="nav-selected">Log in</a>
-        </nav>
         <header>
             <h1>DMC Inventory</h1>
         </header>
         <!--LOGIN CONTAINER-->
         <section >
             <header>
-                <h2><i class="fa-sharp fa-solid fa-keyboard"></i> Log in</h2>
+                <i class="fa-sharp fa-solid fa-keyboard"></i><h2 data-js-form-title>Log in</h2>
             </header>
-            <form class="form-flex-wrapper" method="post" action="utilisateur/connexion">
+            <form class="form-flex-wrapper" method="post">
                 <div>
                     <div class="form-row-wrapper">
                         <div>
-                            <label for="uti_courriel">Email</label>
-                            <input type="email" name="uti_courriel" id="uti_courriel">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email">
                         </div>
                         <div>
-                            <label for="uti_mdp">Password</label>
-                            <input type="password" name="uti_mdp" id="uti_mdp">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password">
                         </div>
                     </div>
             
                 </div>
-                <button class="colored-button">Connexion</button>
+                <button class="colored-button" data-js-login-btn>Login</button>
                 <span class="action-message"></span>
             </form>
-            <a href="profil.html" class="dynamic-underline">Not a member yet? Register!</a>
+            <span class="dynamic-underline" data-js-span-login="register">Not a member yet? Register!</span>
         </section>
     </main>
      <!-- axios -->

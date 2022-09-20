@@ -1,5 +1,6 @@
 form button {
     margin-top: 20px;
+    text-transform: capitalize;
 }
 
 form {
@@ -20,9 +21,10 @@ form {
     width: 100%;
 }
 
-form ~ a {
+form ~ span {
     display: block;
     width: fit-content;
     margin-left: auto;
     margin-right: 0;
+    cursor: pointer;
 }
