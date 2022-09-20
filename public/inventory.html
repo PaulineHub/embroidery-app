@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DMC Inventory</title>
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- scripts -->
+    <script type="module" src="./assets/scripts/main.js" defer></script>
+    <script src="https://kit.fontawesome.com/32150d741e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main>
+        <nav>
+            <a href="#" class="nav-selected">Inventory</a>
+            <a href="#">Projects</a>
+            <a href="#">Log out</a>
+        </nav>
+        <header>
+            <h1>DMC Inventory</h1>
+        </header>
+        <!--SEARCH CONTAINER-->
+        <section class="search-container">
+            <div class="wrap-nuancier">
+                <h2><i class="fas fa-palette"></i> Select your colours</h2>
+                <i class="fas fa-chevron-left"></i>
+                <i class="fas fa-chevron-right"></i>
+                <ul class="nuancier" data-js-colors-container></ul>
+                <template data-js-color-circle-template>
+                    <li class="color-circle-wrapper" data-id="{{color}}">
+                        <div class="color-circle {{color}}"></div>
+                        <p>{{color}}</p>
+                    </li>
+                </template>
+            </div>
+            <!--SEARCH INPUT-->
+            <div class="input-wrapper">
+                <input type="text" id="search-term" class="search-term" placeholder="search by code" />
+                <button id="search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <!--SEARCH CONTAINER RESULTS-->
+            <div class="results">
+                <div class="no-found">
+                    <img src="./assets/images/5.png" alt=""/>
+                    <p>Sorry, no match !</p>
+                </div>
+                <div class="wrapper thread-items-wrapper"></div>
+                <template data-js-thread-template>
+                    <div class="thread-item" data-color-order="{{order}}">
+                        <div class="item-background">
+                            <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
+                                alt="">
+                            <button class="clear"><i class="fas fa-times"></i></button>
+                            <div class="action-box">
+                                <i class="fas fa-shopping-basket"></i>
+                                <i class="fas fa-archive"></i>
+                                <span class="line"></span>
+                            </div>
+                        </div>
+                        <span class="item-code">{{code}}</span>
+                    </div>
+                </template>
+            </div>
+        </section>
+        <!--SHOPPING CONTAINER-->
+        <section class="shopping-container" data-js-shopping-container>
+            <h2><i class="fas fa-shopping-basket"></i> My shopping list</h2>
+            <div class="wrapper shopping-items-wrapper">
+            </div>
+        </section>
+        <!--TREAD STORAGE CONTAINER-->
+        <section class="box-container" data-js-box-container>
+            <h2><i class="fas fa-archive"></i> My thread box</h2>
+            <div class="wrapper box-items-wrapper">
+            </div>
+        </section>
+    </main>
+     <!-- axios -->
+     <script
+     src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+     integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+     crossorigin="anonymous"
+     referrerpolicy="no-referrer"
+   ></script>
+</body>
+
+</html>

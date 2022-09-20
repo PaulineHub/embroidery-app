@@ -1,0 +1,28 @@
+form button {
+    margin-top: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.form-row-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.form-row-wrapper div {
+    width: 50%;
+}
+
+.form-row-wrapper input {
+    width: 100%;
+}
+
+form ~ a {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 0;
+}
