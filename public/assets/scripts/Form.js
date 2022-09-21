@@ -1,3 +1,5 @@
+import TokenStorage from './TokenStorage.js';
+
 export default class Form {
 
     constructor() {
@@ -43,12 +45,18 @@ export default class Form {
             let email = this._elInputEmail.value;
             let password = this._elInputPassword.value;
             const {data} = await axios.post(`/api/v1/auth/${route}`, { email, password });
-            console.log(data);
-            let token = data.user;
+            const token = data.user;
+            const storage = new TokenStorage();
+            storage.saveTokenLocalStorage(token);
+            if (token) {
+                window.location.pathname = '/inventory.html';
+            }
         } catch (error) {
             console.log(error);
         }
     }
+
+    
 
 
 
