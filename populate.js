@@ -3,7 +3,7 @@ require('dotenv').config()
 const connectDB = require('./db/connect')
 const Thread = require('./models/thread')
 
-const jsonThreads = require('./data.json')
+const jsonThreads = require('./threads.json')
 
 const start = async () =>{
     try {
@@ -12,7 +12,7 @@ const start = async () =>{
         await Thread.create(jsonThreads)
         console.log('Success !!!')
         process.exit(0)
-    }catch(error){
+    } catch (error) {
         console.log(error)
         process.exit(1)
     }

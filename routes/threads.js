@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getAllThreads,
-    saveThread,
-    deleteThread
+    getAllThreads
 } = require('../controllers/threads');
 
-router.route('/').get(getAllThreads).post(saveThread).delete(deleteThread)
+router.route('/').get(getAllThreads);
 
 
 module.exports = router

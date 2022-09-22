@@ -1,5 +1,6 @@
 import CloneItem from './CloneItem.js';
 import ColorCarousel from './ColorCarousel.js';
+import ThreadStorage from './ThreadStorage.js';
 
 export default class ColorBrowser {
 
@@ -24,14 +25,14 @@ export default class ColorBrowser {
 
         const elcolorBtns = this._elSearchContainer.querySelectorAll(".color-circle-wrapper");
         elcolorBtns.forEach(colorBtn => {
-            colorBtn.addEventListener('click', this.displayTreadsByColor.bind(this))
+            colorBtn.addEventListener('click', this.displayThreadsByColor.bind(this))
         })
 
-        this._elBtnSearch.addEventListener('click', this.searchThreadByCode.bind(this));
+        this._elBtnSearch.addEventListener('click', this.displayThreadByCode.bind(this));
 
     }
 
-    async searchThreadByCode() {
+    async displayThreadByCode() {
         this._elResultsContainer.innerHTML = '';
         this._elNoFound.classList.remove('active');
         const codeValue = this._elSearchInput.value;
@@ -43,23 +44,7 @@ export default class ColorBrowser {
         new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer);
     }
 
-    async getThreadByCode(codeSearched){
-        const {data : DMCArray} = await axios.get(`/api/v1/threads?code=${codeSearched}`,{
-                                                    headers: {
-                                                        'Authorization': `Bearer ${this.token}`
-                                                    }
-                                                });
-        const codeItem = DMCArray.filter(item => {
-            return item.code === codeSearched;
-        })
-        if(codeItem.length === 0){
-            this._elNoFound.classList.add('active');
-        } else {
-            return codeItem;
-        }
-    }
-
-    async displayTreadsByColor(e) {
+    async displayThreadsByColor(e) {
         this._elResultsContainer.innerHTML = '';
         this._elNoFound.classList.remove('active');
         this._elSearchInput.value = '';
@@ -74,27 +59,25 @@ export default class ColorBrowser {
         }
         const elThreadItems = this._elResultsContainer.querySelectorAll('.thread-item');
         elThreadItems.forEach(elThreadItem => {
-            const elShopBtn = elThreadItem.querySelector('[data-js-shop]');
+            const elShopBtn = elThreadItem.querySelector('[data-js-storage="basket"]');
             //const elStoreBtn = elThreadItem.querySelector('[data-js-store]');
-            elShopBtn.addEventListener('click', this.addShopList.bind(this));
+            elShopBtn.addEventListener('click', (e) => {
+                const storage = new ThreadStorage(this.token);
+                storage.storeThread(e);
+            });
         })
         
     }
 
-    addShopList() {
-        console.log('click')
+    async getThreadByCode(codeSearched){
+        const {data : threadArray} = await axios.get(`/api/v1/threads?code=${codeSearched}`);
+        if(threadArray.length === 0) this._elNoFound.classList.add('active');
+        else return threadArray;
     }
 
-    async getThreadsByCategory(id) {
-        const { data : dmcArray } = await axios.get(`/api/v1/threads?category=${id}`,{
-                                                    headers: {
-                                                        'Authorization': `Bearer ${this.token}`
-                                                    }
-                                                });
-        const categoryArray = dmcArray.filter(element => {
-            return element.category === id;
-        })
-        return categoryArray;
+    async getThreadsByCategory(color) {
+        const { data : threadArray } = await axios.get(`/api/v1/threads?category=${color}`);
+        return threadArray;
     }
 
 }
