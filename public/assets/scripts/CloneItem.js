@@ -1,9 +1,13 @@
+import ThreadButtons from './ThreadButtons.js';
+
 export default class CloneItem {
 
-    constructor(infos, templateItem, parentContainer) {
+    constructor(infos, templateItem, parentContainer, token) {
         this.infos = infos;
         this.templateItem = templateItem;
         this.parentContainer = parentContainer;
+
+        this.token = token;
 
         this.createHtmlItem(this.infos, this.templateItem, this.parentContainer);
     }
@@ -23,6 +27,8 @@ export default class CloneItem {
 
         let newElItem = document.importNode(elItemTemplateClone.content, true);
         elContainer.append(newElItem);
+        let item = elContainer.lastElementChild;
+        if (item.classList.contains('thread-item')) new ThreadButtons(item, this.token);
     }
 
 

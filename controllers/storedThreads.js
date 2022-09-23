@@ -1,10 +1,10 @@
 const StoredThread = require('../models/storedThread');
 const { StatusCodes } = require('http-status-codes')
-// const { BadRequestError, NotFoundError } = require('../errors')
+ const { BadRequestError, NotFoundError } = require('../errors')
 
 const getAllStoredThreads = async (req, res) => {
-  console.log(req)
   const threads = await StoredThread.find({ storedBy: req.user.userId, category:req.query.category })
+  console.log(threads)
   res.status(StatusCodes.OK).json({ threads, count: threads.length })
 }
 
@@ -23,7 +23,20 @@ const updateStoredThread = async (req, res) => {
 }
 
 const deleteStoredThread = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: threadId },
+  } = req
 
+
+  const storedThread = await StoredThread.findByIdAndRemove({
+    _id: threadId,
+    storedBy: userId,
+  })
+  if (!storedThread) {
+    throw new NotFoundError(`No thread with code ${threadId}`);
+  }
+  res.status(StatusCodes.OK).send();
 }
 
 module.exports = {

@@ -14,7 +14,7 @@ import ThreadStorage from "./ThreadStorage.js";
         new Navigation();
         if (pathname == "/inventory.html") {
             new ColorBrowser(token);
-            const threadStorage = new ThreadStorage(token);
+            const threadStorage = new ThreadStorage();
             threadStorage.displayStorage('basket');
             threadStorage.displayStorage('box');
         }

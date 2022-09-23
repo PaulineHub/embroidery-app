@@ -1,6 +1,5 @@
 import CloneItem from './CloneItem.js';
 import ColorCarousel from './ColorCarousel.js';
-import ThreadStorage from './ThreadStorage.js';
 
 export default class ColorBrowser {
 
@@ -25,60 +24,44 @@ export default class ColorBrowser {
 
         const elcolorBtns = this._elSearchContainer.querySelectorAll(".color-circle-wrapper");
         elcolorBtns.forEach(colorBtn => {
-            colorBtn.addEventListener('click', this.displayThreadsByColor.bind(this))
+            colorBtn.addEventListener('click', this.searchThreads.bind(this))
         })
 
-        this._elBtnSearch.addEventListener('click', this.displayThreadByCode.bind(this));
+        this._elBtnSearch.addEventListener('click', this.searchThreads.bind(this));
 
     }
 
-    async displayThreadByCode() {
-        this._elResultsContainer.innerHTML = '';
-        this._elNoFound.classList.remove('active');
-        const codeValue = this._elSearchInput.value;
-        const threadByCode = await this.getThreadByCode(codeValue);
-        let infos = {
-                code:threadByCode[0].code,
-                order:threadByCode[0].order
-            }
-        new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer);
+    searchThreads(e) {
+        const searchType = e.target.dataset.jsSearch;
+        let queryValue;
+        if (searchType == 'category') queryValue = e.target.dataset.jsCategory;
+        else queryValue = this._elSearchInput.value;
+        this.displaySearchedThreads(searchType, queryValue);
     }
 
-    async displayThreadsByColor(e) {
+    async displaySearchedThreads(searchType, queryValue) {
         this._elResultsContainer.innerHTML = '';
         this._elNoFound.classList.remove('active');
-        this._elSearchInput.value = '';
-        const colorCategory = e.currentTarget.dataset.id;
-        const threadsArray = await this.getThreadsByCategory(colorCategory);
+        if (searchType == 'category') this._elSearchInput.value = '';
+        const threadsArray = await this.getSearchedThreads(searchType, queryValue);
         for (let thread in threadsArray) {
             let infos = {
+                id:threadsArray[thread]._id,
                 code:threadsArray[thread].code,
                 order:threadsArray[thread].order
             }
-            new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer)
+            new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer, this.token)
         }
-        const elThreadItems = this._elResultsContainer.querySelectorAll('.thread-item');
-        elThreadItems.forEach(elThreadItem => {
-            const elShopBtn = elThreadItem.querySelector('[data-js-storage="basket"]');
-            //const elStoreBtn = elThreadItem.querySelector('[data-js-store]');
-            elShopBtn.addEventListener('click', (e) => {
-                const storage = new ThreadStorage(this.token);
-                storage.storeThread(e);
-            });
-        })
         
     }
 
-    async getThreadByCode(codeSearched){
-        const {data : threadArray} = await axios.get(`/api/v1/threads?code=${codeSearched}`);
+    async getSearchedThreads(queryKey, queryValue){
+        const {data : threadArray} = await axios.get(`/api/v1/threads?${queryKey}=${queryValue}`);
         if(threadArray.length === 0) this._elNoFound.classList.add('active');
         else return threadArray;
     }
 
-    async getThreadsByCategory(color) {
-        const { data : threadArray } = await axios.get(`/api/v1/threads?category=${color}`);
-        return threadArray;
-    }
+
 
 }
 
