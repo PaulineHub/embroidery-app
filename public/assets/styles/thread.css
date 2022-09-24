@@ -14,7 +14,7 @@
     overflow: hidden;
 }
 
-.thread-item:hover {
+.thread-item:hover .actions-wrapper {
     opacity: 1;
 }
 
@@ -28,26 +28,45 @@
     opacity: 0;
 }
 
+.actions-wrapper {
+    opacity: 0;
+}
+
+.quantity-wrapper {
+    position: absolute;
+    bottom: 26px;
+    right: 5px;
+    color: white;
+    opacity: inherit;
+    cursor: pointer;
+}
+
+.quantity-wrapper:hover {
+    transform: scale(1.1);
+    transition: transform 200ms ease-in-out;
+}
+
+.quantity-wrapper .fa-pen {
+    font-size: 14px;
+}
+
 .item-code {
     margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
-    display: table;
+    width: fit-content;
 }
 
-.thread-item .clear{
+.actions-wrapper .clear{
     position: absolute;
-    right: 0px;
+    right: 2px;
+    top: 2px;
     background-color: transparent;
     height: 18px;
     width: 18px;
     border: none;
     border-radius: 2px;
-    opacity: 0;
-}
-
-.thread-item:hover .clear {
-    opacity: 1;
+    opacity: inherit;
 }
 
 .clear:hover {
@@ -66,12 +85,12 @@
 }
 
 .action-box .fa-shopping-basket:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     transition: transform 200ms ease-in-out;
 }
 
 .action-box .fa-archive:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     transition: transform 200ms ease-in-out;
 }
 
@@ -84,7 +103,7 @@
     opacity: 1;
 }
 
-.thread-item .action-box {
+.actions-wrapper .action-box {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -94,29 +113,19 @@
 
 .action-box .fa-shopping-basket, .action-box .fa-archive {
     font-size: 25px;
-    opacity: 0;
+    opacity: inherit;
     margin: 10px 0px;
     color: white;
     cursor: pointer;
 }
 
-.thread-item:hover .action-box .fa-shopping-basket {
-    opacity: 1;
-
-}
-.thread-item:hover .action-box .fa-archive {
-    opacity: 1;
-}
-
 .line {
     border-bottom: solid white 2px;
     width: 90px;
-    opacity: 0;
+    opacity: inherit;
     position: absolute;
     top: 43px;
     left: -34px;
 }
 
-.thread-item:hover .line {
-    opacity: 1;
-}
+

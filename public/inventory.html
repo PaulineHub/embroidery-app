@@ -47,12 +47,12 @@
                     <p>Sorry, no match !</p>
                 </div>
                 <div class="wrapper thread-items-wrapper"></div>
+                <!--TEMPLATE BROWSED THREAD-->
                 <template data-js-thread-template>
                     <div class="thread-item" data-color-order="{{order}}" id="{{id}}">
                         <div class="item-background">
                             <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
                                 alt="">
-                            <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
                             <div class="action-box">
                                 <i class="fas fa-shopping-basket" data-js-storage="basket"></i>
                                 <i class="fas fa-archive" data-js-storage="box"></i>
@@ -74,6 +74,41 @@
             <h2><i class="fas fa-archive"></i> My thread box</h2>
             <div class="wrapper box-items-wrapper" data-js-threads-wrapper="box"></div>
         </section>
+        <!--TEMPLATE STORED THREAD-->
+        <template data-js-thread-stored-template>
+            <div class="thread-item" data-color-order="{{order}}" id="{{id}}">
+                <div class="item-background">
+                    <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
+                        alt="">
+                    <div class="actions-wrapper">
+                        <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                        <div class="action-box">
+                            <i class="fas fa-shopping-basket" data-js-storage="basket"></i>
+                            <i class="fas fa-archive" data-js-storage="box"></i>
+                            <span class="line"></span>
+                        </div>
+                        <div class="quantity-wrapper">
+                            <i class="fa-solid fa-pen"></i>
+                            <span class="quantity">1</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-code">{{code}}</div>
+            </div>
+        </template>
+        <!--TEMPLATE QUANTITY WINDOW-->
+        <template>
+            <div class="quantity-window">
+                <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                <h3>Update quantity</h3>
+                <h4>DMC {{code}}: {{storage}}</h4>
+                <div data-js-quantity class="item-quantity">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" name="quantity" id="quantity">
+                </div>
+                <button>Update quantity</button>
+            </div>
+        </template>
     </main>
      <!-- axios -->
      <script

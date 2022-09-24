@@ -26,11 +26,11 @@ export default class ThreadButtons {
         this._elStoreBtn.addEventListener('click', (e) => {
             this.storage.storeThread(e);
         });
-
-        this._elDeleteBtn.addEventListener('click', (e) => {
-            //console.log('click');
-            this.storage.deleteThread(e);
-        });
+        if (this._elDeleteBtn) { // no present on the threads in the color browser
+            this._elDeleteBtn.addEventListener('click', (e) => {
+                this.storage.deleteThread(e);
+            });
+        }
 
     }
 
