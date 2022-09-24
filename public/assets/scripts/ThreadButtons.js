@@ -7,6 +7,7 @@ export default class ThreadButtons {
         this._elShopBtn = this._el.querySelector('[data-js-storage="basket"]');
         this._elStoreBtn = this._el.querySelector('[data-js-storage="box"]');
         this._elDeleteBtn = this._el.querySelector('[data-js-delete]');
+        this._elQuantityBtn = this._el.querySelector('[data-js-quantity]');
 
         this.storage = new ThreadStorage(this.token);
         this.token = token;
@@ -28,6 +29,11 @@ export default class ThreadButtons {
         });
         if (this._elDeleteBtn) { // no present on the threads in the color browser
             this._elDeleteBtn.addEventListener('click', (e) => {
+                this.storage.deleteThread(e);
+            });
+        }
+        if (this._elQuantityBtn) { // no present on the threads in the color browser
+            this._elQuantityBtn.addEventListener('click', (e) => {
                 this.storage.deleteThread(e);
             });
         }

@@ -11,3 +11,9 @@
     }
 
 }
+
+@media screen and (max-height: 800px) {
+    .quantity-window{
+        overflow-y: initial!important;
+    }
+}

@@ -4,7 +4,8 @@ import TokenStorage from "./TokenStorage.js";
 export default class ThreadStorage {
 
     constructor() {
-        this._elThreadStoredTemplate = document.querySelector('[data-js-thread-stored-template]');
+        this._elThreadBasketTemplate = document.querySelector('[data-js-thread-basket-template]');
+        this._elThreadBoxTemplate = document.querySelector('[data-js-thread-box-template]');
         this._elBasketContainer = document.querySelector('[data-js-threads-wrapper="basket"]');
         this._elBoxContainer = document.querySelector('[data-js-threads-wrapper="box"]');
 
@@ -35,25 +36,40 @@ export default class ThreadStorage {
         storedThreads.sort((a,b) => a.order - b.order);
         // display in the DOM
         for (let infos in storedThreads) {
-            let storageContainer;
-            if (storage == 'basket') storageContainer = this._elBasketContainer;
-            else storageContainer = this._elBoxContainer
-            new CloneItem(storedThreads[infos], this._elThreadStoredTemplate, storageContainer, this.token);
+            let storageContainer;   // GROSSE REPETITION AVEC LE BAS, A REFACTORISER!!!!!!!!
+            let threadTemplate;
+            if (storage == 'basket') {
+                storageContainer = this._elBasketContainer;
+                threadTemplate = this._elThreadBasketTemplate;
+            }
+            else {
+                storageContainer = this._elBoxContainer;
+                threadTemplate = this._elThreadBoxTemplate;
+            }
+            new CloneItem(storedThreads[infos], threadTemplate, storageContainer, this.token);
         }
 
     }
 
     async storeThread(e) {
         let storageContainer;
+        let threadTemplate;
         const storage = e.target.dataset.jsStorage;
-        if (storage == 'basket') storageContainer = this._elBasketContainer;
-        else storageContainer = this._elBoxContainer
+        if (storage == 'basket') {
+            storageContainer = this._elBasketContainer;
+            threadTemplate = this._elThreadBasketTemplate;
+        }
+        else {
+            storageContainer = this._elBoxContainer;
+            threadTemplate = this._elThreadBoxTemplate;
+        }
         const elThread = e.currentTarget.parentElement.parentElement.parentElement;
         const code = elThread.querySelector(".item-code").innerHTML;
         const order = elThread.dataset.colorOrder;
         const params = {
             category: storage,
-            threadCode: code
+            threadCode: code,
+            quantity:1
         }
         // store the thread in the DB of the user
         const {data} = await axios.post(`/api/v1/storedThreads`, 
@@ -64,10 +80,11 @@ export default class ThreadStorage {
         let infos = {
                 id: data.storedThread._id,
                 code: code,
-                order: order
+                order: order,
+                quantity:1
         };
         // display the stored thread in the DOM of the right container
-        new CloneItem(infos, this._elThreadStoredTemplate, storageContainer, this.token);
+        new CloneItem(infos, threadTemplate, storageContainer, this.token);
     }
 
     async deleteThread(e) {

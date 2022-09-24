@@ -14,6 +14,11 @@ const storedThreadSchema = new mongoose.Schema({
     threadCode:{
         type: String,
         required: [true, "thread's code must be provided"]
+    },
+    quantity: {
+        type: Number,
+        min: 1,
+        required: [true, "quantity must be provided"]
     }
 })
 

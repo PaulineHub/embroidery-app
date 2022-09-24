@@ -48,7 +48,7 @@ export default class ColorBrowser {
             let infos = {
                 id:threadsArray[thread]._id,
                 code:threadsArray[thread].code,
-                order:threadsArray[thread].order
+                order:threadsArray[thread].order,
             }
             new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer, this.token)
         }
