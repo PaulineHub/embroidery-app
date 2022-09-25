@@ -16,6 +16,8 @@
 .quantity-window .clear {
     opacity: 1;
     background-color: transparent;
+    right: 5px;
+    top: 5px;
 }
 
 .quantity-window .fa-times {

@@ -46,17 +46,17 @@
                     <img src="./assets/images/5.png" alt=""/>
                     <p>Sorry, no match !</p>
                 </div>
-                <div class="wrapper thread-items-wrapper"></div>
+                <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="browser"></div>
                 <!--TEMPLATE BROWSED THREAD-->
                 <template data-js-thread-template>
-                    <div class="thread-item" data-color-order="{{order}}" id="{{id}}">
+                    <div class="thread-item" id="{{id}}" data-js-thread-quantity="1">
                         <div class="item-background">
                             <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
                                 alt="">
                             <div class="actions-wrapper">
                                 <div class="action-box">
-                                    <i class="fas fa-shopping-basket" data-js-storage="basket"></i>
-                                    <i class="fas fa-archive" data-js-storage="box"></i>
+                                    <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                    <i class="fas fa-archive" data-js-box-btn data-js-storage="box"></i>
                                     <span class="line"></span>
                                 </div>
                             </div>
@@ -73,18 +73,18 @@
         </section>
         <!--TEMPLATE BASKET THREAD-->
         <template data-js-thread-basket-template>
-            <div class="thread-item" data-color-order="{{order}}" id="{{id}}">
+            <div class="thread-item" id="{{id}}" data-js-thread-quantity="{{quantity}}">
                 <div class="item-background">
                     <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
                         alt="">
                     <div class="actions-wrapper">
                         <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
                         <div class="action-box">
-                            <i class="fas fa-archive" data-js-storage="box"></i>
+                            <i class="fas fa-archive" data-js-box-btn data-js-storage="box"></i>
                         </div>
                         <div class="quantity-wrapper" data-js-quantity>
-                            <i class="fa-solid fa-pen"></i>
-                            <span class="quantity">{{quantity}}</span>
+                            <i class="fa-solid fa-pen" data-js-storage="basket"></i>
+                            <span class="quantity" data-js-storage="basket">{{quantity}}</span>
                         </div>
                     </div>
                 </div>
@@ -98,18 +98,18 @@
         </section>
         <!--TEMPLATE BOX THREAD-->
         <template data-js-thread-box-template>
-            <div class="thread-item" data-color-order="{{order}}" id="{{id}}">
+            <div class="thread-item" id="{{id}}" data-js-thread-quantity="{{quantity}}">
                 <div class="item-background">
                     <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
                         alt="">
                     <div class="actions-wrapper">
                         <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
                         <div class="action-box">
-                            <i class="fas fa-shopping-basket" data-js-storage="basket"></i>
+                            <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
                         </div>
                         <div class="quantity-wrapper" data-js-quantity>
-                            <i class="fa-solid fa-pen"></i>
-                            <span class="quantity">{{quantity}}</span>
+                            <i class="fa-solid fa-pen" data-js-storage="box"></i>
+                            <span class="quantity" data-js-storage="box">{{quantity}}</span>
                         </div>
                     </div>
                 </div>
@@ -117,17 +117,17 @@
             </div>
         </template>
         <!--TEMPLATE QUANTITY WINDOW-->
-        <template>
-            <div class="quantity-window-background">
+        <template data-js-quantity-window-template>
+            <div class="quantity-window-background" data-js-quantity-window>
                 <div class="quantity-window">
                     <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
-                    <h3>Update quantity</h3>
-                    <h4>DMC {{code}}: {{storage}}</h4>
+                    <h3>Thread quantity</h3>
+                    <h4 data-js-id="{{id}}" data-js-code="{{code}}">DMC {{code}}: {{storageFromString}}</h4>
                     <div data-js-quantity class="item-quantity">
                         <label for="quantity">Quantity</label>
-                        <input type="number" name="quantity" id="quantity" value="{{quantity}}">
+                        <input type="number" name="quantity" id="quantity" value="{{quantity}}" data-js-quantity-input>
                     </div>
-                    <button data-js-update-quantity>Update quantity</button>
+                    <button data-js-submit-quantity="{{storageTo}}">{{action}}</button>
                 </div>
             </div>
         </template>
