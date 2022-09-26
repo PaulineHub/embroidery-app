@@ -5,6 +5,9 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: [true, 'name must be provided']
     },
+    description:{
+        type: String,
+    },
     // thread's codes
     threads:{
         type: Array,
@@ -15,11 +18,16 @@ const projectSchema = new mongoose.Schema({
         type: Array,
         default:[]
     },
-    storedBy: {
+    createdBy: {
       type: mongoose.Types.ObjectId,
       ref: 'User',
       required: [true, 'Please provide user'],
     },
+    status: {
+        type: String,
+        required: [true, 'status must be provided'],
+        enum: ['not started', 'in progress', 'on pause', 'over']
+    }
 })
 
 module.exports = mongoose.model('Project', projectSchema)

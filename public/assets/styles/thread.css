@@ -33,12 +33,12 @@
 }
 
 .quantity-wrapper {
-    position: absolute;
-    bottom: 26px;
-    right: 5px;
     color: white;
     opacity: inherit;
     cursor: pointer;
+    width: 35px;
+    font-size: 22px;
+    margin: 10px 0px;
 }
 
 .quantity-wrapper:hover {
@@ -47,7 +47,7 @@
 }
 
 .quantity-wrapper .fa-pen {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .item-code {
@@ -59,13 +59,12 @@
 
 .clear{
     position: absolute;
-    right: 2px;
-    top: 2px;
+    right: 5px;
+    top: 5px;
     background-color: transparent;
     height: 18px;
     width: 18px;
     border: none;
-    border-radius: 2px;
     opacity: inherit;
 }
 
@@ -109,7 +108,7 @@
     flex-direction: column;
     position: absolute;
     top: 16px;
-    left: 48px;
+    left: 45px;
 }
 
 .action-box .fa-shopping-basket, .action-box .fa-archive {
@@ -118,6 +117,7 @@
     margin: 10px 0px;
     color: white;
     cursor: pointer;
+    text-align: center;
 }
 
 .line {
@@ -126,7 +126,7 @@
     opacity: inherit;
     position: absolute;
     top: 43px;
-    left: -34px;
+    left: -30px;
 }
 
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DMC Inventory</title>
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- scripts -->
+    <script type="module" src="./assets/scripts/main.js" defer></script>
+    <script src="https://kit.fontawesome.com/32150d741e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main>
+        <nav>
+            <a href="inventory.html">Inventory</a>
+            <a href="projects.html" class="nav-selected">Projects</a>
+            <a href="#" data-js-logout-btn>Log out</a>
+        </nav>
+        <header>
+            <h1>My Projects</h1>
+        </header>
+        <!--ADD PROJECT-->
+        <button class="add">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        
+        <!--TEMPLATE PROJECT-->
+        <template data-js-project-template>
+            <div class="project" id="{{id}}">
+                <a href="project/{{id}}">
+                    <div class="project-img-ctn">
+                        <img src="assets/images/projects/{{path}}" alt="{{name}}">
+                    </div>
+                    <div class="project-title">
+                        <h2>{{name}}</h2>
+                        <span>{{status}}</span>
+                    </div>
+                </a>
+            </div>
+        </template>
+        <!--PROJECTS CONTAINER-->
+        <section class="box-container">
+            <div class="wrapper projects-items-wrapper" data-js-threads-wrapper="box">
+                <div class="project">
+                    <a href="">
+                        <div class="project-img-ctn">
+                            <img src="assets/images/projects/sunset.jpg" alt="">
+                        </div>
+                        <div class="project-title">
+                            <h2>Sunset</h2>
+                            <span>Over</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="project">
+                    <div class="project-img-ctn">
+                        <img src="assets/images/projects/green.jpg" alt="">
+                    </div>
+                    <div class="project-title">
+                        <h2>Green</h2>
+                        <span>Over</span>
+                    </div>
+                </div>
+                <div class="project">
+                    <div class="project-img-ctn">
+                        <img src="assets/images/projects/automne.jpg" alt="">
+                    </div>
+                    <div class="project-title">
+                        <h2>Automne</h2>
+                        <span>Over</span>
+                    </div>
+                </div>
+                <div class="project">
+                    <div class="project-img-ctn">
+                        <img src="assets/images/projects/winter.jpg" alt="">
+                    </div>
+                    <div class="project-title">
+                        <h2>Winter</h2>
+                        <span>Over</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+     <!-- axios -->
+     <script
+     src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+     integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+     crossorigin="anonymous"
+     referrerpolicy="no-referrer"
+   ></script>
+</body>
+
+</html>

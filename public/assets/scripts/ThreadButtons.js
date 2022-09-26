@@ -25,13 +25,13 @@ export default class ThreadButtons {
 
         if (this._elShopBtn) {
             this._elShopBtn.addEventListener('click', (e) => {
-                this.displayQuantityWindow(e, 'Add to my shopping basket');
+                this.displayQuantityWindow(e, 'Add to my Shopping Basket');
             });
         }
 
         if (this._elStoreBtn) {
             this._elStoreBtn.addEventListener('click', (e) => {
-                this.displayQuantityWindow(e, 'Add to my thread box');
+                this.displayQuantityWindow(e, 'Add to my Thread Box');
             });
         }
 
@@ -45,25 +45,21 @@ export default class ThreadButtons {
 
         if (this._elQuantityBtn) { 
             this._elQuantityBtn.addEventListener('click', (e) => {
-                this.displayQuantityWindow(e, 'Update quantity');
+                this.displayQuantityWindow(e, 'Update Quantity');
             });
         }
     }
 
     displayQuantityWindow(e, actionString) {
-        const storage = e.target.dataset.jsStorage;
-        const thread = e.target.parentElement.parentElement.parentElement.parentElement;
+        const storage = e.currentTarget.dataset.jsStorage;
+        const thread = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
+        console.log(thread);
         const threadQuantity = parseInt(thread.dataset.jsThreadQuantity);
         const threadWrapper = thread.parentElement;
         const threadWrapperValue = threadWrapper.dataset.jsThreadsWrapper;
-        let storageName;
-        if ( threadWrapperValue == 'basket') storageName = 'Shopping Basket';
-        else if (threadWrapperValue == 'box') storageName = 'Thread Box';
-        else storageName = 'Color Browser';
         let infos = {
                 id: thread.id,
                 code:  this._el.querySelector(".item-code").innerHTML,
-                storageFromString: storageName,
                 quantity: threadQuantity,
                 storageTo: storage,
                 action: actionString
@@ -80,7 +76,11 @@ export default class ThreadButtons {
         const elSubmitQuantityBtn = document.querySelector('[data-js-submit-quantity]');
         elSubmitQuantityBtn.addEventListener('click', (e) => {     
             let quantity = parseInt(document.querySelector('[data-js-quantity-input]').value);
-            this.storage.storeThread(e, quantity, containerFrom);
+            if (elSubmitQuantityBtn.innerHTML == 'Update Quantity') {
+                this.storage.updateThread(e, quantity);
+            } else {
+                this.storage.storeThread(e, quantity, containerFrom);
+            }
             this.closeQuantityWindow();
         });
     }

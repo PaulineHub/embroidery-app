@@ -1,0 +1,84 @@
+/* ICON PLUS */
+
+.add {
+    background-color: transparent;
+    border: none;
+    color: black;
+    margin-right: 0;
+    margin-left: auto;
+    display: block;
+}
+
+.add .fa-plus {
+    text-align: right;
+    display: inherit;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.add:hover {
+    background-color: transparent;
+}
+
+.fa-plus:hover {
+    transform: rotate(90deg);
+    transition: transform 300ms ease-in-out;
+}
+
+/* PROJECTS WRAPPER */
+
+.projects-items-wrapper {
+    gap: 20px;
+}
+
+/* PROJECT ITEM */
+
+.project-img-ctn {
+    overflow: hidden;
+    width: 246px;
+    height: 246px;
+    border-radius: 3px;
+}
+
+.project-img-ctn img {
+    width: 100%;
+}
+
+.project-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 3px solid black;
+    margin-top: 10px;
+}
+
+.project h2 {
+    margin-bottom: 0px;
+    border-bottom: none;
+    text-transform: capitalize;
+}
+
+.project span {
+    text-transform: capitalize;
+}
+
+.project {
+    cursor: pointer;
+}
+
+.project:hover .project-title {
+    font-style: italic;
+}
+
+.project-img-ctn:hover img {
+    animation: img-zoom 1000ms forwards;
+}
+
+@keyframes img-zoom {
+   0% {
+      transform: scale3d(1, 1, 1);
+   }
+   100% {
+      transform: scale3d(1.05, 1.05, 1);
+   }
+}

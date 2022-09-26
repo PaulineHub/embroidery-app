@@ -95,6 +95,22 @@ export default class ThreadStorage {
         container.removeChild(thread);
     }
 
+    async updateThread(e, quantity) {
+        const threadTitle = e.target.previousElementSibling.previousElementSibling;
+        const id = threadTitle.dataset.jsId;
+        const params = {quantity};
+        await axios.patch(`/api/v1/storedThreads/${id}`, 
+                            params,
+                        {
+                            headers: {'Authorization': `Bearer ${this.token}`}
+                        });
+        // update quantity of the thread in the DOM
+        const thread = document.getElementById(`${id}`);
+        thread.dataset.jsThreadQuantity = quantity;
+        const threadSpanQuantity = thread.querySelector('.quantity');
+        threadSpanQuantity.innerHTML = quantity;
+    }
+
     
 }
 

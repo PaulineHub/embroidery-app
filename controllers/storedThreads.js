@@ -19,7 +19,24 @@ const getStoredThread = async (req, res) => {
 }
 
 const updateStoredThread = async (req, res) => {
+  const {
+    body: { quantity },
+    user: { userId },
+    params: { id: storedThreadId },
+  } = req
 
+  if (quantity == '') {
+    throw new BadRequestError('Quantity field cannot be empty')
+  }
+  const storedThread = await StoredThread.findByIdAndUpdate(
+    { _id: storedThreadId, storedBy: userId },
+    req.body,
+    { new: true, runValidators: true }
+  )
+  if (!storedThread) {
+    throw new NotFoundError(`No storedThread with id ${storedThreadId}`)
+  }
+  res.status(StatusCodes.OK).json({ storedThread })
 }
 
 const deleteStoredThread = async (req, res) => {
