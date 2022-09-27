@@ -120,22 +120,22 @@
             </div>
         </template>
         <!--TEMPLATE QUANTITY WINDOW-->
-        <template data-js-quantity-window-template>
-            <div class="quantity-window-background" data-js-quantity-window>
-                <div class="quantity-window">
+        <template data-js-window-template>
+            <div class="window-background" data-js-window>
+                <div class="window">
                     <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div class="window-wrapper">
                         <div>
                             <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg" alt="">
                         </div>
-                        <div>
+                        <form>
                             <h3 data-js-id="{{id}}" data-js-code="{{code}}">DMC {{code}}</h3>
                             <div data-js-quantity class="item-quantity">
                                 <label for="quantity">Quantity</label>
                                 <input type="number" name="quantity" id="quantity" value="{{quantity}}" data-js-quantity-input>
                             </div>
-                            <button data-js-submit-quantity="{{storageTo}}">{{action}}</button>
-                        </div>
+                            <button data-js-submit-btn="{{storageTo}}">{{action}}</button>
+                        </form>
                     </div>
                 </div>
             </div>

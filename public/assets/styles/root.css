@@ -41,6 +41,10 @@ h2 {
     text-transform: capitalize;
 }
 
+h3 {
+    text-transform: capitalize;
+}
+
 a {
     color: black;
     text-decoration: none;

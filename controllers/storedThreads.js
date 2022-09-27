@@ -4,7 +4,6 @@ const { StatusCodes } = require('http-status-codes')
 
 const getAllStoredThreads = async (req, res) => {
   const threads = await StoredThread.find({ storedBy: req.user.userId, category:req.query.category })
-  console.log(threads)
   res.status(StatusCodes.OK).json({ threads, count: threads.length })
 }
 

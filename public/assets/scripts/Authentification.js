@@ -1,6 +1,6 @@
 import TokenStorage from './TokenStorage.js';
 
-export default class Form {
+export default class Authentification {
 
     constructor() {
         this._elFormTitle = document.querySelector('[data-js-form-title]');

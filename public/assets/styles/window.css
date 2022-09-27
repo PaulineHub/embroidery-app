@@ -1,4 +1,4 @@
-.quantity-window {
+.window {
     z-index: 4;
     position: absolute;
     background-color: white;
@@ -8,14 +8,18 @@
     margin: auto;
 }
 
-.quantity-window .clear {
+.window-add {
+    left: 32%;
+}
+
+.window .clear {
     opacity: 1;
     background-color: transparent;
     right: 10px;
     top: 10px;
 }
 
-.quantity-window .fa-times {
+.window .fa-times {
     opacity: 1;
     color: black;
     font-size: 20px;
@@ -26,7 +30,18 @@
     gap: 20px;
 }
 
-.item-quantity ~ button {
+.window-image-ctn {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.window-image-ctn img {
+    width: 100%;
+}
+
+/* .item-quantity ~ button { */
+.window-wrapper button {
     margin-top: 10px;
     width: 100%;
 }
@@ -36,7 +51,7 @@ element.style {
     display: block;
 }
 
-.quantity-window-background {
+.window-background {
     position: fixed;
     z-index: 1000;
     padding-top: 70px;
@@ -46,6 +61,24 @@ element.style {
     height: 100%;
     overflow: auto;
     background-color: rgb(0 0 0 / 22%);;
+}
+
+.window-wrapper label {
+    font-size: 18px;
+}
+
+.window-wrapper input {
+    width: 100%;
+}
+
+.window-wrapper select {
+    font-size: 16px;
+    padding: 2px;
+    width: 100%;
+}
+
+.window h3 { 
+    font-size: 24px;
 }
 
 

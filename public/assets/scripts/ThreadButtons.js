@@ -9,7 +9,7 @@ export default class ThreadButtons {
         this._elStoreBtn = this._el.querySelector('[data-js-box-btn]');
         this._elDeleteBtn = this._el.querySelector('[data-js-delete]');
         this._elQuantityBtn = this._el.querySelector('[data-js-quantity]');
-        this._elQuantityWindowTemplate = document.querySelector('[data-js-quantity-window-template]');
+        this._elWindowTemplate = document.querySelector('[data-js-window-template]');
         this._elMainBlock = document.querySelector('main');
 
         this.storage = new ThreadStorage(this.token);
@@ -25,13 +25,13 @@ export default class ThreadButtons {
 
         if (this._elShopBtn) {
             this._elShopBtn.addEventListener('click', (e) => {
-                this.displayQuantityWindow(e, 'Add to my Shopping Basket');
+                this.displayWindow(e, 'Add to my Shopping Basket');
             });
         }
 
         if (this._elStoreBtn) {
             this._elStoreBtn.addEventListener('click', (e) => {
-                this.displayQuantityWindow(e, 'Add to my Thread Box');
+                this.displayWindow(e, 'Add to my Thread Box');
             });
         }
 
@@ -45,12 +45,12 @@ export default class ThreadButtons {
 
         if (this._elQuantityBtn) { 
             this._elQuantityBtn.addEventListener('click', (e) => {
-                this.displayQuantityWindow(e, 'Update Quantity');
+                this.displayWindow(e, 'Update Quantity');
             });
         }
     }
 
-    displayQuantityWindow(e, actionString) {
+    displayWindow(e, actionString) {
         const storage = e.currentTarget.dataset.jsStorage;
         const thread = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
         console.log(thread);
@@ -64,30 +64,30 @@ export default class ThreadButtons {
                 storageTo: storage,
                 action: actionString
         };
-        new CloneItem(infos, this._elQuantityWindowTemplate, this._elMainBlock, this.token);
-        this.listenQuantityWindowBtns(threadWrapperValue);
+        new CloneItem(infos, this._elWindowTemplate, this._elMainBlock, this.token);
+        this.listenWindowBtns(threadWrapperValue);
     }
 
-    listenQuantityWindowBtns(containerFrom) {
+    listenWindowBtns(containerFrom) {
         // listen close btn
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
-        elCloseWindowBtn.addEventListener('click', this.closeQuantityWindow.bind(this));
+        elCloseWindowBtn.addEventListener('click', this.closeWindow.bind(this));
         // listen submit btn
-        const elSubmitQuantityBtn = document.querySelector('[data-js-submit-quantity]');
-        elSubmitQuantityBtn.addEventListener('click', (e) => {     
+        const elSubmitBtn = document.querySelector('[data-js-submit-quantity]');
+        elSubmitBtn.addEventListener('click', (e) => {     
             let quantity = parseInt(document.querySelector('[data-js-quantity-input]').value);
-            if (elSubmitQuantityBtn.innerHTML == 'Update Quantity') {
+            if (elSubmitBtn.innerHTML == 'Update Quantity') {
                 this.storage.updateThread(e, quantity);
             } else {
                 this.storage.storeThread(e, quantity, containerFrom);
             }
-            this.closeQuantityWindow();
+            this.closeWindow();
         });
     }
 
-    closeQuantityWindow() {
-        const elQuantityWindow = document.querySelector('[data-js-quantity-window]');
-        this._elMainBlock.removeChild(elQuantityWindow);
+    closeWindow() {
+        const elWindow = document.querySelector('[data-js-window]');
+        this._elMainBlock.removeChild(elWindow);
     }
 
 }

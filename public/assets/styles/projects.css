@@ -1,24 +1,19 @@
 /* ICON PLUS */
-
-.add {
-    background-color: transparent;
-    border: none;
-    color: black;
-    margin-right: 0;
-    margin-left: auto;
-    display: block;
+.add-wrapper {
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 
-.add .fa-plus {
+.fa-plus {
     text-align: right;
     display: inherit;
     font-size: 30px;
     cursor: pointer;
 }
 
-.add:hover {
-    background-color: transparent;
-}
+
+
 
 .fa-plus:hover {
     transform: rotate(90deg);

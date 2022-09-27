@@ -20,22 +20,41 @@
             <h1>My Projects</h1>
         </header>
         <!--ADD PROJECT-->
-        <button class="add">
-            <i class="fa-solid fa-plus"></i>
-        </button>
-        
-        <!--TEMPLATE PROJECT-->
-        <template data-js-project-template>
-            <div class="project" id="{{id}}">
-                <a href="project/{{id}}">
-                    <div class="project-img-ctn">
-                        <img src="assets/images/projects/{{path}}" alt="{{name}}">
+        <div class="add-wrapper">            
+            <i class="fa-solid fa-plus" data-js-add-btn></i>
+        </div>
+        <!--TEMPLATE ADD PROJECT FORM-->
+        <template data-js-window-template>
+            <div class="window-background" data-js-window>
+                <div class="window window-add">
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                    <div class="window-wrapper">
+                        <div class="window-image-ctn">
+                            <img src="assets/images/7.jpg" alt="">
+                        </div>
+                        <form data-js-window-form>
+                            <h3>{{action}}</h3>
+                            <div>
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" value="" required>
+                            </div>
+                            <div>
+                                <label for="status">Status</label>
+                                <select name="status" id="status">
+                                    <option value="not started" selected>not started</option>
+                                    <option value="in progress">in progress</option>
+                                    <option value="on pause">on pause</option>
+                                    <option value="over">over</option>
+                                </select>
+                            </div>
+                            <div >
+                                <label for="image">Image</label>
+                                <input type="file" id="image" accept="image/*" required>
+                            </div>
+                            <button type='submit' data-js-submit-btn>{{action}}</button>
+                        </form>
                     </div>
-                    <div class="project-title">
-                        <h2>{{name}}</h2>
-                        <span>{{status}}</span>
-                    </div>
-                </a>
+                </div>
             </div>
         </template>
         <!--PROJECTS CONTAINER-->
@@ -81,6 +100,20 @@
                 </div>
             </div>
         </section>
+        <!--TEMPLATE PROJECT-->
+        <template data-js-project-template>
+            <div class="project" id="{{id}}">
+                <a href="project/{{id}}">
+                    <div class="project-img-ctn">
+                        <img src="assets/images/projects/{{path}}" alt="{{name}}">
+                    </div>
+                    <div class="project-title">
+                        <h2>{{name}}</h2>
+                        <span>{{status}}</span>
+                    </div>
+                </a>
+            </div>
+        </template>
     </main>
      <!-- axios -->
      <script
