@@ -35,8 +35,7 @@ h2 {
     margin-bottom: 20px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 100;
-    border-bottom: 4px solid var(--light-black);
-    border-radius: 3px;
+    border-bottom: 3px solid var(--light-black);
     padding-bottom: 5px;
     text-transform: capitalize;
 }

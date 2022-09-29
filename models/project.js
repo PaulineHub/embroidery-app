@@ -8,7 +8,7 @@ const projectSchema = new mongoose.Schema({
     description:{
         type: String,
     },
-    // thread's codes
+    // thread's id
     threads:{
         type: Array,
         default:[]

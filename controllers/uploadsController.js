@@ -4,8 +4,6 @@ const { StatusCodes } = require('http-status-codes');
 const uploadProductImage = async (req, res) => {
     // acces a req.files.image grace a express-fileupload
     // When you upload a file, the file will be accessible from req.files.<nom input>
-    // dans postman, on a nomme la cle de notre fichier "image" et la valeur "computer-1.jpeg"
-     console.log('files', req.files)
     const productImage = req.files.image; // the uploaded file object
    
     // Make the image available publically

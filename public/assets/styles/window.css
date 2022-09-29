@@ -6,6 +6,7 @@
     border-radius: 3px;
     left: 40%;
     margin: auto;
+    margin-top: 100px;
 }
 
 .window-add {
@@ -40,12 +41,10 @@
     width: 100%;
 }
 
-/* .item-quantity ~ button { */
 .window-wrapper button {
     margin-top: 10px;
     width: 100%;
 }
-
 
 element.style {
     display: block;
@@ -81,5 +80,36 @@ element.style {
     font-size: 24px;
 }
 
+.show-window {
+    display: block !important;
+}
 
+/* WINDOW OPTIONS */
 
+.window-wrapper-options {
+    flex-direction: column;
+}
+
+.window-wrapper .option-button {
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.option-button i {
+    padding-right: 10px;
+}
+
+/* WINDOW BROWSER COLORS */
+
+#window-color-browser-container {
+    display: none;
+}
+
+.window-color-browser {
+    left: 30%;
+    margin-top:20px;
+}
+
+#search {
+    margin-top: 0;
+}

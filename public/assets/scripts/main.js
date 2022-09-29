@@ -4,6 +4,7 @@ import TokenStorage from "./TokenStorage.js";
 import Navigation from "./Navigation.js";
 import ThreadStorage from "./ThreadStorage.js";
 import Projects from "./Projects.js";
+import Project from "./Project.js";
 
 (function() {
 
@@ -20,8 +21,11 @@ import Projects from "./Projects.js";
             threadStorage.displayStorage('box');
         } else if (pathname == "/projects.html") {
             new Projects();
+        } else if (pathname == "/project.html") {
+            new Project();
         }
     }
+
     
     
 })();

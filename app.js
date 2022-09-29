@@ -3,6 +3,7 @@ require('express-async-errors');
 
 const express = require('express');
 const app = express();
+const fileUpload = require('express-fileupload');
 
 // connexion
 const connectDB = require('./db/connect');
@@ -21,6 +22,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 //middleware
 app.use(express.json());
 app.use(express.static('./public'));
+app.use(fileUpload());
 
 //routes
 app.use('/api/v1/auth', authRouter);

@@ -9,6 +9,7 @@ export default class ThreadStorage {
         this._elBasketContainer = document.querySelector('[data-js-threads-wrapper="basket"]');
         this._elBoxContainer = document.querySelector('[data-js-threads-wrapper="box"]');
 
+        this.url = '/api/v1/storedThreads';
         this.tokenStorage = new TokenStorage();
         this.token = this.tokenStorage.getLocalStorage()[0];
 
@@ -16,7 +17,7 @@ export default class ThreadStorage {
 
     async displayStorage(storage) {
         // get the infos about the threads stored
-        const {data} = await axios.get(`/api/v1/storedThreads?category=${storage}`,
+        const {data} = await axios.get(`${this.url}?category=${storage}`,
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}
                         });
@@ -52,7 +53,7 @@ export default class ThreadStorage {
             quantity: quantity
         }
         // store the thread in the DB of the user
-        const {data} = await axios.post(`/api/v1/storedThreads`, 
+        const {data} = await axios.post(`${this.url}`, 
                         params,
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}
@@ -87,7 +88,7 @@ export default class ThreadStorage {
 
     async deleteThread(container, thread) {
         //delete from DB
-        await axios.delete(`/api/v1/storedThreads/${thread.id}`, 
+        await axios.delete(`${this.url}/${thread.id}`, 
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}
                         });
@@ -99,7 +100,7 @@ export default class ThreadStorage {
         const threadTitle = e.target.previousElementSibling.previousElementSibling;
         const id = threadTitle.dataset.jsId;
         const params = {quantity};
-        await axios.patch(`/api/v1/storedThreads/${id}`, 
+        await axios.patch(`${this.url}/${id}`, 
                             params,
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}

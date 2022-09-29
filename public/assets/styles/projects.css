@@ -12,9 +12,6 @@
     cursor: pointer;
 }
 
-
-
-
 .fa-plus:hover {
     transform: rotate(90deg);
     transition: transform 300ms ease-in-out;
@@ -31,7 +28,6 @@
 .project-img-ctn {
     overflow: hidden;
     width: 246px;
-    height: 246px;
     border-radius: 3px;
 }
 

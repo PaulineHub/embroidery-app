@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DMC Inventory</title>
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- scripts -->
+    <script type="module" src="./assets/scripts/main.js" defer></script>
+    <script src="https://kit.fontawesome.com/32150d741e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main class="product-main">
+        <nav>
+            <a href="inventory.html">Inventory</a>
+            <a href="projects.html" class="nav-selected">Projects</a>
+            <a href="#" data-js-logout-btn>Log out</a>
+        </nav>
+        <header>
+            <h1>My Projects</h1>
+        </header>
+        <!--ACTIONS-->
+        <div class="project-actions-wrapper">
+            <a href="projects.html" class="dynamic-underline">Retour</a>    
+            <div>
+                <i class="fa-solid fa-gear"></i>
+            </div>        
+        </div>
+        <!--TEMPLATE OPTIONS WINDOW-->
+        <template data-js-options-window-template>
+            <div class="window-background" data-js-options-window>
+                <div class="window">
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                    <div class="window-wrapper window-wrapper-options">
+                        <button class="option-button" data-js-option="{{option1}}"><i class="{{classes1}}"></i>{{option1}}</button>
+                        <button class="option-button" data-js-option="{{option2}}"><i class="{{classes2}}"></i>{{option2}}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--TEMPLATE MODIFY IMAGES-->
+        <template data-js-window-template>
+            <div class="window-background" data-js-window>
+                <div class="window window-add">
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                    <div class="window-wrapper">
+                        <div class="window-image-ctn">
+                            <img src="assets/images/7.jpg" alt="">
+                        </div>
+                        <form data-js-window-form>
+                            <h3>{{action}}</h3>
+                            <div>
+                                <label for="image">Image</label>
+                                <input type="file" id="image" accept="image/*" required>
+                            </div>
+                            <button type='submit' data-js-submit-btn>{{action}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--TEMPLATE DELETE PROJECT-->
+        <template data-js-window-template>
+            <div class="window-background" data-js-window>
+                <div class="window window-add">
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                    <div class="window-wrapper">
+                        <h3>{{action}}</h3>
+                        <button type='submit' data-js-submit-btn>{{action}}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--PROJECT CONTAINER-->
+        <section class="project-container" id="" data-js-project-container>
+            <!--IMAGES CONTAINER-->
+            <div class="project-images-ctn" data-js-project-images-ctn></div>
+            <!--INFOS CONTAINER-->
+            <div class="project-infos-threads-ctn">
+                <form class="project-infos-wrapper" >
+                    <header>
+                        <input type="text" name="name" id="name" value="Green">
+                        <select name="status" id="status">
+                            <option value="not started">not started</option>
+                            <option value="in progress">in progress</option>
+                            <option value="on pause">on pause</option>
+                            <option value="over">over</option>
+                        </select>
+                    </header>
+                    <input type="textarea" name="description" id="description" placeholder="Add comments..." value="">
+                    <button type="submit" data-js-save-button>Save modifications</button>
+                </form>
+                <!--THREADS CONTAINER-->
+                <div class="project-threads-big-container">
+                    <header class="project-threads-header">
+                        <h2>Threads</h2>
+                        <i class="fa-solid fa-plus" data-js-add-project-thread></i>
+                    </header>
+                    <div class="project-threads-container" data-js-project-threads-ctn>
+                        <div class="thread-item" id="320" data-js-thread-quantity="1">
+                            <div class="item-background">
+                                <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_320_swatch_150x150.jpg"
+                                    alt="">
+                                <div class="actions-wrapper">
+                                    <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                                    <div class="action-box">
+                                        <div class="quantity-wrapper" data-js-quantity data-js-storage="box">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span class="quantity">1</span>
+                                        </div>
+                                        <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="thread-infos">
+                                <div class="thread-detail"><i class="fas fa-shopping-basket"></i>1</div>
+                                <div class="item-code">320</div>
+                                <div class="thread-detail"><i class="fas fa-archive"></i>0</div>
+                            </div>
+                            
+                        </div>
+                        <div class="thread-item" id="320" data-js-thread-quantity="1">
+                            <div class="item-background">
+                                <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_320_swatch_150x150.jpg"
+                                    alt="">
+                                <div class="actions-wrapper">
+                                    <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                                    <div class="action-box">
+                                        <div class="quantity-wrapper" data-js-quantity data-js-storage="box">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span class="quantity">1</span>
+                                        </div>
+                                        <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-code">320</div>
+                        </div>
+                        <div class="thread-item" id="320" data-js-thread-quantity="1">
+                            <div class="item-background">
+                                <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_320_swatch_150x150.jpg"
+                                    alt="">
+                                <div class="actions-wrapper">
+                                    <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                                    <div class="action-box">
+                                        <div class="quantity-wrapper" data-js-quantity data-js-storage="box">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span class="quantity">1</span>
+                                        </div>
+                                        <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-code">320</div>
+                        </div>
+                        <div class="thread-item" id="320" data-js-thread-quantity="1">
+                            <div class="item-background">
+                                <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_320_swatch_150x150.jpg" alt="">
+                                <div class="actions-wrapper">
+                                    <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                                    <div class="action-box">
+                                        <div class="quantity-wrapper" data-js-quantity data-js-storage="box">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span class="quantity">1</span>
+                                        </div>
+                                        <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-code">320</div>
+                        </div>
+                        <div class="thread-item" id="320" data-js-thread-quantity="1">
+                            <div class="item-background">
+                                <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_320_swatch_150x150.jpg" alt="">
+                                <div class="actions-wrapper">
+                                    <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                                    <div class="action-box">
+                                        <div class="quantity-wrapper" data-js-quantity data-js-storage="box">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span class="quantity">1</span>
+                                        </div>
+                                        <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-code">320</div>
+                        </div>
+                        <div class="thread-item" id="320" data-js-thread-quantity="1">
+                            <div class="item-background">
+                                <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_320_swatch_150x150.jpg" alt="">
+                                <div class="actions-wrapper">
+                                    <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                                    <div class="action-box">
+                                        <div class="quantity-wrapper" data-js-quantity data-js-storage="box">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span class="quantity">1</span>
+                                        </div>
+                                        <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                        <span class="line"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-code">320</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--TEMPLATE PROJECT IMAGE-->
+        <template data-js-project-image-template>
+            <div role="listitem" class="image-gallery-item">
+                <img src="{{image}}" alt="" class="product-image-description">
+            </div>
+        </template>
+        <!--TEMPLATE PROJECT THREAD-->
+        <template data-js-thread-basket-template>
+            <div class="thread-item" id="{{id}}" data-js-thread-quantity="{{quantity}}">
+                <div class="item-background">
+                    <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
+                        alt="">
+                    <div class="actions-wrapper">
+                        <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
+                        <div class="action-box">
+                            <div class="quantity-wrapper" data-js-quantity data-js-storage="basket">
+                                <i class="fa-solid fa-pen"></i>
+                                <span class="quantity">{{quantity}}</span>
+                            </div>
+                            <i class="fas fa-archive" data-js-box-btn data-js-storage="box"></i>
+                            <span class="line"></span>
+                        </div>
+        
+                    </div>
+                </div>
+                <div class="thread-infos">
+                    <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span>{{basketQuantity}}</span></div>
+                    <div class="item-code">{{code}}</div>
+                    <div class="thread-detail"><i class="fas fa-archive"></i><span>{{boxQuantity}}</span></div>
+                </div>
+            </div>
+        </template>
+        <!--WINDOW COLOR BROWSER-->
+        <div class="window-background" id="window-color-browser-container">
+            <div class="window window-color-browser">
+                <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                <div class="window-wrapper">
+                    <section class="search-container">
+                        <div class="wrap-nuancier">
+                            <h2><i class="fas fa-palette"></i> Select your colours</h2>
+                            <i class="fas fa-chevron-left"></i>
+                            <i class="fas fa-chevron-right"></i>
+                            <ul class="nuancier" data-js-colors-container></ul>
+                            <template data-js-color-circle-template>
+                                <li class="color-circle-wrapper" data-js-category="{{color}}" data-js-search="category">
+                                    <div class="color-circle {{color}}" data-js-search="category" data-js-category="{{color}}"></div>
+                                    <p data-js-search="category" data-js-category="{{color}}">{{color}}</p>
+                                </li>
+                            </template>
+                        </div>
+                        <!--SEARCH INPUT-->
+                        <div class="input-wrapper">
+                            <input type="text" id="search-term" class="search-term" placeholder="search by code" />
+                            <button id="search" data-js-search="code">
+                                <i class="fas fa-search" data-js-search="code"></i>
+                            </button>
+                        </div>
+                        <!--SEARCH CONTAINER RESULTS-->
+                        <div class="results">
+                            <div class="no-found">
+                                <img src="./assets/images/5.png" alt="" />
+                                <p>Sorry, no match !</p>
+                            </div>
+                            <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="browser"></div>
+                            <!--TEMPLATE BROWSED THREAD-->
+                            <template data-js-thread-template>
+                                <div class="thread-item" id="{{id}}" data-js-thread-quantity="1">
+                                    <div class="item-background">
+                                        <img class="img-color-thread"
+                                            src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg" alt="">
+                                        <div class="actions-wrapper">
+                                            <div class="action-box">
+                                                <i class="fas fa-shopping-basket" data-js-basket-btn data-js-storage="basket"></i>
+                                                <i class="fas fa-archive" data-js-box-btn data-js-storage="box"></i>
+                                                <span class="line"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-code">{{code}}</div>
+                                </div>
+                            </template>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!--END WINDOW COLOR BROWSER-->
+    </main>
+     <!-- axios -->
+     <script
+     src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+     integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+     crossorigin="anonymous"
+     referrerpolicy="no-referrer"
+   ></script>
+</body>
+
+</html>

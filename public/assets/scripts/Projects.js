@@ -7,10 +7,10 @@ export default class Projects {
         this._elCreateProjectBtn = document.querySelector('[data-js-add-btn]');
         this._elWindowTemplate = document.querySelector('[data-js-window-template]');
         this._elMainBlock = document.querySelector('main');
-        this._elProjectTemplate = document.querySelector('[data-js-thread-basket-template]');
-        this._elProjectsContainer = document.querySelector('[data-js-threads-wrapper="basket"]');
+        this._elProjectTemplate = document.querySelector('[data-js-project-template]');
+        this._elProjectsContainer = document.querySelector('[data-js-projects-wrapper]');
 
-        //this.storage = new ThreadStorage(this.token);
+        this.url = '/api/v1/projects';
         this.tokenStorage = new TokenStorage();
         this.token = this.tokenStorage.getLocalStorage()[0];
         this.imageValue;
@@ -26,7 +26,20 @@ export default class Projects {
         this._elCreateProjectBtn.addEventListener('click', () => {
             this.displayWindow('create a project');
         });
+
+        this.displayAllProjects();
         
+    }
+
+    async displayAllProjects() {
+        // get the infos about the threads stored
+        const {data:{projects}} = await axios.get(`${this.url}`,
+                        {
+                            headers: {'Authorization': `Bearer ${this.token}`}
+                        });
+        for (let project in projects){
+            this.displayProject(projects[project]);
+        }
     }
 
     displayWindow(action) {
@@ -60,9 +73,8 @@ export default class Projects {
         const imageFile = e.target.files[0];
         const formData = new FormData();
         formData.append('image',imageFile);
-        console.log(formData);
         try {
-            const {data:{image:{src}}} = await axios.post(`api/v1/projects/uploads`,
+            const {data:{image:{src}}} = await axios.post(`${this.url}/uploads`,
                                         formData, {
                                             headers:{
                                                 'Content-Type':'multipart/form-data',
@@ -76,35 +88,34 @@ export default class Projects {
         }
     }
 
-    createProject(){
+    async createProject(){
         const name = document.getElementById('name');
         const status = document.getElementById('status');
         const params = {
             name: name.value,
             status: status.value,
-            images: [this.imageValue] // array
+            images: [this.imageValue],
+            description: '',
+            threads: [] 
         }
-        console.log(params);
-        // create the project in the DB of the user
-        // const {data} = await axios.post(`/api/v1/projects`, 
-        //                 params,
-        //                 {
-        //                     headers: {
-        //                         'Content-Type':'multipart/form-data',
-        //                         'Authorization': `Bearer ${this.token}`
-        //                     }
-        //                 });
-        // let infos = {
-        //         id: data.storedThread._id,
-        //         code: code,
-        //         quantity:quantity
-        // };
-        // // display the project created in the DOM 
-        // this.displayProject(infos);
+        const {data:{project}} = await axios.post(`${this.url}`, 
+                        params,
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${this.token}`
+                            }
+                        });
+        this.displayProject(project);
     }
 
-    displayProject(infos) {
-
+    displayProject(data) {
+        let infos = {
+                id: data._id,
+                name: data.name,
+                status: data.status,
+                image: data.images[0]
+        };
+        new CloneItem(infos, this._elProjectTemplate, this._elProjectsContainer, this.token);
     }
 
 }

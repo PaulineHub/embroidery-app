@@ -1,0 +1,141 @@
+.product-main {
+    width: 880px;
+}
+
+/* ACTIONS WRAPPER */
+
+.project-actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.project-actions-wrapper ~ section {
+    margin-top: 20px;
+}
+
+.project-actions-wrapper .fa-times {
+    margin-left: 20px;
+    color: black;
+    opacity: 1;
+    position: relative;
+    font-size: 20px;
+}
+
+.project-actions-wrapper .fa-gear {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.project-actions-wrapper .fa-gear:hover {
+    transform: rotate(90deg);
+    transition: transform 300ms ease-in-out;
+}
+
+/* PROJECT CONTAINERS */
+
+.project-threads-big-container {
+    margin-top: 20px;
+}
+
+.project-container {
+    margin-bottom: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.project-infos-threads-ctn {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+/* IMAGE SECTION */
+
+.project-images-ctn {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+.image-gallery-item {
+    border-radius: 5px;
+    width: 400px;
+    height: 400px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+/* PROJECT INFOS SECTION */
+
+.project-infos-wrapper header {
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid black 3px;
+}
+
+.project-infos-wrapper header input{
+    border: none;
+    font-size: 30px;
+    max-width: 290px;
+}
+
+.project-infos-wrapper header select {
+    font-style: italic;
+    border: none;
+    background-color: transparent;
+}
+
+#description {
+    width: 100%;
+}
+
+.project-infos-wrapper button {
+    margin-top: 20px;
+    display: none;
+}
+
+.show-button {     /* class for js to show the button */
+    display: block !important;
+}
+
+/* THREAD SECTION */
+
+.project-threads-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 0;
+    border-bottom: solid 3px black;
+}
+
+.project-threads-header h2 {
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+
+.project-threads-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thread-infos {
+    display: flex;
+    align-items: baseline;
+}
+
+.thread-infos i {
+ padding-right: 5px;
+}
+
+.thread-detail {
+    opacity: 0;
+}
+
+.thread-item:hover .thread-detail {
+    opacity: 1;
+}
