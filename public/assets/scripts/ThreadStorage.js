@@ -6,8 +6,10 @@ export default class ThreadStorage {
     constructor() {
         this._elThreadBasketTemplate = document.querySelector('[data-js-thread-basket-template]');
         this._elThreadBoxTemplate = document.querySelector('[data-js-thread-box-template]');
+        this._elThreadProjectTemplate = document.querySelector('[data-js-thread-project-template]');
         this._elBasketContainer = document.querySelector('[data-js-threads-wrapper="basket"]');
         this._elBoxContainer = document.querySelector('[data-js-threads-wrapper="box"]');
+        this._elProjectContainer = document.querySelector('[data-js-threads-wrapper="project"]');
 
         this.url = '/api/v1/storedThreads';
         this.tokenStorage = new TokenStorage();
@@ -43,7 +45,7 @@ export default class ThreadStorage {
     }
 
     async storeThread(e, quantity, containerFrom) {
-        const storage = e.target.dataset.jsSubmitQuantity;
+        const storage = e.target.dataset.jsSubmitBtn;
         const threadTitle = e.target.previousElementSibling.previousElementSibling;
         const code = threadTitle.dataset.jsCode;
         const id = threadTitle.dataset.jsId;
@@ -79,9 +81,13 @@ export default class ThreadStorage {
                 storageContainer = this._elBasketContainer;
                 threadTemplate = this._elThreadBasketTemplate;
             }
-            else {
+            else if (storage == 'box'){
                 storageContainer = this._elBoxContainer;
                 threadTemplate = this._elThreadBoxTemplate;
+            }
+            else {
+                storageContainer = this._elProjectContainer;
+                threadTemplate = this._elThreadProjectTemplate;
             }
             new CloneItem(infos, threadTemplate, storageContainer, this.token);
     }

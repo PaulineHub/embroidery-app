@@ -106,10 +106,12 @@ element.style {
 }
 
 .window-color-browser {
-    left: 30%;
+    left: 28%;
     margin-top:20px;
+    width: 840px;
 }
 
 #search {
     margin-top: 0;
 }
+

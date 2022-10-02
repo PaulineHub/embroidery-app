@@ -7,6 +7,7 @@ export default class ThreadButtons {
         this._el = el;
         this._elShopBtn = this._el.querySelector('[data-js-basket-btn]');
         this._elStoreBtn = this._el.querySelector('[data-js-box-btn]');
+        this._elAddToProjectBtn = this._el.querySelector('[data-js-add-thread-btn]');
         this._elDeleteBtn = this._el.querySelector('[data-js-delete]');
         this._elQuantityBtn = this._el.querySelector('[data-js-quantity]');
         this._elWindowTemplate = document.querySelector('[data-js-window-template]');
@@ -35,6 +36,12 @@ export default class ThreadButtons {
             });
         }
 
+        if (this._elAddToProjectBtn) {
+            this._elAddToProjectBtn.addEventListener('click', (e) => {
+                this.displayWindow(e, 'Add to my Project');
+            });
+        }
+
         if (this._elDeleteBtn) {
             this._elDeleteBtn.addEventListener('click', (e) => {
                 const thread = e.target.parentElement.parentElement.parentElement.parentElement;
@@ -53,7 +60,6 @@ export default class ThreadButtons {
     displayWindow(e, actionString) {
         const storage = e.currentTarget.dataset.jsStorage;
         const thread = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
-        console.log(thread);
         const threadQuantity = parseInt(thread.dataset.jsThreadQuantity);
         const threadWrapper = thread.parentElement;
         const threadWrapperValue = threadWrapper.dataset.jsThreadsWrapper;
@@ -73,10 +79,10 @@ export default class ThreadButtons {
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
         elCloseWindowBtn.addEventListener('click', this.closeWindow.bind(this));
         // listen submit btn
-        const elSubmitBtn = document.querySelector('[data-js-submit-quantity]');
+        const elSubmitBtn = document.querySelector('[data-js-submit-btn]');
         elSubmitBtn.addEventListener('click', (e) => {     
             let quantity = parseInt(document.querySelector('[data-js-quantity-input]').value);
-            if (elSubmitBtn.innerHTML == 'Update Quantity') {
+            if (elSubmitBtn.innerHTML == 'Update Quantity' || elSubmitBtn.innerHTML == 'Add To My Project') {
                 this.storage.updateThread(e, quantity);
             } else {
                 this.storage.storeThread(e, quantity, containerFrom);

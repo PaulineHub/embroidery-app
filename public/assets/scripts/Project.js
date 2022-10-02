@@ -1,7 +1,7 @@
 import CloneItem from './CloneItem.js';
 import Router from './Router.js';
 import TokenStorage from "./TokenStorage.js";
-import ColorCarousel from "./ColorCarousel.js";
+import ColorBrowser from "./ColorBrowser.js";
 
 
 export default class Project {
@@ -130,10 +130,15 @@ export default class Project {
             option2: 'Add from Thread Box'
         };
         new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock, this.token);
-
-        const elOptionsWindow = document.querySelector('[data-js-options-window]');
+        
+        const elOptionsWindow = document.querySelector('[data-js-option-window]');
         const elNewColorsBtn = document.querySelector('[data-js-option="Browse new colors"]');
         const elBoxBtn = document.querySelector('[data-js-option="Browse new colors"]');
+        const elCloseWindowBtn = document.querySelector('[data-js-close-option-window]');
+        elCloseWindowBtn.addEventListener('click', () => {
+            
+            this.closeWindow(elOptionsWindow);
+        });
 
         elNewColorsBtn.addEventListener('click', () => {
             this.displayThreadBrowserWindow();
@@ -148,11 +153,15 @@ export default class Project {
 
     displayThreadBrowserWindow() {
         this._elColorBrowserWindow.classList.add('show-window');
-        new ColorCarousel(710, 600, 700, 670);
-
+        new ColorBrowser(); 
+        // listen close btn
+        const elCloseWindowBtn = document.querySelector('[data-js-close-browser-window]');
+        elCloseWindowBtn.addEventListener('click', () => {
+            this._elColorBrowserWindow.classList.remove('show-window');
+        });
     }
 
-     displayProjectOptionsWindow() {
+    displayProjectOptionsWindow() {
         let infos = {
             classes1: 'fa-regular fa-image',
             classes2: 'fa-regular fa-trash-can',

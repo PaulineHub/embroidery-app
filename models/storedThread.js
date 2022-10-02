@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const storedThreadSchema = new mongoose.Schema({
     category:{
         type: String,
-        values:['basket', 'box'],
+        values:['basket', 'box', 'project'],
         message:'{VALUE} is not supported'
     },
     storedBy: {
