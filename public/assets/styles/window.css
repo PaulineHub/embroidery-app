@@ -101,11 +101,7 @@ element.style {
 
 /* WINDOW BROWSER COLORS */
 
-#window-color-browser-container {
-    display: none;
-}
-
-.window-color-browser {
+.window-color-browser, .window-thread-box {
     left: 28%;
     margin-top:20px;
     width: 840px;

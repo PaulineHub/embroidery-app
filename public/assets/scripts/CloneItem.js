@@ -7,8 +7,6 @@ export default class CloneItem {
         this.templateItem = templateItem;
         this.parentContainer = parentContainer;
 
-        this.token = token;
-
         this.createHtmlItem(this.infos, this.templateItem, this.parentContainer);
     }
 
@@ -20,15 +18,22 @@ export default class CloneItem {
      */
     createHtmlItem(infos, elTemplate, elContainer) {
         let elItemTemplateClone = elTemplate.cloneNode(true);
-        for (const cle in infos) {
-            let regExp = new RegExp(`{{${cle}}}`, 'g');
-            elItemTemplateClone.innerHTML = elItemTemplateClone.innerHTML.replace(regExp, infos[cle])
+        if (infos != '') {
+            for (const cle in infos) {
+                let regExp = new RegExp(`{{${cle}}}`, 'g');
+                elItemTemplateClone.innerHTML = elItemTemplateClone.innerHTML.replace(regExp, infos[cle])
+            }
         }
+        
 
         let newElItem = document.importNode(elItemTemplateClone.content, true);
         elContainer.append(newElItem);
+        this.addBtnsEventListener(elContainer);
+    }
+
+    addBtnsEventListener(elContainer) {
         let item = elContainer.lastElementChild;
-        if (item.classList.contains('thread-item')) new ThreadButtons(item, this.token);
+        if (item.classList.contains('thread-item')) new ThreadButtons(item);
     }
 
 

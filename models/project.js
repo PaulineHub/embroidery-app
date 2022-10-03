@@ -8,11 +8,6 @@ const projectSchema = new mongoose.Schema({
     description:{
         type: String,
     },
-    // thread's id
-    threads:{
-        type: Array,
-        default:[]
-    },
     // images path
     images:{
         type: Array,

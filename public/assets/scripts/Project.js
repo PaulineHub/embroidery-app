@@ -2,6 +2,7 @@ import CloneItem from './CloneItem.js';
 import Router from './Router.js';
 import TokenStorage from "./TokenStorage.js";
 import ColorBrowser from "./ColorBrowser.js";
+import ThreadStorage from './ThreadStorage.js';
 
 
 export default class Project {
@@ -18,7 +19,8 @@ export default class Project {
         this._elAddThreadButton = document.querySelector('[data-js-add-project-thread]');
         this._elMainBlock = document.querySelector('main');
         this._elOptionsWindowTemplate = document.querySelector('[data-js-options-window-template]');
-        this._elColorBrowserWindow = document.getElementById('window-color-browser-container');
+        this._elColorBrowserWindowTemplate = document.querySelector('[data-js-color-browser-window-template]');
+        this._elThreadBoxWindowTemplate = document.querySelector('[data-js-thread-box-window-template]');
 
         this.router = new Router();
         this.url = '/api/v1/projects';
@@ -33,7 +35,7 @@ export default class Project {
      */
    init() {
         const projectId = this.router.getSearchParamsFromUrl();
-        this.displayProjectContent(projectId);
+        this.displayProjectContent(projectId.id);
 
         this._elNameInput.addEventListener('change', this.displaySaveButton.bind(this));
         this._elStatusSelect.addEventListener('change', this.displaySaveButton.bind(this));
@@ -48,12 +50,12 @@ export default class Project {
      * @param {object} idProject - The id of the project.
      */
    displayProjectContent(idProject) {
-       this.getProjectDescription(idProject)
+       this.getProjectInfos(idProject)
        .then(infosProject => {
             this.displayProjectDescription(infosProject)
             this.displayProjectImages(infosProject);
-            this.displayProjectThreads(infosProject);
        });
+       this.displayProjectThreads(idProject);
    }
 
    /**
@@ -61,9 +63,9 @@ export default class Project {
      * @param {object} params - The id of the project.
      * @return {object} - The infos about the project.
      */
-   async getProjectDescription(params) {
+   async getProjectInfos(id) {
         try {
-            const {data:{project}} = await axios.get(`${this.url}/${params.id}?id=${params.id}`,
+            const {data:{project}} = await axios.get(`${this.url}/${id}?id=${id}`,
                                     {
                                         headers: {'Authorization': `Bearer ${this.token}`}
                                     });
@@ -85,23 +87,20 @@ export default class Project {
         const images = project.images;
         for (let image in images) {
             let infos = {image: images[image]};
-            new CloneItem(infos, this._elImageTemplate, this._elImagesContainer, this.token);
+            new CloneItem(infos, this._elImageTemplate, this._elImagesContainer);
         }
     }
 
-    displayProjectThreads(project) {
-        const threads = project.threads;
-        if (threads.length > 0) {
-            // appel a db pour recuperer fils stockes sous categorie 'projet'
-            //display
-        }
+    displayProjectThreads(projectId) {
+        const storage = new ThreadStorage();
+        storage.displayStorage('project', projectId);
     }
 
     displaySaveButton() {
         this._elSaveButton.classList.toggle('show-button');
     }
 
-    async updateProjectInfos(e) {
+    updateProjectInfos(e) {
         e.preventDefault();
         let params = {
             id:  this._elProjectContainer.id,
@@ -109,8 +108,13 @@ export default class Project {
             status: this._elStatusSelect.value,
             description: this._elDescriptionInput.value
         }
+        this.updateProjectStorage(params.id, params);
+        this.displaySaveButton();
+    }
+
+    async updateProjectStorage(id, params) {
         try {
-            await axios.patch(`${this.url}/${params.id}`, 
+            await axios.patch(`${this.url}/${id}`, 
                             params,
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}
@@ -119,7 +123,6 @@ export default class Project {
         } catch (error) {
             console.log(error);
         }
-        this.displaySaveButton();
     }
 
     displayBrowserOptionsWindow() {
@@ -129,35 +132,41 @@ export default class Project {
             option1: 'Browse new colors',
             option2: 'Add from Thread Box'
         };
-        new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock, this.token);
+        new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock);
         
         const elOptionsWindow = document.querySelector('[data-js-option-window]');
         const elNewColorsBtn = document.querySelector('[data-js-option="Browse new colors"]');
-        const elBoxBtn = document.querySelector('[data-js-option="Browse new colors"]');
+        const elBoxBtn = document.querySelector('[data-js-option="Add from Thread Box"]');
         const elCloseWindowBtn = document.querySelector('[data-js-close-option-window]');
+        
         elCloseWindowBtn.addEventListener('click', () => {
-            
             this.closeWindow(elOptionsWindow);
         });
 
         elNewColorsBtn.addEventListener('click', () => {
-            this.displayThreadBrowserWindow();
             this.closeWindow(elOptionsWindow);
+            this.displaySearchThreadWindow(this._elColorBrowserWindowTemplate, 'browser', 'color-browser')
         });
 
-        // elBoxBtn.addEventListener('click', () => {
-        //     this.displayThreadBrowserWindow();
-        //     this.closeWindow(elOptionsWindow);
-        // });
+        elBoxBtn.addEventListener('click', () => {
+            this.closeWindow(elOptionsWindow);
+            this.displaySearchThreadWindow(this._elThreadBoxWindowTemplate, 'box', 'thread-box')
+        });
     }
 
-    displayThreadBrowserWindow() {
-        this._elColorBrowserWindow.classList.add('show-window');
-        new ColorBrowser(); 
+    displaySearchThreadWindow(template, storage, window) {
+        new CloneItem('', template, this._elMainBlock);
+        if (storage == 'browser') {
+            new ColorBrowser(); 
+        } else {
+            const storage = new ThreadStorage();
+            storage.displayStorage('box');
+        }
         // listen close btn
-        const elCloseWindowBtn = document.querySelector('[data-js-close-browser-window]');
+        const elCloseWindowBtn = document.querySelector(`[data-js-close-${storage}-window]`);
+        const elWindow = document.getElementById(`window-${window}-container`);
         elCloseWindowBtn.addEventListener('click', () => {
-            this._elColorBrowserWindow.classList.remove('show-window');
+            this.closeWindow(elWindow);
         });
     }
 
@@ -168,7 +177,7 @@ export default class Project {
             option1: 'Modify images',
             option2: 'Delete project'
         };
-        new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock, this.token);
+        new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock);
 
     }
 

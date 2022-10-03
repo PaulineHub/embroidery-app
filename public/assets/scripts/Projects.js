@@ -44,7 +44,7 @@ export default class Projects {
 
     displayWindow(action) {
         let infos = { action };
-        new CloneItem(infos, this._elWindowTemplate, this._elMainBlock, this.token);
+        new CloneItem(infos, this._elWindowTemplate, this._elMainBlock);
         this.listenWindowBtns();
     }
 
@@ -115,7 +115,7 @@ export default class Projects {
                 status: data.status,
                 image: data.images[0]
         };
-        new CloneItem(infos, this._elProjectTemplate, this._elProjectsContainer, this.token);
+        new CloneItem(infos, this._elProjectTemplate, this._elProjectsContainer);
     }
 
 }

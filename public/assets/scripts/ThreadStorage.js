@@ -14,46 +14,69 @@ export default class ThreadStorage {
         this.url = '/api/v1/storedThreads';
         this.tokenStorage = new TokenStorage();
         this.token = this.tokenStorage.getLocalStorage()[0];
-
     }
 
-    async displayStorage(storage) {
-        // get the infos about the threads stored
-        const {data} = await axios.get(`${this.url}?category=${storage}`,
+    async displayStorage(storage, projectId) {
+        // get the threads stored
+        let data;
+        if (projectId) {
+            data = await axios.get(`${this.url}?category=${storage}&projectId=${projectId}`,
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}
                         });
-        // get the chromatic order of the threads stored
-        const threads = data.threads;
+        } else {
+            data = await axios.get(`${this.url}?category=${storage}`,
+                        {
+                            headers: {'Authorization': `Bearer ${this.token}`}
+                        });
+        }
+        // get the infos about the threads stored
         let storedThreads = [];
-        for (let thread in threads){
-            const {data} = await axios.get(`/api/v1/threads?code=${threads[thread].threadCode}`);
+        const dataThreads = data.data.threads;
+        for (let thread in dataThreads) {
             let infos = {
-                id: threads[thread]._id,
-                code: threads[thread].threadCode,
-                order: data[0].order,
-                quantity: threads[thread].quantity
+                id: dataThreads[thread]._id,
+                code: dataThreads[thread].threadCode,
+                quantity: dataThreads[thread].quantity
             };
+            infos['basketQuantity'] = await this.getThreadQuantity(dataThreads[thread].threadCode, 'basket');
+            infos['boxQuantity'] = await this.getThreadQuantity(dataThreads[thread].threadCode, 'box');
+            infos['order'] = await this.getThreadOrder(dataThreads[thread].threadCode);
             storedThreads[thread] = infos;
         }
         // sort by chromatic order
         storedThreads.sort((a,b) => a.order - b.order);
         // display in the DOM
-        for (let infos in storedThreads) {
-            this.displayThread(storedThreads[infos], storage);
+        for (let thread in storedThreads) {
+            this.displayThread(storedThreads[thread], storage);
         }
     }
 
-    async storeThread(e, quantity, containerFrom) {
+    async getThreadQuantity(code, category) {
+        let {data:{threads}} = await axios.get(`${this.url}?threadCode=${code}&category=${category}`, {
+                                headers: {'Authorization': `Bearer ${this.token}`}
+                            });
+        if (threads.length === 0) return  0;
+        else return threads[0].quantity;
+    }
+
+    async getThreadOrder(code) {
+        const {data} = await axios.get(`/api/v1/threads?code=${code}`);
+        return data[0].order;
+    }
+
+    async storeThread(e, quantity, containerFrom, projectId) {
         const storage = e.target.dataset.jsSubmitBtn;
         const threadTitle = e.target.previousElementSibling.previousElementSibling;
         const code = threadTitle.dataset.jsCode;
         const id = threadTitle.dataset.jsId;
-        const params = {
+        let params = {
             category: storage,
             threadCode: code,
-            quantity: quantity
+            quantity
         }
+        // if thread added to a project, add the project's id to params
+        if (projectId) params['projectId'] = projectId;
         // store the thread in the DB of the user
         const {data} = await axios.post(`${this.url}`, 
                         params,
@@ -62,9 +85,11 @@ export default class ThreadStorage {
                         });
         let infos = {
                 id: data.storedThread._id,
-                code: code,
-                quantity:quantity
+                code,
+                quantity
         };
+        infos['basketQuantity'] = await this.getThreadQuantity(code, 'basket');
+        infos['boxQuantity'] = await this.getThreadQuantity(code, 'box');
         // display the stored thread in the DOM of the right container
         this.displayThread(infos, storage);
         // remove thread if it comes from shopping container et go to thread box
@@ -75,7 +100,7 @@ export default class ThreadStorage {
     }
 
     displayThread(infos, storage) {
-         let storageContainer;   
+        let storageContainer;   
             let threadTemplate;
             if (storage == 'basket') {
                 storageContainer = this._elBasketContainer;
@@ -89,7 +114,7 @@ export default class ThreadStorage {
                 storageContainer = this._elProjectContainer;
                 threadTemplate = this._elThreadProjectTemplate;
             }
-            new CloneItem(infos, threadTemplate, storageContainer, this.token);
+            new CloneItem(infos, threadTemplate, storageContainer);
     }
 
     async deleteThread(container, thread) {

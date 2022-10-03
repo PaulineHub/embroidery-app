@@ -26,36 +26,6 @@
                 <i class="fa-solid fa-gear"></i>
             </div>        
         </div>
-        <!--TEMPLATE OPTIONS WINDOW-->
-        <template data-js-options-window-template>
-            <div class="window-background" data-js-option-window>
-                <div class="window">
-                    <button class="clear"><i class="fas fa-times" data-js-close-option-window></i></button>
-                    <div class="window-wrapper window-wrapper-options">
-                        <button class="option-button" data-js-option="{{option1}}"><i class="{{classes1}}"></i>{{option1}}</button>
-                        <button class="option-button" data-js-option="{{option2}}"><i class="{{classes2}}"></i>{{option2}}</button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        <!--WINDOW MODIFY IMAGES-->
-        <!--<div class="window-background" data-js-window>
-            <div class="window window-add">
-                <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
-                <div class="window-wrapper">
-                </div>
-            </div>
-        </div>-->
-        <!--WINDOW DELETE PROJECT-->
-        <!--<div class="window-background" data-js-window>
-            <div class="window window-add">
-                <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
-                <div class="window-wrapper">
-                    <h3>{{action}}</h3>
-                    <button type='submit' data-js-submit-btn>{{action}}</button>
-                </div>
-            </div>
-        </div>-->
         <!--PROJECT CONTAINER-->
         <section class="project-container" id="" data-js-project-container>
             <!--IMAGES CONTAINER-->
@@ -85,12 +55,14 @@
                 </div>
             </div>
         </section>
+        <!--END PROJECT CONTAINER-->
         <!--TEMPLATE PROJECT IMAGE-->
         <template data-js-project-image-template>
             <div role="listitem" class="image-gallery-item">
                 <img src="{{image}}" alt="" class="product-image-description">
             </div>
         </template>
+        <!--END TEMPLATE PROJECT IMAGE-->
         <!--TEMPLATE PROJECT THREAD-->
         <template data-js-thread-project-template>
             <div class="thread-item" id="{{id}}" data-js-thread-quantity="{{quantity}}">
@@ -117,59 +89,121 @@
                 </div>
             </div>
         </template>
-        <!--WINDOW COLOR BROWSER-->
-        <div class="window-background" id="window-color-browser-container">
-            <div class="window window-color-browser">
-                <button class="clear"><i class="fas fa-times" data-js-close-browser-window></i></button>
-                <div>
-                    <section class="search-container">
-                        <div class="wrap-nuancier">
-                            <h2><i class="fas fa-palette"></i> Select your colours</h2>
-                            <i class="fas fa-chevron-left"></i>
-                            <i class="fas fa-chevron-right"></i>
-                            <ul class="nuancier" data-js-colors-container></ul>
-                            <template data-js-color-circle-template>
-                                <li class="color-circle-wrapper" data-js-category="{{color}}" data-js-search="category">
-                                    <div class="color-circle {{color}}" data-js-search="category" data-js-category="{{color}}"></div>
-                                    <p data-js-search="category" data-js-category="{{color}}">{{color}}</p>
-                                </li>
-                            </template>
-                        </div>
-                        <!--SEARCH INPUT-->
-                        <div class="input-wrapper">
-                            <input type="text" id="search-term" class="search-term" placeholder="search by code" />
-                            <button id="search" data-js-search="code">
-                                <i class="fas fa-search" data-js-search="code"></i>
-                            </button>
-                        </div>
-                        <!--SEARCH CONTAINER RESULTS-->
-                        <div class="results">
-                            <div class="no-found">
-                                <img src="./assets/images/5.png" alt="" />
-                                <p>Sorry, no match !</p>
-                            </div>
-                            <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="browser"></div>
-                            <!--TEMPLATE BROWSED THREAD-->
-                            <template data-js-thread-template>
-                                <div class="thread-item" id="{{id}}" data-js-thread-quantity="1">
-                                    <div class="item-background">
-                                        <img class="img-color-thread"
-                                            src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg" alt="">
-                                        <div class="actions-wrapper one-action-wrapper">
-                                            <div class="action-box">
-                                                <i class="fa-solid fa-plus" data-js-add-thread-btn data-js-storage="project"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item-code">{{code}}</div>
-                                </div>
-                            </template>
-                        </div>
-                    </section>
+        <!--END TEMPLATE PROJECT THREAD-->
+        <!--TEMPLATE OPTIONS WINDOW-->
+        <template data-js-options-window-template>
+            <div class="window-background" data-js-option-window>
+                <div class="window">
+                    <button class="clear"><i class="fas fa-times" data-js-close-option-window></i></button>
+                    <div class="window-wrapper window-wrapper-options">
+                        <button class="option-button" data-js-option="{{option1}}"><i
+                                class="{{classes1}}"></i>{{option1}}</button>
+                        <button class="option-button" data-js-option="{{option2}}"><i
+                                class="{{classes2}}"></i>{{option2}}</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
+        <!--END TEMPLATE OPTIONS WINDOW-->
+        <!--TEMPLATE WINDOW MODIFY IMAGES-->
+        <template>
+            <div class="window-background" data-js-window>
+                <div class="window window-add">
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                    <div class="window-wrapper">
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--END TEMPLATE WINDOW MODIFY IMAGES-->
+        <!--TEMPLATE WINDOW DELETE PROJECT-->
+        <template>
+            <div class="window-background" data-js-window>
+                <div class="window window-add">
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
+                    <div class="window-wrapper">
+                        <h3>{{action}}</h3>
+                        <button type='submit' data-js-submit-btn>{{action}}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--END TEMPLATE WINDOW DELETE PROJECT-->
+        <!--WINDOW COLOR BROWSER-->
+        <template data-js-color-browser-window-template>
+            <div class="window-background" id="window-color-browser-container">
+                <div class="window window-color-browser">
+                    <button class="clear"><i class="fas fa-times" data-js-close-browser-window></i></button>
+                    <div>
+                        <section class="search-container">
+                            <div class="wrap-nuancier">
+                                <h2><i class="fas fa-palette"></i> Select your colours</h2>
+                                <i class="fas fa-chevron-left"></i>
+                                <i class="fas fa-chevron-right"></i>
+                                <ul class="nuancier" data-js-colors-container></ul>
+                                <template data-js-color-circle-template>
+                                    <li class="color-circle-wrapper" data-js-category="{{color}}" data-js-search="category">
+                                        <div class="color-circle {{color}}" data-js-search="category" data-js-category="{{color}}"></div>
+                                        <p data-js-search="category" data-js-category="{{color}}">{{color}}</p>
+                                    </li>
+                                </template>
+                            </div>
+                            <!--SEARCH INPUT-->
+                            <div class="input-wrapper">
+                                <input type="text" id="search-term" class="search-term" placeholder="search by code" />
+                                <button id="search" data-js-search="code">
+                                    <i class="fas fa-search" data-js-search="code"></i>
+                                </button>
+                            </div>
+                            <!--SEARCH CONTAINER RESULTS-->
+                            <div class="results">
+                                <div class="no-found">
+                                    <img src="./assets/images/5.png" alt="" />
+                                    <p>Sorry, no match !</p>
+                                </div>
+                                <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="browser"></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </template>
         <!--END WINDOW COLOR BROWSER-->
+        <!--WINDOW THREAD BOX-->
+        <template data-js-thread-box-window-template>
+            <div class="window-background" id="window-thread-box-container">
+                <div class="window window-thread-box">
+                    <button class="clear"><i class="fas fa-times" data-js-close-box-window></i></button>
+                    <div>
+                        <section class="box-container">
+                            <h2><i class="fas fa-archive"></i> My thread box</h2>
+                            <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="box"></div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--END WINDOW THREAD BOX-->
+        <!--TEMPLATE SEARCHED THREAD-->
+        <template data-js-thread-template data-js-thread-box-template>
+            <div class="thread-item" id="{{id}}" data-js-thread-quantity="1">
+                <div class="item-background">
+                    <img class="img-color-thread" src="https://static1.dmc.com/cache/1/1/117mc_e_{{code}}_swatch_150x150.jpg"
+                        alt="">
+                    <div class="actions-wrapper one-action-wrapper">
+                        <div class="action-box">
+                            <i class="fa-solid fa-plus" data-js-add-thread-btn data-js-storage="project"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="thread-infos">
+                    <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span>{{basketQuantity}}</span></div>
+                    <div class="item-code">{{code}}</div>
+                    <div class="thread-detail"><i class="fas fa-archive"></i><span>{{boxQuantity}}</span></div>
+                </div>
+            </div>
+        </template>
+        <!--END TEMPLATE BROWSED THREAD-->
         <!--TEMPLATE QUANTITY WINDOW-->
         <template data-js-window-template>
             <div class="window-background" data-js-window>
@@ -192,6 +226,7 @@
                 </div>
             </div>
         </template>
+        <!--END TEMPLATE QUANTITY WINDOW-->
     </main>
      <!-- axios -->
      <script

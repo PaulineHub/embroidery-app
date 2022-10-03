@@ -1,17 +1,16 @@
 import CloneItem from './CloneItem.js';
 import ColorCarousel from './ColorCarousel.js';
+import ThreadStorage from './ThreadStorage.js';
 
 export default class ColorBrowser {
 
-    constructor(token) {
+    constructor() {
         this._elSearchContainer = document.querySelector('.search-container');
         this._elResultsContainer = document.querySelector(".thread-items-wrapper");
         this._elThreadTemplate = document.querySelector('[data-js-thread-template]');
         this._elNoFound = document.querySelector('.no-found');
         this._elSearchInput = document.querySelector(".search-term");
         this._elBtnSearch = document.getElementById("search");
-
-        this.token = token;
 
         this.init();
     }
@@ -50,7 +49,10 @@ export default class ColorBrowser {
                 code:threadsArray[thread].code,
                 order:threadsArray[thread].order,
             }
-            new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer, this.token)
+            const storage = new ThreadStorage();
+            infos['basketQuantity'] = await storage.getThreadQuantity(threadsArray[thread].code, 'basket');
+            infos['boxQuantity'] = await storage.getThreadQuantity(threadsArray[thread].code, 'box');
+            new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer);
         }
         
     }

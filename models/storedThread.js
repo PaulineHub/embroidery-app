@@ -19,6 +19,9 @@ const storedThreadSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         required: [true, "quantity must be provided"]
+    },
+    projectId: {
+        type: String
     }
 })
 

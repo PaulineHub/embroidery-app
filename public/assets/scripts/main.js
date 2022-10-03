@@ -15,7 +15,7 @@ import Project from "./Project.js";
     if (token) {
         new Navigation();
         if (pathname == "/inventory.html") {
-            new ColorBrowser(token);
+            new ColorBrowser();
             const threadStorage = new ThreadStorage();
             threadStorage.displayStorage('basket');
             threadStorage.displayStorage('box');

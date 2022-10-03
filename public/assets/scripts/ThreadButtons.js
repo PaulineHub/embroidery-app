@@ -1,9 +1,11 @@
 import ThreadStorage from './ThreadStorage.js';
 import CloneItem from './CloneItem.js';
+// import Project from './Project.js';
+import Router from './Router.js';
 
 export default class ThreadButtons {
 
-    constructor(el, token) {
+    constructor(el) {
         this._el = el;
         this._elShopBtn = this._el.querySelector('[data-js-basket-btn]');
         this._elStoreBtn = this._el.querySelector('[data-js-box-btn]');
@@ -13,8 +15,7 @@ export default class ThreadButtons {
         this._elWindowTemplate = document.querySelector('[data-js-window-template]');
         this._elMainBlock = document.querySelector('main');
 
-        this.storage = new ThreadStorage(this.token);
-        this.token = token;
+        this.storage = new ThreadStorage();
 
         this.init();
     }
@@ -23,6 +24,8 @@ export default class ThreadButtons {
      * Initiate behaviors by default 
      */
     init() {  
+
+        
 
         if (this._elShopBtn) {
             this._elShopBtn.addEventListener('click', (e) => {
@@ -63,18 +66,20 @@ export default class ThreadButtons {
         const threadQuantity = parseInt(thread.dataset.jsThreadQuantity);
         const threadWrapper = thread.parentElement;
         const threadWrapperValue = threadWrapper.dataset.jsThreadsWrapper;
+        const threadCode = this._el.querySelector(".item-code").innerHTML;
         let infos = {
-                id: thread.id,
-                code:  this._el.querySelector(".item-code").innerHTML,
-                quantity: threadQuantity,
-                storageTo: storage,
-                action: actionString
+            id: thread.id,
+            code:  threadCode,
+            quantity: threadQuantity,
+            storageTo: storage,
+            action: actionString
         };
-        new CloneItem(infos, this._elWindowTemplate, this._elMainBlock, this.token);
+        new CloneItem(infos, this._elWindowTemplate, this._elMainBlock);
         this.listenWindowBtns(threadWrapperValue);
     }
 
     listenWindowBtns(containerFrom) {
+        
         // listen close btn
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
         elCloseWindowBtn.addEventListener('click', this.closeWindow.bind(this));
@@ -82,8 +87,12 @@ export default class ThreadButtons {
         const elSubmitBtn = document.querySelector('[data-js-submit-btn]');
         elSubmitBtn.addEventListener('click', (e) => {     
             let quantity = parseInt(document.querySelector('[data-js-quantity-input]').value);
-            if (elSubmitBtn.innerHTML == 'Update Quantity' || elSubmitBtn.innerHTML == 'Add To My Project') {
+            if (elSubmitBtn.innerHTML == 'Update Quantity') {
                 this.storage.updateThread(e, quantity);
+            } else if (elSubmitBtn.innerHTML == 'Add to my Project') {
+                const router = new Router();
+                const {id} = router.getSearchParamsFromUrl();
+                this.storage.storeThread(e, quantity, '', id); 
             } else {
                 this.storage.storeThread(e, quantity, containerFrom);
             }
