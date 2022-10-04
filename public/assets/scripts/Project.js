@@ -15,14 +15,16 @@ export default class Project {
         this._elImagesContainer = document.querySelector('[data-js-project-images-ctn]');
         this._elImageTemplate = document.querySelector('[data-js-project-image-template]');
         this._elSaveButton = document.querySelector('[data-js-save-button]');
-
+        this._elProjectParamsButton = document.querySelector('[data-js-project-params-btn]');
         this._elAddThreadButton = document.querySelector('[data-js-add-project-thread]');
         this._elMainBlock = document.querySelector('main');
         this._elOptionsWindowTemplate = document.querySelector('[data-js-options-window-template]');
         this._elColorBrowserWindowTemplate = document.querySelector('[data-js-color-browser-window-template]');
+        this._elDeleteProjectWindowTemplate = document.querySelector('[data-js-delete-project-window-template]');
         this._elThreadBoxWindowTemplate = document.querySelector('[data-js-thread-box-window-template]');
 
         this.router = new Router();
+        this.projectId = this.router.getSearchParamsFromUrl().id;
         this.url = '/api/v1/projects';
         this.tokenStorage = new TokenStorage();
         this.token = this.tokenStorage.getLocalStorage()[0];
@@ -34,14 +36,15 @@ export default class Project {
      * Set the initial behaviors.
      */
    init() {
-        const projectId = this.router.getSearchParamsFromUrl();
-        this.displayProjectContent(projectId.id);
+        
+        this.displayProjectContent(this.projectId);
 
         this._elNameInput.addEventListener('change', this.displaySaveButton.bind(this));
         this._elStatusSelect.addEventListener('change', this.displaySaveButton.bind(this));
         this._elDescriptionInput.addEventListener('change', this.displaySaveButton.bind(this));
         this._elSaveButton.addEventListener('click', this.updateProjectInfos.bind(this));
         this._elAddThreadButton.addEventListener('click', this.displayBrowserOptionsWindow.bind(this));
+        this._elProjectParamsButton.addEventListener('click', this.displayProjectOptionsWindow.bind(this));
    }
 
 
@@ -178,7 +181,59 @@ export default class Project {
             option2: 'Delete project'
         };
         new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock);
+        
+        //listen options btn
+        const elOptionsWindow = document.querySelector('[data-js-option-window]');
+        const elCloseWindowBtn = document.querySelector('[data-js-close-option-window]');
+        const modifyImagesBtn = document.querySelector('[data-js-option="Modify images"]');
+        const deleteProjectBtn = document.querySelector('[data-js-option="Delete project"]');
 
+        elCloseWindowBtn.addEventListener('click', () => {
+            this.closeWindow(elOptionsWindow);
+        });
+
+        modifyImagesBtn.addEventListener('click', () => {
+            this.closeWindow(elOptionsWindow);
+            // display modify window
+        })
+
+        deleteProjectBtn.addEventListener('click', () => {
+            this.closeWindow(elOptionsWindow);
+            this.displayDeleteProjectWindow();
+        })
+    }
+
+    displayDeleteProjectWindow() {
+        let projectImages = document.querySelectorAll('.product-image-description');
+        let firstImageSrc = new URL(projectImages[0].src);
+        let firstImagePath = firstImageSrc.pathname;
+        let infos = {
+            id: this.projectId,
+            name: this._elNameInput.value,
+            image: firstImagePath
+        };
+        new CloneItem(infos, this._elDeleteProjectWindowTemplate, this._elMainBlock);
+        // listen delete btn
+        const elDeleteProjectBtn = document.querySelector('[data-js-submit-btn="delete project"]');
+        const elDeleteProjectWindow = document.querySelector('[data-js-delete-project-window]');
+        const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
+
+        elCloseWindowBtn.addEventListener('click', () => {
+            this.closeWindow(elDeleteProjectWindow);
+        });
+
+        elDeleteProjectBtn.addEventListener('click', () => {
+            this.deleteProject();
+            // redirect towards all projects page
+            window.location.href = '/projects.html';
+        });
+    }    
+
+    async deleteProject() {
+        await axios.delete(`${this.url}/${this.projectId}`, 
+                        {
+                            headers: {'Authorization': `Bearer ${this.token}`}
+                        });
     }
 
     closeWindow(elWindow) {

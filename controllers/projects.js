@@ -51,19 +51,19 @@ const updateProject = async (req, res) => {
 }
 
 const deleteProject = async (req, res) => {
-  // const {
-  //   user: { userId },
-  //   params: { id: projectId },
-  // } = req
+  const {
+    user: { userId },
+    params: { id: projectId },
+  } = req
 
-  // const project = await Project.findByIdAndRemove({
-  //   _id: projectId,
-  //   createdBy: userId,
-  // })
-  // if (!project) {
-  //   throw new NotFoundError(`No project with id ${projectId}`)
-  // }
-  // res.status(StatusCodes.OK).send()
+  const project = await Project.findByIdAndRemove({
+    _id: projectId,
+    createdBy: userId,
+  })
+  if (!project) {
+    throw new NotFoundError(`No project with id ${projectId}`)
+  }
+  res.status(StatusCodes.OK).send()
 }
 
 module.exports = {
