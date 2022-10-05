@@ -28,3 +28,12 @@ form ~ span {
     margin-right: 0;
     cursor: pointer;
 }
+
+.image-form {
+    margin-bottom: 0;
+}
+
+.image-form button {
+    display: block;
+    width: 100%;
+}

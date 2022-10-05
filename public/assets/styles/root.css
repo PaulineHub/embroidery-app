@@ -61,6 +61,10 @@ input {
     padding: 3px 5px;
 }
 
+img {
+    width: 100%;
+}
+
 button {
     padding: 3px 6px;
     color: white;
@@ -92,4 +96,14 @@ button:hover {
 
 .dynamic-underline:hover::after {
     width: 100%;
+}
+
+@keyframes img-zoom {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+
+    100% {
+        transform: scale3d(1.05, 1.05, 1);
+    }
 }

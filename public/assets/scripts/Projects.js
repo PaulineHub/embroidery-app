@@ -1,5 +1,6 @@
 import CloneItem from './CloneItem.js';
 import TokenStorage from "./TokenStorage.js";
+import ProjectImages from "./ProjectImages.js";
 
 export default class Projects {
 
@@ -13,7 +14,8 @@ export default class Projects {
         this.url = '/api/v1/projects';
         this.tokenStorage = new TokenStorage();
         this.token = this.tokenStorage.getLocalStorage()[0];
-        this.imageValue;
+
+        this.projectImages = new ProjectImages();
 
         this.init();
     }
@@ -49,17 +51,21 @@ export default class Projects {
     }
 
     listenWindowBtns() {
+        let imageSrc;
         // listen close btn
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
         elCloseWindowBtn.addEventListener('click', this.closeWindow.bind(this));
         // listen image input
         const imageInput = document.getElementById('image');
-        imageInput.addEventListener('change', this.uploadImage.bind(this));
+        imageInput.addEventListener('change', async (e) => {
+            const imageFile = e.target.files[0];
+            imageSrc = await this.projectImages.uploadImage(imageFile);
+        });
         // listen submit form
         const elForm = document.querySelector('[data-js-window-form]');
         elForm.addEventListener('submit', (e) => { 
-            e.preventDefault();    
-            this.createProject();
+            e.preventDefault();   
+            this.createProject(imageSrc);
             this.closeWindow();
         });
     }
@@ -69,34 +75,13 @@ export default class Projects {
         this._elMainBlock.removeChild(elWindow);
     }
 
-    async uploadImage(e) {
-        const imageFile = e.target.files[0];
-        const formData = new FormData();
-        formData.append('image',imageFile);
-        try {
-            const {data:{image:{src}}} = await axios.post(`${this.url}/uploads`,
-                                        formData, {
-                                            headers:{
-                                                'Content-Type':'multipart/form-data',
-                                                'Authorization': `Bearer ${this.token}`
-                                            }
-                                        })
-            this.imageValue = src
-        } catch (error) {
-            this.imageValue = null
-            console.log(error);
-        }
-    }
-
-    async createProject(){
+    async createProject(imageSrc){
         const name = document.getElementById('name');
         const status = document.getElementById('status');
         const params = {
             name: name.value,
             status: status.value,
-            images: [this.imageValue],
-            description: '',
-            threads: [] 
+            description: ''
         }
         const {data:{project}} = await axios.post(`${this.url}`, 
                         params,
@@ -105,15 +90,18 @@ export default class Projects {
                                 'Authorization': `Bearer ${this.token}`
                             }
                         });
+        await this.projectImages.createProjectImage(project._id, imageSrc);
         this.displayProject(project);
     }
 
-    displayProject(data) {
+    async displayProject(project) {
+        const images = await this.projectImages.getAllProjectImages(project._id);
+        const image = this.projectImages.getFirstProjectImage(images);
         let infos = {
-                id: data._id,
-                name: data.name,
-                status: data.status,
-                image: data.images[0]
+                id: project._id,
+                name: project.name,
+                status: project.status,
+                image: image.src
         };
         new CloneItem(infos, this._elProjectTemplate, this._elProjectsContainer);
     }

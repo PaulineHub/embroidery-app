@@ -8,11 +8,6 @@ const projectSchema = new mongoose.Schema({
     description:{
         type: String,
     },
-    // images path
-    images:{
-        type: Array,
-        default:[]
-    },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: 'User',

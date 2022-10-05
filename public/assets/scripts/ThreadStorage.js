@@ -18,18 +18,7 @@ export default class ThreadStorage {
 
     async displayStorage(storage, projectId) {
         // get the threads stored
-        let data;
-        if (projectId) {
-            data = await axios.get(`${this.url}?category=${storage}&projectId=${projectId}`,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
-        } else {
-            data = await axios.get(`${this.url}?category=${storage}`,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
-        }
+        let data = await this.getThreadsStored(storage, projectId);
         // get the infos about the threads stored
         let storedThreads = [];
         const dataThreads = data.data.threads;
@@ -52,12 +41,30 @@ export default class ThreadStorage {
         }
     }
 
+    async getThreadsStored(storage, projectId) {
+        let data;
+        if (projectId) {
+            data = await axios.get(`${this.url}?category=${storage}&projectId=${projectId}`,
+                        {
+                            headers: {'Authorization': `Bearer ${this.token}`}
+                        });
+        } else {
+            data = await axios.get(`${this.url}?category=${storage}`,
+                        {
+                            headers: {'Authorization': `Bearer ${this.token}`}
+                        });
+        }
+        return data;
+    }
+
     async getThreadQuantity(code, category) {
+        let quantity;
         let {data:{threads}} = await axios.get(`${this.url}?threadCode=${code}&category=${category}`, {
                                 headers: {'Authorization': `Bearer ${this.token}`}
                             });
-        if (threads.length === 0) return  0;
-        else return threads[0].quantity;
+        if (threads.length === 0) quantity =  0;
+        else quantity = threads[0].quantity;
+        return quantity;
     }
 
     async getThreadOrder(code) {
@@ -95,7 +102,8 @@ export default class ThreadStorage {
         // remove thread if it comes from shopping container et go to thread box
         if (containerFrom == 'basket') {
             const elThread = document.getElementById(`${id}`);
-            this.deleteThread(this._elBasketContainer, elThread);
+            this.deleteThread(elThread.id);
+            this.removeThreadFromDOM(elThread, this._elBasketContainer)
         }
     }
 
@@ -117,13 +125,14 @@ export default class ThreadStorage {
             new CloneItem(infos, threadTemplate, storageContainer);
     }
 
-    async deleteThread(container, thread) {
-        //delete from DB
-        await axios.delete(`${this.url}/${thread.id}`, 
+    async deleteThread(threadId) {
+        await axios.delete(`${this.url}/${threadId}`, 
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}
                         });
-        //remove from DOM
+    }
+
+    removeThreadFromDOM(thread, container) {
         container.removeChild(thread);
     }
 

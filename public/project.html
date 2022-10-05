@@ -58,8 +58,8 @@
         <!--END PROJECT CONTAINER-->
         <!--TEMPLATE PROJECT IMAGE-->
         <template data-js-project-image-template>
-            <div role="listitem" class="image-gallery-item">
-                <img src="{{image}}" alt="" class="product-image-description">
+            <div role="listitem" class="image-gallery-item" id="{{id}}">
+                <img src="{{src}}" alt="" class="product-image-description">
             </div>
         </template>
         <!--END TEMPLATE PROJECT IMAGE-->
@@ -106,16 +106,31 @@
         </template>
         <!--END TEMPLATE OPTIONS WINDOW-->
         <!--TEMPLATE WINDOW MODIFY IMAGES-->
-        <template>
+        <template data-js-modify-project-images-window-template>
             <div class="window-background" data-js-window>
-                <div class="window window-add">
+                <div class="window window-images">
                     <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
-                    <div class="window-wrapper">
+                    <div>
+                        <h3>Project's Images</h3>
+                        <div class="small-images-wrapper" data-js-small-images-wrapper></div>
+                        <h4>Add An Image</h4>
+                        <form class="image-form">
+                            <input type="file" id="image" accept="image/*" required>
+                            <button type='submit' data-js-add-image-btn>Add Image</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </template>
         <!--END TEMPLATE WINDOW MODIFY IMAGES-->
+        <!--TEMPLATE SMALL IMAGE-->
+        <template data-js-small-image-template>
+            <div class="image-ctn small-image-ctn" data-js-id="{{id}}">
+                <img src="{{src}}" alt="">
+                <button class="clear"><i class="fas fa-times" data-js-delete-image></i></button>
+            </div>
+        </template>
+        <!--END TEMPLATE SMALL IMAGE-->
         <!--TEMPLATE WINDOW DELETE PROJECT-->
         <template data-js-delete-project-window-template>
             <div class="window-background" data-js-delete-project-window>

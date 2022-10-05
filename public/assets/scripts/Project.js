@@ -3,7 +3,7 @@ import Router from './Router.js';
 import TokenStorage from "./TokenStorage.js";
 import ColorBrowser from "./ColorBrowser.js";
 import ThreadStorage from './ThreadStorage.js';
-
+import ProjectImages from "./ProjectImages.js";
 
 export default class Project {
 
@@ -19,15 +19,20 @@ export default class Project {
         this._elAddThreadButton = document.querySelector('[data-js-add-project-thread]');
         this._elMainBlock = document.querySelector('main');
         this._elOptionsWindowTemplate = document.querySelector('[data-js-options-window-template]');
-        this._elColorBrowserWindowTemplate = document.querySelector('[data-js-color-browser-window-template]');
         this._elDeleteProjectWindowTemplate = document.querySelector('[data-js-delete-project-window-template]');
+        this._elModifyProjectImagesWindowTemplate = document.querySelector('[data-js-modify-project-images-window-template]');
+        this._elSmallImageProjectTemplate = document.querySelector('[data-js-small-image-template]');
+        this._elColorBrowserWindowTemplate = document.querySelector('[data-js-color-browser-window-template]');
         this._elThreadBoxWindowTemplate = document.querySelector('[data-js-thread-box-window-template]');
+        this._elThreadsContainer = document.querySelector('[data-js-threads-wrapper="project"]');
 
         this.router = new Router();
         this.projectId = this.router.getSearchParamsFromUrl().id;
         this.url = '/api/v1/projects';
         this.tokenStorage = new TokenStorage();
         this.token = this.tokenStorage.getLocalStorage()[0];
+        this.storage = new ThreadStorage();
+        this.projectImages = new ProjectImages();
 
         this.init();
     }
@@ -56,7 +61,7 @@ export default class Project {
        this.getProjectInfos(idProject)
        .then(infosProject => {
             this.displayProjectDescription(infosProject)
-            this.displayProjectImages(infosProject);
+            this.projectImages.displayAllProjectImages(infosProject._id, this._elImageTemplate, this._elImagesContainer);
        });
        this.displayProjectThreads(idProject);
    }
@@ -86,17 +91,8 @@ export default class Project {
         this._elDescriptionInput.value = project.description;
     }
 
-    displayProjectImages(project) {
-        const images = project.images;
-        for (let image in images) {
-            let infos = {image: images[image]};
-            new CloneItem(infos, this._elImageTemplate, this._elImagesContainer);
-        }
-    }
-
     displayProjectThreads(projectId) {
-        const storage = new ThreadStorage();
-        storage.displayStorage('project', projectId);
+        this.storage.displayStorage('project', projectId);
     }
 
     displaySaveButton() {
@@ -194,7 +190,7 @@ export default class Project {
 
         modifyImagesBtn.addEventListener('click', () => {
             this.closeWindow(elOptionsWindow);
-            // display modify window
+            this.displayModifyImagesProjectWindow();
         })
 
         deleteProjectBtn.addEventListener('click', () => {
@@ -203,7 +199,42 @@ export default class Project {
         })
     }
 
+    async displayModifyImagesProjectWindow() {
+        //display window
+        new CloneItem('', this._elModifyProjectImagesWindowTemplate, this._elMainBlock);
+        // display images
+        const images = await this.projectImages.getAllProjectImages(this.projectId);
+        const elImagesWrapper = document.querySelector('[data-js-small-images-wrapper]');
+        for (let image in images) {
+            this.projectImages.displaySmallProjectImage(images[image], this._elSmallImageProjectTemplate, elImagesWrapper);
+        }
+        const elAddImageButton = document.querySelector('[data-js-add-image-btn]');
+        elAddImageButton.addEventListener('click', this.addImageToProject.bind(this));
+        //listen close btn
+        const window = document.querySelector('[data-js-window]');
+        const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
+        elCloseWindowBtn.addEventListener('click', () => {
+            this.closeWindow(window);
+        });
+    }
+
+    async addImageToProject(e) {
+        e.preventDefault();
+        const elImageInput = document.getElementById('image');
+        const imageFile = elImageInput.files[0];
+        const imageSrc = await this.projectImages.uploadImage(imageFile);
+        const imageInfos = await this.projectImages.createProjectImage(this.projectId, imageSrc);
+        const elImagesWrapper = document.querySelector('[data-js-small-images-wrapper]');
+        // display image added in the window
+        this.projectImages.displaySmallProjectImage(imageInfos, this._elSmallImageProjectTemplate, elImagesWrapper);
+        // display image added in the project's page
+        this.projectImages.displayProjectImage(imageInfos, this._elImageTemplate, this._elImagesContainer)
+    }
+
+    
+
     displayDeleteProjectWindow() {
+        // add window to the DOM
         let projectImages = document.querySelectorAll('.product-image-description');
         let firstImageSrc = new URL(projectImages[0].src);
         let firstImagePath = firstImageSrc.pathname;
@@ -213,7 +244,8 @@ export default class Project {
             image: firstImagePath
         };
         new CloneItem(infos, this._elDeleteProjectWindowTemplate, this._elMainBlock);
-        // listen delete btn
+       
+        // listen btns
         const elDeleteProjectBtn = document.querySelector('[data-js-submit-btn="delete project"]');
         const elDeleteProjectWindow = document.querySelector('[data-js-delete-project-window]');
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
@@ -223,11 +255,20 @@ export default class Project {
         });
 
         elDeleteProjectBtn.addEventListener('click', () => {
+            this.deteleProjectThreads();
+            this.projectImages.deleteAllProjectImages();
             this.deleteProject();
             // redirect towards all projects page
             window.location.href = '/projects.html';
         });
-    }    
+    } 
+    
+    async deteleProjectThreads() {
+        let {data:{threads}} = await this.storage.getThreadsStored('project', this.projectId);
+        for (let thread in threads) {
+            this.storage.deleteThread(threads[thread]._id);
+        }
+    }
 
     async deleteProject() {
         await axios.delete(`${this.url}/${this.projectId}`, 

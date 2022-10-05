@@ -49,7 +49,8 @@ export default class ThreadButtons {
             this._elDeleteBtn.addEventListener('click', (e) => {
                 const thread = e.target.parentElement.parentElement.parentElement.parentElement;
                 const container = thread.parentElement;
-                this.storage.deleteThread(container, thread);
+                this.storage.deleteThread(thread.id);
+                this.storage.removeThreadFromDOM(thread, container)
             });
         }
 
