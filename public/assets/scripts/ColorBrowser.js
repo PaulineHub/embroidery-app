@@ -12,6 +12,7 @@ export default class ColorBrowser {
         this._elSearchInput = document.querySelector(".search-term");
         this._elBtnSearch = document.getElementById("search");
 
+        this.url = '/api/v1/threads';
         this.init();
     }
     
@@ -43,22 +44,25 @@ export default class ColorBrowser {
         this._elNoFound.classList.remove('active');
         if (searchType == 'category') this._elSearchInput.value = '';
         const threadsArray = await this.getSearchedThreads(searchType, queryValue);
+        const storage = new ThreadStorage();
+        const threads = await storage.getAllThreadsStored();
         for (let thread in threadsArray) {
             let infos = {
                 id:threadsArray[thread]._id,
                 code:threadsArray[thread].code,
                 order:threadsArray[thread].order,
             }
-            const storage = new ThreadStorage();
-            infos['basketQuantity'] = await storage.getThreadQuantity(threadsArray[thread].code, 'basket');
-            infos['boxQuantity'] = await storage.getThreadQuantity(threadsArray[thread].code, 'box');
+            infos['basketQuantity'] = storage.getThreadQuantityByStorage(threadsArray[thread].code, 'basket', threads).quantity;
+            infos['boxQuantity'] = storage.getThreadQuantityByStorage(threadsArray[thread].code, 'box', threads).quantity;
             new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer);
         }
         
     }
 
     async getSearchedThreads(queryKey, queryValue){
-        const {data : threadArray} = await axios.get(`/api/v1/threads?${queryKey}=${queryValue}`);
+        let params = {};
+        params[queryKey] = queryValue;
+        const {data : threadArray} = await axios.get(`${this.url}`, {params});
         if(threadArray.length === 0) this._elNoFound.classList.add('active');
         else return threadArray;
     }

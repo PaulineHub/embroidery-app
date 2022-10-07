@@ -1,12 +1,12 @@
 import CloneItem from './CloneItem.js';
-import TokenStorage from "./TokenStorage.js";
+import reqInstanceAuth from "./InstanceAxios.js";
 
 export default class ProjectImages {
 
     constructor() {
         this.url = '/api/v1/projectImages';
-        this.tokenStorage = new TokenStorage();
-        this.token = this.tokenStorage.getLocalStorage()[0];
+        this.axiosInstanceAuth = reqInstanceAuth;
+
     }
 
     async uploadImage(imageFile) {
@@ -14,16 +14,15 @@ export default class ProjectImages {
         const formData = new FormData();
         formData.append('image',imageFile);
         try {
-            const {data:{image:{src}}} = await axios.post(`${this.url}/uploads`,
+            const {data:{image:{src}}} = await this.axiosInstanceAuth.post(`${this.url}/uploads`,
                                         formData, {
                                             headers:{
-                                                'Content-Type':'multipart/form-data',
-                                                'Authorization': `Bearer ${this.token}`
+                                                'Content-Type':'multipart/form-data'
                                             }
                                         })
-           imageSrc = src;
+            imageSrc = src;
         } catch (error) {
-           imageValue = null
+            imageValue = null;
             console.log(error);
         }
         return imageSrc;
@@ -34,18 +33,14 @@ export default class ProjectImages {
             src: imageSrc,
             projectId
         }
-        const {data:{image}} = await axios.post(`${this.url}`,
-                                        params, {
-                                            headers:{'Authorization': `Bearer ${this.token}`}
-                                        })
+        const {data:{image}} = await this.axiosInstanceAuth.post(`${this.url}`, params)
         return image;
     }
 
     async getAllProjectImages(projectId) {
-        const {data:{images}} = await axios.get(`${this.url}?projectId=${projectId}`,
-                    {
-                        headers: {'Authorization': `Bearer ${this.token}`}
-                    });
+        //const params = {projectId};
+        //console.log({params})
+        const {data:{images}} = await this.axiosInstanceAuth.get(`${this.url}?projectId=${projectId}`); // pk params ne marche pas ???????
         return images;
     }
 
@@ -92,10 +87,7 @@ export default class ProjectImages {
     }
 
     async deleteProjectImage(imageId) {
-        await axios.delete(`${this.url}/${imageId}`, 
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        await this.axiosInstanceAuth.delete(`${this.url}/${imageId}`);
     }
 
     removeProjectImage(image, container) {

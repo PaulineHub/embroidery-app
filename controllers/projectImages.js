@@ -4,8 +4,8 @@ const { StatusCodes } = require('http-status-codes')
 
 const getAllProjectImages = async (req, res) => {
   const params = {
-    createdBy: req.user.userId,
-    ...req.query
+    ...req.query,
+    createdBy: req.user.userId
   };
   const images = await ProjectImage.find(params).sort('createdAt')
   res.status(StatusCodes.OK).json({ images, count: images.length })

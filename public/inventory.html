@@ -61,10 +61,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="thread-infos">
-                            <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span>{{basketQuantity}}</span></div>
+                        <div class="thread-infos" data-js-code="{{code}}">
+                            <div class="thread-detail">
+                                <i class="fas fa-shopping-basket"></i>
+                                <span data-js-quantity-indicator="basket">{{basketQuantity}}</span>
+                            </div>
                             <div class="item-code">{{code}}</div>
-                            <div class="thread-detail"><i class="fas fa-archive"></i><span>{{boxQuantity}}</span></div>
+                            <div class="thread-detail">
+                                <i class="fas fa-archive"></i>
+                                <span  data-js-quantity-indicator="box">{{boxQuantity}}</span>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -93,10 +99,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="thread-infos">
-                    <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span>{{basketQuantity}}</span></div>
+                <div class="thread-infos" data-js-code="{{code}}"> 
+                    <div class="thread-detail">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span data-js-quantity-indicator="basket">{{basketQuantity}}</span>
+                    </div>
                     <div class="item-code">{{code}}</div>
-                    <div class="thread-detail"><i class="fas fa-archive"></i><span>{{boxQuantity}}</span></div>
+                    <div class="thread-detail">
+                        <i class="fas fa-archive"></i>
+                        <span data-js-quantity-indicator="box">{{boxQuantity}}</span>
+                    </div>
                 </div>
             </div>
         </template>
@@ -123,10 +135,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="thread-infos">
-                    <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span>{{basketQuantity}}</span></div>
+                <div class="thread-infos" data-js-code="{{code}}">
+                    <div class="thread-detail">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span data-js-quantity-indicator="basket">{{basketQuantity}}</span>
+                    </div>
                     <div class="item-code">{{code}}</div>
-                    <div class="thread-detail"><i class="fas fa-archive"></i><span>{{boxQuantity}}</span></div>
+                    <div class="thread-detail">
+                        <i class="fas fa-archive"></i>
+                        <span data-js-quantity-indicator="box">{{boxQuantity}}</span>
+                    </div>
                 </div>
             </div>
         </template>

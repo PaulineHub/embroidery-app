@@ -72,20 +72,20 @@
                     <div class="actions-wrapper">
                         <button class="clear"><i class="fas fa-times" data-js-delete></i></button>
                         <div class="action-box">
-                            <div class="quantity-wrapper" data-js-quantity data-js-storage="basket">
+                            <div class="quantity-wrapper" data-js-quantity data-js-storage="project">
                                 <i class="fa-solid fa-pen"></i>
                                 <span class="quantity">{{quantity}}</span>
                             </div>
-                            <i class="fas fa-archive" data-js-box-btn data-js-storage="box"></i>
+                            <i class="fas fa-shopping-basket" data-js-box-btn data-js-storage="basket"></i>
                             <span class="line"></span>
                         </div>
         
                     </div>
                 </div>
-                <div class="thread-infos">
-                    <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span>{{basketQuantity}}</span></div>
+                <div class="thread-infos" data-js-code="{{code}}">
+                    <div class="thread-detail"><i class="fas fa-shopping-basket"></i><span data-js-quantity-indicator="basket">{{basketQuantity}}</span></div>
                     <div class="item-code">{{code}}</div>
-                    <div class="thread-detail"><i class="fas fa-archive"></i><span>{{boxQuantity}}</span></div>
+                    <div class="thread-detail"><i class="fas fa-archive"></i><span data-js-quantity-indicator="box">{{boxQuantity}}</span></div>
                 </div>
             </div>
         </template>
@@ -224,7 +224,7 @@
                 </div>
             </div>
         </template>
-        <!--END TEMPLATE BROWSED THREAD-->
+        <!--END TEMPLATE SEARCHED THREAD-->
         <!--TEMPLATE QUANTITY WINDOW-->
         <template data-js-window-template>
             <div class="window-background" data-js-window>

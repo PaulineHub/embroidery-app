@@ -24,9 +24,6 @@ export default class ThreadButtons {
      * Initiate behaviors by default 
      */
     init() {  
-
-        
-
         if (this._elShopBtn) {
             this._elShopBtn.addEventListener('click', (e) => {
                 this.displayWindow(e, 'Add to my Shopping Basket');
@@ -49,7 +46,7 @@ export default class ThreadButtons {
             this._elDeleteBtn.addEventListener('click', (e) => {
                 const thread = e.target.parentElement.parentElement.parentElement.parentElement;
                 const container = thread.parentElement;
-                this.storage.deleteThread(thread.id);
+                this.storage.deleteStoredThread(thread.id);
                 this.storage.removeThreadFromDOM(thread, container)
             });
         }
@@ -70,7 +67,7 @@ export default class ThreadButtons {
         const threadCode = this._el.querySelector(".item-code").innerHTML;
         let infos = {
             id: thread.id,
-            code:  threadCode,
+            code: threadCode,
             quantity: threadQuantity,
             storageTo: storage,
             action: actionString
@@ -80,7 +77,6 @@ export default class ThreadButtons {
     }
 
     listenWindowBtns(containerFrom) {
-        
         // listen close btn
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
         elCloseWindowBtn.addEventListener('click', this.closeWindow.bind(this));
@@ -89,7 +85,9 @@ export default class ThreadButtons {
         elSubmitBtn.addEventListener('click', (e) => {     
             let quantity = parseInt(document.querySelector('[data-js-quantity-input]').value);
             if (elSubmitBtn.innerHTML == 'Update Quantity') {
-                this.storage.updateThread(e, quantity);
+                const threadTitle = e.target.previousElementSibling.previousElementSibling;
+                const id = threadTitle.dataset.jsId;
+                this.storage.updateStoredThread(id, quantity);
             } else if (elSubmitBtn.innerHTML == 'Add to my Project') {
                 const router = new Router();
                 const {id} = router.getSearchParamsFromUrl();

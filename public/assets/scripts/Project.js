@@ -1,6 +1,6 @@
 import CloneItem from './CloneItem.js';
 import Router from './Router.js';
-import TokenStorage from "./TokenStorage.js";
+import reqInstanceAuth from "./InstanceAxios.js";
 import ColorBrowser from "./ColorBrowser.js";
 import ThreadStorage from './ThreadStorage.js';
 import ProjectImages from "./ProjectImages.js";
@@ -29,8 +29,7 @@ export default class Project {
         this.router = new Router();
         this.projectId = this.router.getSearchParamsFromUrl().id;
         this.url = '/api/v1/projects';
-        this.tokenStorage = new TokenStorage();
-        this.token = this.tokenStorage.getLocalStorage()[0];
+        this.axiosInstanceAuth = reqInstanceAuth;
         this.storage = new ThreadStorage();
         this.projectImages = new ProjectImages();
 
@@ -73,10 +72,7 @@ export default class Project {
      */
    async getProjectInfos(id) {
         try {
-            const {data:{project}} = await axios.get(`${this.url}/${id}?id=${id}`,
-                                    {
-                                        headers: {'Authorization': `Bearer ${this.token}`}
-                                    });
+            const {data:{project}} = await this.axiosInstanceAuth.get(`${this.url}/${id}?id=${id}`);
             return project;
 
         } catch (error) {
@@ -113,11 +109,7 @@ export default class Project {
 
     async updateProjectStorage(id, params) {
         try {
-            await axios.patch(`${this.url}/${id}`, 
-                            params,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+            await this.axiosInstanceAuth.patch(`${this.url}/${id}`, params);
 
         } catch (error) {
             console.log(error);
@@ -266,15 +258,12 @@ export default class Project {
     async deteleProjectThreads() {
         let {data:{threads}} = await this.storage.getThreadsStored('project', this.projectId);
         for (let thread in threads) {
-            this.storage.deleteThread(threads[thread]._id);
+            this.storage.deleteStoredThread(threads[thread]._id);
         }
     }
 
     async deleteProject() {
-        await axios.delete(`${this.url}/${this.projectId}`, 
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        await this.axiosInstanceAuth.delete(`${this.url}/${this.projectId}`);
     }
 
     closeWindow(elWindow) {

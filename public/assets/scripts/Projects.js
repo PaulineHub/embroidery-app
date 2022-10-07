@@ -34,7 +34,6 @@ export default class Projects {
     }
 
     async displayAllProjects() {
-        // get the infos about the threads stored
         const {data:{projects}} = await axios.get(`${this.url}`,
                         {
                             headers: {'Authorization': `Bearer ${this.token}`}

@@ -4,8 +4,8 @@ const { StatusCodes } = require('http-status-codes')
 
 const getAllStoredThreads = async (req, res) => {
   const params = {
+    ...req.query,
     storedBy: req.user.userId,
-    ...req.query
   };
   const threads = await StoredThread.find(params);
   res.status(StatusCodes.OK).json({ threads, count: threads.length })
@@ -15,10 +15,6 @@ const createStoredThread = async (req, res) => {
   req.body.storedBy = req.user.userId;
   const storedThread = await StoredThread.create(req.body)
   res.status(StatusCodes.CREATED).json({ storedThread })
-}
-
-const getStoredThread = async (req, res) => {
-
 }
 
 const updateStoredThread = async (req, res) => {
@@ -63,6 +59,5 @@ module.exports = {
   getAllStoredThreads,
   createStoredThread,
   deleteStoredThread,
-  updateStoredThread,
-  getStoredThread,
+  updateStoredThread
 }

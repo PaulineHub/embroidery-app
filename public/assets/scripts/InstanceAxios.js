@@ -1,19 +1,18 @@
-axios.get(url, config)
+import TokenStorage from "./TokenStorage.js";
 
-export const instance = axios.create({});
-instance.interceptors.request.use(config => ({
+// get token of the user logged
+const tokenStorage = new TokenStorage();
+const token = tokenStorage.getLocalStorage()[0];
+
+// create instance of an axios request with authorization in headers
+const reqInstanceAuth = axios.create({});
+
+reqInstanceAuth.interceptors.request.use(config => ({
     ...config,
     headers: {
         ...config.headers,
-        Authorization: localStorage.getItem('my_token'),
+        Authorization: `Bearer ${token}`,
     }
 }))
-instance.interceptors.request.use(config => {
-    return {
-        ...config,
-        headers: {
-            ...config.headers,
-            Authorization: localStorage.getItem('my_token'),
-        }
-    }
-})
+
+export default reqInstanceAuth;
