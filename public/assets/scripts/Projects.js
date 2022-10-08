@@ -1,6 +1,6 @@
 import CloneItem from './CloneItem.js';
-import TokenStorage from "./TokenStorage.js";
 import ProjectImages from "./ProjectImages.js";
+import reqInstanceAuth from "./InstanceAxios.js";
 
 export default class Projects {
 
@@ -12,8 +12,7 @@ export default class Projects {
         this._elProjectsContainer = document.querySelector('[data-js-projects-wrapper]');
 
         this.url = '/api/v1/projects';
-        this.tokenStorage = new TokenStorage();
-        this.token = this.tokenStorage.getLocalStorage()[0];
+        this.axiosInstanceAuth = reqInstanceAuth;
 
         this.projectImages = new ProjectImages();
 
@@ -21,7 +20,7 @@ export default class Projects {
     }
     
     /***
-     * Initiate behaviors by default 
+     * Initiate behaviors by default (display all the projects and listen event on buttons)
      */
     init() {  
 
@@ -33,22 +32,28 @@ export default class Projects {
         
     }
 
+    /***
+     * Get the projects of the user and display them in the DOM.
+     */
     async displayAllProjects() {
-        const {data:{projects}} = await axios.get(`${this.url}`,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        const {data:{projects}} = await this.axiosInstanceAuth.get(`${this.url}`);
         for (let project in projects){
             this.displayProject(projects[project]);
         }
     }
 
+    /***
+     * Display a window in the DOM.
+     */
     displayWindow(action) {
         let infos = { action };
         new CloneItem(infos, this._elWindowTemplate, this._elMainBlock);
         this.listenWindowBtns();
     }
 
+    /***
+     * Listen events on the buttons an inputs of the window.
+     */
     listenWindowBtns() {
         let imageSrc;
         // listen close btn
@@ -69,11 +74,18 @@ export default class Projects {
         });
     }
 
+    /***
+     * Remove the window from the DOM.
+     */
     closeWindow() {
         const elWindow = document.querySelector('[data-js-window]');
         this._elMainBlock.removeChild(elWindow);
     }
 
+    /**
+     * Create a new project.
+     * @param {string} imageSrc - The path of the image of the project.
+     */
     async createProject(imageSrc){
         const name = document.getElementById('name');
         const status = document.getElementById('status');
@@ -82,17 +94,15 @@ export default class Projects {
             status: status.value,
             description: ''
         }
-        const {data:{project}} = await axios.post(`${this.url}`, 
-                        params,
-                        {
-                            headers: {
-                                'Authorization': `Bearer ${this.token}`
-                            }
-                        });
+        const {data:{project}} = await this.axiosInstanceAuth.post(`${this.url}`, params);
         await this.projectImages.createProjectImage(project._id, imageSrc);
         this.displayProject(project);
     }
 
+    /**
+     * Display the new project in the DOM.
+     * @param {object} project - The infos about the new project.
+     */
     async displayProject(project) {
         const images = await this.projectImages.getAllProjectImages(project._id);
         const image = this.projectImages.getFirstProjectImage(images);

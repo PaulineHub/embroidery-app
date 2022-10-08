@@ -12,11 +12,17 @@ export default class Authentification {
         this.init();
     }
 
+    /**
+     * Set the initial behaviors.
+     */
     init() {
         this._elSpanLogin.addEventListener('click', this.updateForm.bind(this));
         this._elFormButton.addEventListener('click', this.sendForm.bind(this));
     }
 
+    /**
+     * Update authentification form (login or register).
+     */
     updateForm() {
         let loginState = this._elSpanLogin.dataset.jsSpanLogin;
         let spanString;
@@ -31,6 +37,9 @@ export default class Authentification {
         this.replaceTextForm(loginState, spanString, newState)
     }
 
+    /**
+     * Replace the text in the authentification form accordingly to the type of form required.
+     */
     replaceTextForm(state, sentence, newState) {
         this._elFormTitle.innerHTML = state;
         this._elFormButton.innerHTML = state;
@@ -38,6 +47,11 @@ export default class Authentification {
         this._elSpanLogin.dataset.jsSpanLogin = newState;
     }
 
+    /**
+     * Post the informations of the form in the DB and save the token created in the local storage. 
+     * Then, redirect the user to the inventory page.
+     * @param {string} e - The event.
+     */
     async sendForm(e) {
         e.preventDefault();
         try {
@@ -55,9 +69,5 @@ export default class Authentification {
             console.log(error);
         }
     }
-
-    
-
-
 
 }

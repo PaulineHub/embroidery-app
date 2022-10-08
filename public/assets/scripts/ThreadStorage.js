@@ -16,6 +16,11 @@ export default class ThreadStorage {
 
     }
 
+    /**
+     * Display the threads's storage.
+     * @param {string} storage - Type of storage.
+     * @param {string} projectId - Id of the project.
+     */
     async displayStorage(storage, projectId) {
         // get all the threads stored by the user
         const threads = await this.getAllThreadsStored();
@@ -44,11 +49,20 @@ export default class ThreadStorage {
         }
     }
 
+    /**
+     * Get all the threads stored by the user.
+     * @return {object[]} - Threads stored.
+     */
     async getAllThreadsStored() {
         let {data:{threads}} = await this.axiosInstanceAuth.get(`${this.url}`);
         return threads;
     }
 
+    /**
+     * Get all the threads stored by the user with a specific code.
+     * @param {string} threadCode - Code of the thread.
+     * @return {object[]} - Threads stored (project, box, basket) with the same code given.
+     */
     async getAllThreadsStoredByCode(threadCode) {
         //const params = {threadCode}
         let {data:{threads}} = await this.axiosInstanceAuth.get(`${this.url}?threadCode=${threadCode}`, // pk ne marche pas avec params ???????????
@@ -57,6 +71,13 @@ export default class ThreadStorage {
         return threads;
     }
 
+    /**
+     * Get the quantity of a given thread by storage.
+     * @param {string} code - Code of the thread.
+     * @param {string} category - Category of the storage of the thread.
+     * @param {object[]} threadsArray - Threads.
+     * @return {object} - Infos about quantity of a given thread by storage.
+     */
     getThreadQuantityByStorage(code, category, threadsArray) {
         let infos = {
             id: '',
@@ -72,12 +93,25 @@ export default class ThreadStorage {
         return infos; 
     }
 
+    /**
+     * Get the chromatic order of a given thread.
+     * @param {string} code - Code of the thread.
+     * @return {string} - Chromatic order of the thread.
+     */
     async getThreadOrder(code) {
         const params = {code};
         const {data} = await axios.get(`/api/v1/threads`, {params});
         return data[0].order;
     }
 
+    /**
+     * Add a thread to the storage of the user and display it on the DOM.
+     * If the thread already exists in the storage, update the quantity.
+     * @param {string} e - Event.
+     * @param {number} quantity - Quantity of the thread to store.
+     * @param {string} containerFrom - Container the thread is from.
+     * @param {string} projectId - Id of the project.
+     */
     async storeThread(e, quantity, containerFrom, projectId) {
         const storage = e.target.dataset.jsSubmitBtn;
         const threadTitle = e.target.previousElementSibling.previousElementSibling;
@@ -118,6 +152,11 @@ export default class ThreadStorage {
         
     }
 
+    /**
+     * Display the thread in the DOM.
+     * @param {object} infos - Infos about the thread.
+     * @param {string} storage - Storage where to display the thread.
+     */
     displayThread(infos, storage) {
         let storageContainer;   
         let threadTemplate;
@@ -136,25 +175,49 @@ export default class ThreadStorage {
         new CloneItem(infos, threadTemplate, storageContainer);
     }
 
+    /**
+     * Display the thread in the DOM.
+     * @param {object} params - Infos about the thread.
+     * @return {object} - Infos about the thread stored.
+     */
     async createStoredThread(params) {
         const {data:{storedThread}} = await this.axiosInstanceAuth.post(`${this.url}`, params);
         return storedThread;
     }
 
+    /**
+     * Delete the thread stored from the DB.
+     * @param {string} threadId - Infos about the thread.
+     */
     async deleteStoredThread(threadId) {
         await this.axiosInstanceAuth.delete(`${this.url}/${threadId}`);
     }
 
+    /**
+     * Remove the thread stored from the DOM.
+     * @param {string} thread - Thread to remove.
+     * @param {string} container - Container where the thread is.
+     */
     removeThreadFromDOM(thread, container) {
         container.removeChild(thread);
     }
 
+    /**
+     * Update the infos about a thread stored.
+     * @param {string} id - Id of the thread.
+     * @param {number} quantity - Quantity of the thread.
+     */
     async updateStoredThread(id, quantity) {
         const params = {quantity};
         await this.axiosInstanceAuth.patch(`${this.url}/${id}`, params);
         this.updateQuantityIndicators(id, quantity);
     }
 
+    /**
+     * Update the indicators of quantity on a thread.
+     * @param {string} threadId - Id of the thread.
+     * @param {string} quantity - Quantity of the thread.
+     */
     async updateQuantityIndicators(threadId, quantity) {
         //update thread main quantity indicator
         const elThread = document.getElementById(`${threadId}`);

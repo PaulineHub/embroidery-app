@@ -160,8 +160,10 @@
     margin-top: 5px;
 }
 
-.no-found img {
+.error-image-ctn {
     height: 110px;
+    width: 110px;
+    margin: auto;
 }
 
 .active {

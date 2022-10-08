@@ -17,7 +17,8 @@ export default class ColorBrowser {
     }
     
     /***
-     * Initiate behaviors by default 
+     * Initiate behaviors by default (create a color carousel, 
+     * listen event on color button and search button).
      */
     init() {
         new ColorCarousel();
@@ -28,9 +29,12 @@ export default class ColorBrowser {
         })
 
         this._elBtnSearch.addEventListener('click', this.searchThreads.bind(this));
-
     }
 
+    /**
+     * Search threads by color (category) or code.
+     * @param {string} e - The event.
+     */
     searchThreads(e) {
         const searchType = e.target.dataset.jsSearch;
         let queryValue;
@@ -39,32 +43,44 @@ export default class ColorBrowser {
         this.displaySearchedThreads(searchType, queryValue);
     }
 
+    /**
+     * Display threads found in the DOM or a 'not found' message.
+     * @param {string} searchType - The type of research (by category or code).
+     * @param {string} queryValue - The color or code searched.
+     */
     async displaySearchedThreads(searchType, queryValue) {
         this._elResultsContainer.innerHTML = '';
         this._elNoFound.classList.remove('active');
         if (searchType == 'category') this._elSearchInput.value = '';
         const threadsArray = await this.getSearchedThreads(searchType, queryValue);
-        const storage = new ThreadStorage();
-        const threads = await storage.getAllThreadsStored();
-        for (let thread in threadsArray) {
-            let infos = {
-                id:threadsArray[thread]._id,
-                code:threadsArray[thread].code,
-                order:threadsArray[thread].order,
+        if(threadsArray.length === 0) {
+            this._elNoFound.classList.add('active');
+        } else {
+            const storage = new ThreadStorage();
+            const threads = await storage.getAllThreadsStored();
+            for (let thread in threadsArray) {
+                let infos = {
+                    id:threadsArray[thread]._id,
+                    code:threadsArray[thread].code,
+                    order:threadsArray[thread].order
+                }
+                infos['basketQuantity'] = storage.getThreadQuantityByStorage(threadsArray[thread].code, 'basket', threads).quantity;
+                infos['boxQuantity'] = storage.getThreadQuantityByStorage(threadsArray[thread].code, 'box', threads).quantity;
+                new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer);
             }
-            infos['basketQuantity'] = storage.getThreadQuantityByStorage(threadsArray[thread].code, 'basket', threads).quantity;
-            infos['boxQuantity'] = storage.getThreadQuantityByStorage(threadsArray[thread].code, 'box', threads).quantity;
-            new CloneItem(infos, this._elThreadTemplate, this._elResultsContainer);
         }
-        
     }
 
+    /**
+     * Get the searched threads.
+     * @param {string} queryKey - The type of research (by category or code).
+     * @param {string} queryValue - The color or code searched.
+     */
     async getSearchedThreads(queryKey, queryValue){
         let params = {};
         params[queryKey] = queryValue;
-        const {data : threadArray} = await axios.get(`${this.url}`, {params});
-        if(threadArray.length === 0) this._elNoFound.classList.add('active');
-        else return threadArray;
+        const {data : threadsArray} = await axios.get(`${this.url}`, {params});
+        return threadsArray;
     }
 
 

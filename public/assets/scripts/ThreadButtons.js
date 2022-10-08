@@ -21,7 +21,7 @@ export default class ThreadButtons {
     }
     
     /***
-     * Initiate behaviors by default 
+     * Initiate behaviors by default (listen events on buttons of the thread element)
      */
     init() {  
         if (this._elShopBtn) {
@@ -58,6 +58,11 @@ export default class ThreadButtons {
         }
     }
 
+    /**
+     * Display a window to validate the quantity of threads.
+     * @param {string} e - Event.
+     * @param {string} actionString - The action of the submit button of the window (update, add).
+     */
     displayWindow(e, actionString) {
         const storage = e.currentTarget.dataset.jsStorage;
         const thread = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
@@ -76,6 +81,10 @@ export default class ThreadButtons {
         this.listenWindowBtns(threadWrapperValue);
     }
 
+    /**
+     * Listen events on the buttons of the window.
+     * @param {string} containerFrom - The container the thread is from.
+     */
     listenWindowBtns(containerFrom) {
         // listen close btn
         const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
@@ -99,8 +108,11 @@ export default class ThreadButtons {
         });
     }
 
+    /**
+     * Remove the window from the DOM.
+     */
     closeWindow() {
-        const elWindow = document.querySelector('[data-js-window]');
+        const elWindow = document.querySelector('[data-js-quantity-window]');
         this._elMainBlock.removeChild(elWindow);
     }
 

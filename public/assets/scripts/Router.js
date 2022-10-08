@@ -3,6 +3,7 @@ export default class Router {
 
     /**
      * Get the search params from the url.
+     * @param {string} hashWord - The hash word to search
      * @return {object} or {boolean} - The params for the request or false.
      */
     getSearchParamsFromUrl(hashWord='') {
@@ -20,7 +21,7 @@ export default class Router {
             }
             return params;
         }
-         else return false;
+        else return false;
     }
 
     /**

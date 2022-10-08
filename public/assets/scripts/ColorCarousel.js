@@ -52,7 +52,8 @@ export default class ColorCarousel {
     }
     
     /**
-     * Move the colors in the carousel horizontaly and display buttons next and previous if needed
+     * Move the colors in the carousel horizontaly and display buttons next 
+     * and previous if needed.
      */
     moveCarousel() {
         // Display buttons

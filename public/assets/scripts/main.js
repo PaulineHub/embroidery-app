@@ -12,6 +12,7 @@ import Project from "./Project.js";
     if (pathname == "/index.html" || pathname == "/") new Authentification();
     const tokenStorage = new TokenStorage();
     const token = tokenStorage.getLocalStorage()[0];
+    // if user authenticated
     if (token) {
         new Navigation();
         if (pathname == "/inventory.html") {

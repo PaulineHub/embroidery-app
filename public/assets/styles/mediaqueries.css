@@ -12,8 +12,41 @@
 
 }
 
+@media screen and (max-width: 890px) {
+    main, .product-main {
+        width: 100%;
+    }
+
+    .project-container {
+        flex-direction: column;
+    }
+
+    .project-images-ctn {
+        position: relative;
+    }
+
+}
+
 @media screen and (max-height: 800px) {
-    .quantity-window{
+    .quantity-window {
         overflow-y: initial!important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .projects-items-wrapper {
+        justify-content: center;
+    }
+
+    .project-img-ctn {
+        width: 100%;
+    }
+
+    .form-row-wrapper {
+        flex-direction: column;
+    }
+
+    .form-row-wrapper div {
+        width: 100%;
     }
 }

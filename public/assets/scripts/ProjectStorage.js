@@ -1,5 +1,5 @@
 import CloneItem from './CloneItem.js';
-import TokenStorage from "./TokenStorage.js";
+import reqInstanceAuth from "./InstanceAxios.js";
 
 export default class ProjectStorage {
 
@@ -7,17 +7,17 @@ export default class ProjectStorage {
         this._elProjectTemplate = document.querySelector('[data-js-thread-basket-template]');
         this._elProjectsContainer = document.querySelector('[data-js-threads-wrapper="basket"]');
 
-        this.tokenStorage = new TokenStorage();
-        this.token = this.tokenStorage.getLocalStorage()[0];
+        this.axiosInstanceAuth = reqInstanceAuth;
 
     }
 
+    /**
+     * Display the storage in the DOM.
+     * @param {string} storage - The name of the storage (box of threads or shopping basket).
+     */
     async displayStorage(storage) {
         // get the infos about the threads stored
-        const {data} = await axios.get(`/api/v1/storedThreads?category=${storage}`,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        const {data} = await this.axiosInstanceAuth.get(`/api/v1/storedThreads?category=${storage}`);
         // get the chromatic order of the threads stored
         const threads = data.threads;
         let storedThreads = [];
@@ -39,6 +39,12 @@ export default class ProjectStorage {
         }
     }
 
+    /**
+     * Display the storage in the DOM.
+     * @param {string} e - Event.
+     * @param {number} quantity - Quantity of threads.
+     * @param {string} containerFrom - The name of the storage (box of threads or shopping basket) the thread comes from.
+     */
     async storeThread(e, quantity, containerFrom) {
         const storage = e.target.dataset.jsSubmitQuantity;
         const threadTitle = e.target.previousElementSibling.previousElementSibling;
@@ -48,13 +54,9 @@ export default class ProjectStorage {
             category: storage,
             threadCode: code,
             quantity: quantity
-        }
+        };
         // store the thread in the DB of the user
-        const {data} = await axios.post(`/api/v1/storedThreads`, 
-                        params,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        const {data} = await this.axiosInstanceAuth.post(`/api/v1/storedThreads`, params);
         let infos = {
                 id: data.storedThread._id,
                 code: code,
@@ -69,6 +71,11 @@ export default class ProjectStorage {
         }
     }
 
+    /**
+     * Display the thread in the DOM.
+     * @param {object} infos - Infos of the thread.
+     * @param {string} storage - The name of the storage (box of threads or shopping basket) where to put the thread.
+     */
     displayThread(infos, storage) {
          let storageContainer;   
             let threadTemplate;
@@ -83,25 +90,29 @@ export default class ProjectStorage {
             new CloneItem(infos, threadTemplate, storageContainer, this.token);
     }
 
+    /**
+     * Delete the thread.
+     * @param {string} container - The name of the storage (box of threads or shopping basket) the thread comes from.
+     * @param {string} thread - The thread.
+     */
     async deleteThread(container, thread) {
         //delete from DB
-        await axios.delete(`/api/v1/storedThreads/${thread.id}`, 
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        await this.axiosInstanceAuth.delete(`/api/v1/storedThreads/${thread.id}`);
         //remove from DOM
         container.removeChild(thread);
     }
 
+    /**
+     * Update the thread.
+     * @param {string} e - Event.
+     * @param {number} quantity - The quantity of threads.
+     */
     async updateThread(e, quantity) {
         const threadTitle = e.target.previousElementSibling.previousElementSibling;
         const id = threadTitle.dataset.jsId;
         const params = {quantity};
-        await axios.patch(`/api/v1/storedThreads/${id}`, 
-                            params,
-                        {
-                            headers: {'Authorization': `Bearer ${this.token}`}
-                        });
+        // update quantity of the thread in the DB
+        await this.axiosInstanceAuth.patch(`/api/v1/storedThreads/${id}`, params);
         // update quantity of the thread in the DOM
         const thread = document.getElementById(`${id}`);
         thread.dataset.jsThreadQuantity = quantity;

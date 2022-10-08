@@ -102,6 +102,12 @@
     display: block !important;
 }
 
+.form-message {
+    margin-top: 10px;
+    display: block;
+    font-style: italic;
+}
+
 /* THREAD SECTION */
 
 .project-threads-header {

@@ -31,6 +31,10 @@ export default class CloneItem {
         this.addBtnsEventListener(elContainer);
     }
 
+    /**
+     * Add the behaviors to the buttons of the item if it's a thread.
+     * @param {string} elContainer - The parent container of the item.
+     */
     addBtnsEventListener(elContainer) {
         let item = elContainer.lastElementChild;
         if (item.classList.contains('thread-item')) new ThreadButtons(item);

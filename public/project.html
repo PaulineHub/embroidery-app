@@ -44,6 +44,7 @@
                     </header>
                     <input type="textarea" name="description" id="description" placeholder="Add comments..." value="">
                     <button type="submit" data-js-save-button>Save modifications</button>
+                    <span class="form-message" data-js-save-message></span>
                 </form>
                 <!--THREADS CONTAINER-->
                 <div class="project-threads-big-container">
@@ -92,9 +93,9 @@
         <!--END TEMPLATE PROJECT THREAD-->
         <!--TEMPLATE OPTIONS WINDOW-->
         <template data-js-options-window-template>
-            <div class="window-background" data-js-option-window>
+            <div class="window-background" data-js-window>
                 <div class="window">
-                    <button class="clear"><i class="fas fa-times" data-js-close-option-window></i></button>
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div class="window-wrapper window-wrapper-options">
                         <button class="option-button" data-js-option="{{option1}}"><i
                                 class="{{classes1}}"></i>{{option1}}</button>
@@ -133,7 +134,7 @@
         <!--END TEMPLATE SMALL IMAGE-->
         <!--TEMPLATE WINDOW DELETE PROJECT-->
         <template data-js-delete-project-window-template>
-            <div class="window-background" data-js-delete-project-window>
+            <div class="window-background" data-js-window>
                 <div class="window window-add">
                     <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div class="window-wrapper">
@@ -152,9 +153,9 @@
         <!--END TEMPLATE WINDOW DELETE PROJECT-->
         <!--WINDOW COLOR BROWSER-->
         <template data-js-color-browser-window-template>
-            <div class="window-background" id="window-color-browser-container">
+            <div class="window-background" id="window-color-browser-container" data-js-window>
                 <div class="window window-color-browser">
-                    <button class="clear"><i class="fas fa-times" data-js-close-browser-window></i></button>
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div>
                         <section class="search-container">
                             <div class="wrap-nuancier">
@@ -179,7 +180,7 @@
                             <!--SEARCH CONTAINER RESULTS-->
                             <div class="results">
                                 <div class="no-found">
-                                    <img src="./assets/images/5.png" alt="" />
+                                    <img src="./assets/images/error.png" alt="" />
                                     <p>Sorry, no match !</p>
                                 </div>
                                 <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="browser"></div>
@@ -192,9 +193,9 @@
         <!--END WINDOW COLOR BROWSER-->
         <!--WINDOW THREAD BOX-->
         <template data-js-thread-box-window-template>
-            <div class="window-background" id="window-thread-box-container">
+            <div class="window-background" id="window-thread-box-container" data-js-window>
                 <div class="window window-thread-box">
-                    <button class="clear"><i class="fas fa-times" data-js-close-box-window></i></button>
+                    <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div>
                         <section class="box-container">
                             <h2><i class="fas fa-archive"></i> My thread box</h2>
@@ -227,7 +228,7 @@
         <!--END TEMPLATE SEARCHED THREAD-->
         <!--TEMPLATE QUANTITY WINDOW-->
         <template data-js-window-template>
-            <div class="window-background" data-js-window>
+            <div class="window-background" data-js-quantity-window>
                 <div class="window">
                     <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div class="window-wrapper">

@@ -43,7 +43,9 @@
             <!--SEARCH CONTAINER RESULTS-->
             <div class="results">
                 <div class="no-found">
-                    <img src="./assets/images/5.png" alt=""/>
+                    <div class="error-image-ctn">
+                        <img src="./assets/images/error.png" alt="" />
+                    </div>
                     <p>Sorry, no match !</p>
                 </div>
                 <div class="wrapper thread-items-wrapper" data-js-threads-wrapper="browser"></div>
@@ -150,7 +152,7 @@
         </template>
         <!--TEMPLATE QUANTITY WINDOW-->
         <template data-js-window-template>
-            <div class="window-background" data-js-window>
+            <div class="window-background" data-js-quantity-window>
                 <div class="window">
                     <button class="clear"><i class="fas fa-times" data-js-close-window></i></button>
                     <div class="window-wrapper">

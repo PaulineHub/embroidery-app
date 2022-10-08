@@ -15,6 +15,7 @@ export default class Project {
         this._elImagesContainer = document.querySelector('[data-js-project-images-ctn]');
         this._elImageTemplate = document.querySelector('[data-js-project-image-template]');
         this._elSaveButton = document.querySelector('[data-js-save-button]');
+        this._elMessageSpan = document.querySelector('[data-js-save-message]');
         this._elProjectParamsButton = document.querySelector('[data-js-project-params-btn]');
         this._elAddThreadButton = document.querySelector('[data-js-add-project-thread]');
         this._elMainBlock = document.querySelector('main');
@@ -37,7 +38,7 @@ export default class Project {
     }
 
     /**
-     * Set the initial behaviors.
+     * Set the initial behaviors (display project content, listen events on inputs and buttons).
      */
    init() {
         
@@ -53,21 +54,21 @@ export default class Project {
 
 
    /**
-     * Display the content of the project (images and description).
-     * @param {object} idProject - The id of the project.
+     * Display the content of the project (images, description and threads).
+     * @param {object} idProject - Id of the project.
      */
-   displayProjectContent(idProject) {
-       this.getProjectInfos(idProject)
-       .then(infosProject => {
+    displayProjectContent(idProject) {
+        this.getProjectInfos(idProject)
+        .then(infosProject => {
             this.displayProjectDescription(infosProject)
             this.projectImages.displayAllProjectImages(infosProject._id, this._elImageTemplate, this._elImagesContainer);
-       });
-       this.displayProjectThreads(idProject);
-   }
+        });
+        this.displayProjectThreads(idProject);
+    }
 
    /**
-     * Get the project description and insert it into the DOM.
-     * @param {object} params - The id of the project.
+     * Get the project's description.
+     * @param {string} id - The id of the project.
      * @return {object} - The infos about the project.
      */
    async getProjectInfos(id) {
@@ -80,6 +81,10 @@ export default class Project {
         }
     }
 
+    /**
+     * Display the project's description in the DOM.
+     * @param {object} project - The infos about the project.
+     */
     displayProjectDescription(project) {
         this._elProjectContainer.id = project._id;
         this._elNameInput.value = project.name;
@@ -87,14 +92,27 @@ export default class Project {
         this._elDescriptionInput.value = project.description;
     }
 
+    /**
+     * Display the project's threads in the DOM.
+     * @param {string} projectId - The id of the project.
+     */
     displayProjectThreads(projectId) {
         this.storage.displayStorage('project', projectId);
     }
 
+    /**
+     * Display the button to save updates in the project's description.
+     */
     displaySaveButton() {
-        this._elSaveButton.classList.toggle('show-button');
+        if (!this._elSaveButton.classList.contains('show-button')) {
+            this._elSaveButton.classList.add('show-button');
+        }
     }
 
+    /**
+     * Update the infos of the project and remove the 'save' button.
+     * @param {string} e - The event.
+     */
     updateProjectInfos(e) {
         e.preventDefault();
         let params = {
@@ -104,18 +122,33 @@ export default class Project {
             description: this._elDescriptionInput.value
         }
         this.updateProjectStorage(params.id, params);
-        this.displaySaveButton();
+        this.removeSaveButton();
     }
 
+    /**
+     * Remove the 'save' button and display a confirmation message.
+     */
+    removeSaveButton() {
+        this._elSaveButton.classList.remove('show-button');
+        this._elMessageSpan.innerHTML = 'Modifications saved!';
+    }
+
+    /**
+     * Update the infos of the project in the DB.
+     * @param {string} id - The id of the project.
+     * @param {object} params - The infos of the project.
+     */
     async updateProjectStorage(id, params) {
         try {
             await this.axiosInstanceAuth.patch(`${this.url}/${id}`, params);
-
         } catch (error) {
             console.log(error);
         }
     }
 
+    /**
+     * Display a window of options to search threads.
+     */
     displayBrowserOptionsWindow() {
         let infos = {
             classes1: 'fas fa-palette',
@@ -125,27 +158,27 @@ export default class Project {
         };
         new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock);
         
-        const elOptionsWindow = document.querySelector('[data-js-option-window]');
+        const elOptionsWindow = document.querySelector('[data-js-window]');
         const elNewColorsBtn = document.querySelector('[data-js-option="Browse new colors"]');
         const elBoxBtn = document.querySelector('[data-js-option="Add from Thread Box"]');
-        const elCloseWindowBtn = document.querySelector('[data-js-close-option-window]');
-        
-        elCloseWindowBtn.addEventListener('click', () => {
-            this.closeWindow(elOptionsWindow);
-        });
+
+        this.listenCloseWindowBtn();
 
         elNewColorsBtn.addEventListener('click', () => {
             this.closeWindow(elOptionsWindow);
-            this.displaySearchThreadWindow(this._elColorBrowserWindowTemplate, 'browser', 'color-browser')
+            this.displaySearchThreadWindow(this._elColorBrowserWindowTemplate, 'browser');
         });
 
         elBoxBtn.addEventListener('click', () => {
             this.closeWindow(elOptionsWindow);
-            this.displaySearchThreadWindow(this._elThreadBoxWindowTemplate, 'box', 'thread-box')
+            this.displaySearchThreadWindow(this._elThreadBoxWindowTemplate, 'box');
         });
     }
 
-    displaySearchThreadWindow(template, storage, window) {
+    /**
+     * Display a window to search threads (in the color browser or in your box storage).
+     */
+    displaySearchThreadWindow(template, storage) {
         new CloneItem('', template, this._elMainBlock);
         if (storage == 'browser') {
             new ColorBrowser(); 
@@ -153,14 +186,12 @@ export default class Project {
             const storage = new ThreadStorage();
             storage.displayStorage('box');
         }
-        // listen close btn
-        const elCloseWindowBtn = document.querySelector(`[data-js-close-${storage}-window]`);
-        const elWindow = document.getElementById(`window-${window}-container`);
-        elCloseWindowBtn.addEventListener('click', () => {
-            this.closeWindow(elWindow);
-        });
+        this.listenCloseWindowBtn();
     }
 
+    /**
+     * Display a window of options to modify your project.
+     */
     displayProjectOptionsWindow() {
         let infos = {
             classes1: 'fa-regular fa-image',
@@ -171,14 +202,11 @@ export default class Project {
         new CloneItem(infos, this._elOptionsWindowTemplate, this._elMainBlock);
         
         //listen options btn
-        const elOptionsWindow = document.querySelector('[data-js-option-window]');
-        const elCloseWindowBtn = document.querySelector('[data-js-close-option-window]');
+        const elOptionsWindow = document.querySelector('[data-js-window]');
         const modifyImagesBtn = document.querySelector('[data-js-option="Modify images"]');
         const deleteProjectBtn = document.querySelector('[data-js-option="Delete project"]');
 
-        elCloseWindowBtn.addEventListener('click', () => {
-            this.closeWindow(elOptionsWindow);
-        });
+        this.listenCloseWindowBtn();
 
         modifyImagesBtn.addEventListener('click', () => {
             this.closeWindow(elOptionsWindow);
@@ -191,6 +219,9 @@ export default class Project {
         })
     }
 
+    /**
+     * Display a window to modify the images of your project.
+     */
     async displayModifyImagesProjectWindow() {
         //display window
         new CloneItem('', this._elModifyProjectImagesWindowTemplate, this._elMainBlock);
@@ -203,13 +234,13 @@ export default class Project {
         const elAddImageButton = document.querySelector('[data-js-add-image-btn]');
         elAddImageButton.addEventListener('click', this.addImageToProject.bind(this));
         //listen close btn
-        const window = document.querySelector('[data-js-window]');
-        const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
-        elCloseWindowBtn.addEventListener('click', () => {
-            this.closeWindow(window);
-        });
+        this.listenCloseWindowBtn();
     }
 
+    /**
+     * Add an image to the project.
+     * @param {string} e - Event.
+     */
     async addImageToProject(e) {
         e.preventDefault();
         const elImageInput = document.getElementById('image');
@@ -223,8 +254,9 @@ export default class Project {
         this.projectImages.displayProjectImage(imageInfos, this._elImageTemplate, this._elImagesContainer)
     }
 
-    
-
+    /**
+     * Display a window to delete the project.
+     */
     displayDeleteProjectWindow() {
         // add window to the DOM
         let projectImages = document.querySelectorAll('.product-image-description');
@@ -239,12 +271,8 @@ export default class Project {
        
         // listen btns
         const elDeleteProjectBtn = document.querySelector('[data-js-submit-btn="delete project"]');
-        const elDeleteProjectWindow = document.querySelector('[data-js-delete-project-window]');
-        const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
 
-        elCloseWindowBtn.addEventListener('click', () => {
-            this.closeWindow(elDeleteProjectWindow);
-        });
+        this.listenCloseWindowBtn();
 
         elDeleteProjectBtn.addEventListener('click', () => {
             this.deteleProjectThreads();
@@ -255,6 +283,9 @@ export default class Project {
         });
     } 
     
+    /**
+     * Delete the threads stored for the project.
+     */
     async deteleProjectThreads() {
         let {data:{threads}} = await this.storage.getThreadsStored('project', this.projectId);
         for (let thread in threads) {
@@ -262,14 +293,29 @@ export default class Project {
         }
     }
 
+    /**
+     * Delete the project from the DB.
+     */
     async deleteProject() {
         await this.axiosInstanceAuth.delete(`${this.url}/${this.projectId}`);
     }
 
+    /**
+     * Listen event on the button to close a window.
+     */
+    listenCloseWindowBtn() {
+        const elWindow = document.querySelector('[data-js-window]');
+        const elCloseWindowBtn = document.querySelector('[data-js-close-window]');
+        elCloseWindowBtn.addEventListener('click', () => {
+            this.closeWindow(elWindow);
+        });
+    }
+
+    /**
+     * Remove the window from the DOM.
+     */
     closeWindow(elWindow) {
         this._elMainBlock.removeChild(elWindow);
     }
-
-
 
 }

@@ -8,10 +8,16 @@ export default class Navigation {
         this.init();
     }
 
+    /***
+     * Initiate behaviors by default (listen event on logout button).
+     */
     init() {
         this._elLogoutBtn.addEventListener('click', this.logout.bind(this));
     }
 
+    /***
+     * Logout the user by deleting his/her token from the local storage.
+     */
     logout() {
         const storage = new TokenStorage();
         storage.deleteTokenLocalStorage();
