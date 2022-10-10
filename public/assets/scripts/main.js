@@ -12,7 +12,6 @@ import Project from "./Project.js";
     const isHome = pathname === '/index.html' || pathname === "/";
     const tokenStorage = new TokenStorage();
     const token = tokenStorage.getLocalStorage();
-    console.log(token);
     if (isHome) {
         new Authentification();
         return;

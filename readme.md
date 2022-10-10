@@ -2,6 +2,28 @@
 
 ## Description
 Browse and store your favorite colors of thread for your embroidery projects !
-(From the treads store DMC)
+(Images from the treads store DMC)
+
+## Technologies
+Javascript, Node.js, Express, Mongo DB
+
+## Test account
+Want to do a little tour of the app ? Log in with this logs :
+ID : test@gmail.com
+PW : Test1234
+
+## Presentation
+
+### Login - Register
+
+![alt text](https://github.com/paulinehub/embroidery-app/main/public/assets/images/demo/login.png?raw=true)
+
+### Browse threads
+
+### Shopping list and personal inventory
+
+### Collection of projects
+
+### Details of a project
 
 
