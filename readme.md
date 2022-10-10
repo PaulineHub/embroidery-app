@@ -16,7 +16,7 @@ PW : Test1234
 
 ### Login - Register
 
-![alt text](https://github.com/paulinehub/embroidery-app/main/public/assets/images/demo/login.png?raw=true)
+![alt text](public/assets/images/demo/login.png)
 
 ### Browse threads
 
