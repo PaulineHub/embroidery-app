@@ -2,7 +2,7 @@ import CloneItem from './CloneItem.js';
 
 export default class ColorCarousel {
 
-    constructor(widthFirstPart=780, widthSecondPart=520, percentage1=615, percentage2=670) {
+    constructor() {
         this._elSearchContainer = document.querySelector('.search-container');
         this._elColorsContainer = this._elSearchContainer.querySelector('[data-js-colors-container]');
         this._elColorCircleTemplate = this._elSearchContainer.querySelector('[data-js-color-circle-template]');
@@ -11,13 +11,9 @@ export default class ColorCarousel {
 
         this.colorsName = ['red', 'orange', 'yellow', 'khaki', 'green', 'teal', 'blue', 'purple', 'pink', 'brown', 'light', 'dark'];
         this.counter = 0;
-        this.carouselWidth = this._elSearchContainer.offsetWidth;
+        this.carouselTotalWidth = 702;
         this._elPrevBtn.style.display = 'none';
-
-        this.widthFirstPart = widthFirstPart;
-        this.widthSecondPart = widthSecondPart;
-        this.percentage1 = percentage1;
-        this.percentage2 = percentage2;
+        this.percentage = 615;
 
         this.init();
     }
@@ -57,9 +53,11 @@ export default class ColorCarousel {
      */
     moveCarousel() {
         // Display buttons
-        if (this.carouselWidth === this.widthFirstPart && this.counter < 1) {
+        let carouselWidth = this._elColorsContainer.offsetWidth;
+
+        if ( this.counter < 1) {
             this._elNextBtn.style.display = 'block';
-        } else if (this.carouselWidth === this.widthSecondPart && this.counter < 2) {
+        } else if ((carouselWidth * this.counter) < this.carouselTotalWidth) {
             this._elNextBtn.style.display = 'block';
         } else {
             this._elNextBtn.style.display = 'none';
@@ -71,15 +69,9 @@ export default class ColorCarousel {
         }
         // Move colors of the carousel
         const elcolorBtns = this._elSearchContainer.querySelectorAll(".color-circle-wrapper");
-        if (this.carouselWidth === this.widthFirstPart) {
             elcolorBtns.forEach(color => {
-                color.style.transform = `translateX(-${this.counter * this.percentage1}%)`;
-            })
-        } else if (this.carouselWidth === this.widthSecondPart) {
-            elcolorBtns.forEach(color => {
-                color.style.transform = `translateX(-${this.counter * this.percentage2}%)`;
-            })
-        }
+                color.style.transform = `translateX(-${this.counter * this.percentage}%)`;
+           })
     }
 }
 

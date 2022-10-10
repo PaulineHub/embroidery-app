@@ -1,18 +1,15 @@
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 991px) {
+
     .category-container {
         width: 520px;
-    }
-
-    .nuancier  {
-        width: 520px;
-        margin-left: 0px;
     }
 
 }
 
 @media screen and (max-width: 890px) {
+
     main, .product-main {
         width: 100%;
     }
@@ -28,12 +25,15 @@
 }
 
 @media screen and (max-height: 800px) {
+
     .quantity-window {
         overflow-y: initial!important;
     }
+
 }
 
 @media screen and (max-width: 600px) {
+
     .projects-items-wrapper {
         justify-content: center;
     }
@@ -49,4 +49,5 @@
     .form-row-wrapper div {
         width: 100%;
     }
+    
 }

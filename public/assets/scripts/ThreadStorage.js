@@ -64,9 +64,9 @@ export default class ThreadStorage {
      * @return {object[]} - Threads stored (project, box, basket) with the same code given.
      */
     async getAllThreadsStoredByCode(threadCode) {
-        //const params = {threadCode}
-        let {data:{threads}} = await this.axiosInstanceAuth.get(`${this.url}?threadCode=${threadCode}`, // pk ne marche pas avec params ???????????
-                       // params,
+        const params = {threadCode}
+        let {data:{threads}} = await this.axiosInstanceAuth.get(`${this.url}`, // pk ne marche pas avec params ???????????
+                                {params},
                         );
         return threads;
     }

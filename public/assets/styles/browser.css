@@ -2,7 +2,6 @@
 
 .wrap-nuancier {
     position: relative;
-    /* width: 840px; */
 }
 
 .fa-chevron-left {
@@ -11,6 +10,7 @@
     left: -5px;
     font-size: 30px;
     cursor:pointer;
+    z-index: 3;
 }
 
 .fa-chevron-right {
@@ -19,6 +19,7 @@
     top: 104px;
     font-size: 30px;
     cursor:pointer;
+    z-index: 3;
 }
 
 .fa-chevron-right:hover,  .fa-chevron-left:hover{
@@ -33,7 +34,7 @@
     overflow: hidden;
     height: 120px;
     margin-left: 20px;
-    width: 710px;
+    width: 90%;
 }
 
 .color-circle-wrapper {

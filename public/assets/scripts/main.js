@@ -9,11 +9,18 @@ import Project from "./Project.js";
 (function() {
 
     let pathname = window.location.pathname;
-    if (pathname == "/index.html" || pathname == "/") new Authentification();
+    const isHome = pathname === '/index.html' || pathname === "/";
     const tokenStorage = new TokenStorage();
-    const token = tokenStorage.getLocalStorage()[0];
-    // if user authenticated
-    if (token) {
+    const token = tokenStorage.getLocalStorage();
+    console.log(token);
+    if (isHome) {
+        new Authentification();
+        return;
+    }
+    else if (!token) {
+        window.location.pathname = "/index.html";
+        return;
+    } else {
         new Navigation();
         if (pathname == "/inventory.html") {
             new ColorBrowser();
@@ -26,7 +33,6 @@ import Project from "./Project.js";
             new Project();
         }
     }
-
     
     
 })();

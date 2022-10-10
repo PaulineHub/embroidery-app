@@ -53,7 +53,9 @@ export default class ProjectImages {
     async getAllProjectImages(projectId) {
         //const params = {projectId};
         //console.log({params})
-        const {data:{images}} = await this.axiosInstanceAuth.get(`${this.url}?projectId=${projectId}`); // pk params ne marche pas ???????
+        const {data:{images}} = await this.axiosInstanceAuth.get(`${this.url}?projectId=${projectId}`, {
+            params: { projectId }
+        }); // pk params ne marche pas ???????
         return images;
     }
 

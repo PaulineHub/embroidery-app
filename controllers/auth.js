@@ -3,9 +3,18 @@ const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 
 const register = async (req, res) => {
-  const user = await User.create({ ...req.body });
-  const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ token });
+  // check if user already exist
+  const { email } = req.body;
+  const user = await User.findOne({ email })
+  if (user) {
+    throw new BadRequestError('User already exists.');
+  } else {
+    // create new user
+    const user = await User.create({ ...req.body });
+    const token = user.createJWT();
+    res.status(StatusCodes.CREATED).json({ token });
+  }
+  
 }
 
 const login = async (req, res) => {
@@ -24,8 +33,11 @@ const login = async (req, res) => {
   }
   // compare password
   const token = user.createJWT();
+  console.log('token',token);
   res.status(StatusCodes.OK).json({ user: token });
 }
+
+
 
 module.exports = {
   register,
