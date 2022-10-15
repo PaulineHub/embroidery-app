@@ -1,10 +1,15 @@
-![alt text](public/assets/images/logo.png)
+
+<p align="center">
+  <img src="public/assets/images/logo.png">
+</p>
 
 # Embroide me - Embroidery Stash Application
 
 ## Description
 Browse and store your favorite colors of thread for your embroidery projects !
 (Images from the treads store DMC)
+
+https://embroidery-app.onrender.com
 
 ## Technologies
 Javascript, Node.js, Express, Mongo DB
