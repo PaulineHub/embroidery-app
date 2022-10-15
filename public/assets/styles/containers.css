@@ -24,3 +24,9 @@ section {
     gap: 10px;
     flex-wrap: wrap;
 }
+
+.logo-img-ctn {
+    margin: auto;
+    overflow: hidden;
+    width: 210px;
+}
