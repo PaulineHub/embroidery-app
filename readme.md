@@ -1,4 +1,6 @@
-# Embroidery Stash Application
+![alt text](public/assets/images/logo.png)
+
+# Embroide me - Embroidery Stash Application
 
 ## Description
 Browse and store your favorite colors of thread for your embroidery projects !
