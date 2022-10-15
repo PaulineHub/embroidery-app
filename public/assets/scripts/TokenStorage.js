@@ -12,7 +12,7 @@ export default class TokenStorage {
      * Delete the token from the Local Storage.
      */
     deleteTokenLocalStorage() {
-        localStorage.deleteItem('tokenString')
+        localStorage.removeItem('tokenString')
     }
 
     /**

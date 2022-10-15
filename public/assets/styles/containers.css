@@ -5,7 +5,7 @@ main {
     margin: 60px auto;
     width: 860px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    padding: 20px 40px;
+    padding: 30px 40px;
     border-radius: 5px;
 }
 
@@ -27,6 +27,9 @@ section {
 
 .logo-img-ctn {
     margin: auto;
-    overflow: hidden;
     width: 210px;
+}
+
+.logo-img-small-ctn {
+    width: 90px;
 }
