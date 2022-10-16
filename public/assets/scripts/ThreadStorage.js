@@ -76,14 +76,20 @@ export default class ThreadStorage {
      * @param {string} code - Code of the thread.
      * @param {string} category - Category of the storage of the thread.
      * @param {object[]} threadsArray - Threads.
+     * @param {string} projectId - Id of the project the thread belongs to.
      * @return {object} - Infos about quantity of a given thread by storage.
      */
-    getThreadQuantityByStorage(code, category, threadsArray) {
+    getThreadQuantityByStorage(code, category, threadsArray, projectId = '') {
         let infos = {
             id: '',
             quantity: 0
         };
-        let threadsByCodeAndStorage = threadsArray.filter(thread => thread.category === category && thread.threadCode === code);
+        let threadsByCodeAndStorage;
+        if (projectId !== '') {
+            threadsByCodeAndStorage = threadsArray.filter(thread => thread.category === category && thread.threadCode === code && thread.projectId === projectId);
+        } else {
+            threadsByCodeAndStorage = threadsArray.filter(thread => thread.category === category && thread.threadCode === code);
+        }
         if (threadsByCodeAndStorage.length > 0) {
             infos = {
                 id: threadsByCodeAndStorage[0]._id,
@@ -124,7 +130,9 @@ export default class ThreadStorage {
         }
         // check if thread already stored
         const threads = await this.getAllThreadsStored();
-        const threadInfos = this.getThreadQuantityByStorage(code, `${storage}`, threads);
+        let threadInfos;
+        if (projectId) threadInfos = this.getThreadQuantityByStorage(code, `${storage}`, threads, projectId);
+        else threadInfos = this.getThreadQuantityByStorage(code, `${storage}`, threads);
         if (threadInfos.quantity > 0) {
             let newQuantity = threadInfos.quantity + quantity;
             this.updateStoredThread(threadInfos.id, newQuantity);
