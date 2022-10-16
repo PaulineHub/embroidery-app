@@ -67,6 +67,11 @@
     overflow: hidden;
 }
 
+.image-gallery-item img {
+    object-fit: cover;
+    height: 100%;
+}
+
 /* PROJECT INFOS SECTION */
 
 .project-infos-wrapper header {
